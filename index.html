@@ -108,7 +108,7 @@
     <div class="chat-messages" id="messages">
       <div class="message bot">
         Olá! 👋<br>
-        Posso te ajudar com informações sobre o evento.  
+        Posso te ajudar com informações sobre o evento.<br>
         É só perguntar 😊
       </div>
     </div>
@@ -124,7 +124,7 @@
   const input = document.getElementById("input");
 
   const API_URL = "https://nichele-ai-proxy.vercel.app/api/chat";
-  const WHATS_URL = "https://wa.me/5547999999999"; // depois ajustamos
+  const WHATS_URL = "https://wa.me/5541997550040";
 
   function addMessage(text, sender) {
     const div = document.createElement("div");
@@ -144,26 +144,24 @@
     try {
       const response = await fetch(API_URL, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ question: text })
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ message: text })
       });
 
-      if (!response.ok) throw new Error("Erro na IA");
+      if (!response.ok) throw new Error("Erro no backend");
 
       const data = await response.json();
 
-      if (!data.answer || data.answer.toLowerCase().includes("não sei")) {
-        throw new Error("Resposta inválida");
-      }
-
-      addMessage(data.answer, "bot");
+      addMessage(data.reply, "bot");
 
     } catch (error) {
       addMessage(
         `⚠️ Não consegui responder agora.<br>
-         <a href="${WHATS_URL}" target="_blank">
-           Clique aqui para falar conosco no WhatsApp
-         </a>`,
+        <a href="${WHATS_URL}" target="_blank">
+          Clique aqui para falar conosco no WhatsApp
+        </a>`,
         "bot"
       );
     }
