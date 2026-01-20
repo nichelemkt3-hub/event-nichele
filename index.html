@@ -3,49 +3,113 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Assistente Nichele</title>
+  <title>Evento Nichele</title>
 
   <style>
-    * { box-sizing: border-box; font-family: Arial, Helvetica, sans-serif; }
+    * {
+      box-sizing: border-box;
+      font-family: Arial, Helvetica, sans-serif;
+    }
 
     body {
       margin: 0;
       background: #f2f2f2;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
     }
 
-    .chat-container {
+    /* TOPO */
+    .top-banner img {
       width: 100%;
-      max-width: 420px;
-      height: 90vh;
-      background: #ffffff;
+      display: block;
+    }
+
+    /* CONTEÚDO */
+    .container {
+      max-width: 1100px;
+      margin: auto;
+      padding: 20px;
+    }
+
+    .section {
+      background: #fff;
       border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 24px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    }
+
+    .section h2 {
+      margin-top: 0;
+      color: #b5121b;
+      text-align: center;
+    }
+
+    /* ROLETA */
+    .roleta {
       display: flex;
       flex-direction: column;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      align-items: center;
+      gap: 12px;
+    }
+
+    .roleta img {
+      max-width: 320px;
+      width: 100%;
+    }
+
+    .roleta p {
+      text-align: center;
+      font-size: 15px;
+      color: #444;
+    }
+
+    /* PRÊMIOS */
+    .premios-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 16px;
+      margin-top: 16px;
+    }
+
+    .premio {
+      background: #fafafa;
+      border-radius: 10px;
+      padding: 10px;
+      text-align: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    }
+
+    .premio img {
+      width: 100%;
+      border-radius: 8px;
+    }
+
+    /* CHAT */
+    .chat-container {
+      display: flex;
+      flex-direction: column;
+      height: 480px;
+      border-radius: 12px;
       overflow: hidden;
+      border: 1px solid #ddd;
     }
 
     .chat-header {
       background: #b5121b;
       color: #fff;
-      padding: 16px;
+      padding: 14px;
       text-align: center;
       font-weight: bold;
     }
 
     .chat-messages {
       flex: 1;
-      padding: 16px;
+      padding: 14px;
       overflow-y: auto;
       background: #fafafa;
     }
 
     .message {
-      margin-bottom: 12px;
+      margin-bottom: 10px;
       padding: 10px 14px;
       border-radius: 8px;
       max-width: 80%;
@@ -72,8 +136,8 @@
       flex: 1;
       padding: 14px;
       border: none;
-      font-size: 14px;
       outline: none;
+      font-size: 14px;
     }
 
     .chat-input button {
@@ -82,41 +146,78 @@
       border: none;
       padding: 0 20px;
       cursor: pointer;
-      font-size: 14px;
     }
 
     .chat-input button:hover {
       background: #8e0e15;
-    }
-
-    @media (max-width: 480px) {
-      .chat-container {
-        height: 100vh;
-        border-radius: 0;
-      }
     }
   </style>
 </head>
 
 <body>
 
-  <div class="chat-container">
-    <div class="chat-header">
-      Assistente do Evento Nichele
+  <!-- TOPO -->
+  <div class="top-banner">
+    <img src="topo.png" alt="Evento Nichele">
+  </div>
+
+  <div class="container">
+
+    <!-- ROLETA -->
+    <div class="section roleta">
+      <h2>🎯 Roleta de Prêmios</h2>
+      <img src="roleta.png" alt="Roleta de Prêmios">
+      <p>
+        Participe do nosso evento especial e concorra a diversos prêmios incríveis.
+        Fale com o assistente abaixo para saber como participar!
+      </p>
     </div>
 
-    <div class="chat-messages" id="messages">
-      <div class="message bot">
-        Olá! 👋<br>
-        Posso te ajudar com informações sobre o evento.<br>
-        É só perguntar 😊
+    <!-- PRÊMIOS -->
+    <div class="section">
+      <h2>🎁 Prêmios do Evento</h2>
+
+      <div class="premios-grid">
+        <div class="premio"><img src="4.png"></div>
+        <div class="premio"><img src="5.png"></div>
+        <div class="premio"><img src="6.png"></div>
+        <div class="premio"><img src="7.png"></div>
+        <div class="premio"><img src="8.png"></div>
+        <div class="premio"><img src="9.png"></div>
+        <div class="premio"><img src="10.png"></div>
+        <div class="premio"><img src="11.png"></div>
+        <div class="premio"><img src="12.png"></div>
+        <div class="premio"><img src="13.png"></div>
+        <div class="premio"><img src="14.png"></div>
+        <div class="premio"><img src="15.png"></div>
+        <div class="premio"><img src="16.png"></div>
+        <div class="premio"><img src="17.png"></div>
       </div>
     </div>
 
-    <div class="chat-input">
-      <input id="input" type="text" placeholder="Digite sua pergunta..." />
-      <button onclick="sendMessage()">Enviar</button>
+    <!-- CHAT -->
+    <div class="section">
+      <h2>💬 Fale com o Assistente</h2>
+
+      <div class="chat-container">
+        <div class="chat-header">
+          Assistente do Evento Nichele
+        </div>
+
+        <div class="chat-messages" id="messages">
+          <div class="message bot">
+            Olá! 👋<br>
+            Posso te ajudar com informações sobre o evento 😊
+          </div>
+        </div>
+
+        <div class="chat-input">
+          <input id="input" type="text" placeholder="Digite sua pergunta..." />
+          <button onclick="sendMessage()">Enviar</button>
+        </div>
+      </div>
     </div>
+
   </div>
 
 <script>
@@ -144,19 +245,16 @@
     try {
       const response = await fetch(API_URL, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: text })
       });
 
-      if (!response.ok) throw new Error("Erro no backend");
+      if (!response.ok) throw new Error();
 
       const data = await response.json();
-
       addMessage(data.reply, "bot");
 
-    } catch (error) {
+    } catch {
       addMessage(
         `⚠️ Não consegui responder agora.<br>
         <a href="${WHATS_URL}" target="_blank">
@@ -167,7 +265,7 @@
     }
   }
 
-  input.addEventListener("keypress", function(e) {
+  input.addEventListener("keypress", e => {
     if (e.key === "Enter") sendMessage();
   });
 </script>
