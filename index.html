@@ -1,273 +1,278 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Evento Nichele</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Evento Nichele</title>
 
-  <style>
-    * {
-      box-sizing: border-box;
-      font-family: Arial, Helvetica, sans-serif;
-    }
+<style>
+* {
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
 
-    body {
-      margin: 0;
-      background: #f2f2f2;
-    }
+body {
+  margin: 0;
+  background: #f2f2f2;
+}
 
-    /* TOPO */
-    .top-banner img {
-      width: 100%;
-      display: block;
-    }
+/* TOPO */
+.top-banner img {
+  width: 100%;
+  display: block;
+}
 
-    /* CONTEÚDO */
-    .container {
-      max-width: 1100px;
-      margin: auto;
-      padding: 20px;
-    }
+/* CONTAINER */
+.container {
+  max-width: 1100px;
+  margin: auto;
+  padding: 20px;
+}
 
-    .section {
-      background: #fff;
-      border-radius: 12px;
-      padding: 20px;
-      margin-bottom: 24px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.08);
-    }
+.section {
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 24px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+}
 
-    .section h2 {
-      margin-top: 0;
-      color: #b5121b;
-      text-align: center;
-    }
+.section h2 {
+  text-align: center;
+  color: #b5121b;
+  margin-top: 0;
+}
 
-    /* ROLETA */
-    .roleta {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 12px;
-    }
+/* ROLETA */
+.roleta {
+  text-align: center;
+}
 
-    .roleta img {
-      max-width: 320px;
-      width: 100%;
-    }
+.roleta img {
+  max-width: 320px;
+  width: 100%;
+}
 
-    .roleta p {
-      text-align: center;
-      font-size: 15px;
-      color: #444;
-    }
+/* ===== CARROSSEL ===== */
+.carousel {
+  overflow: hidden;
+  width: 100%;
+  margin-top: 20px;
+}
 
-    /* PRÊMIOS */
-    .premios-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-      gap: 16px;
-      margin-top: 16px;
-    }
+.carousel-track {
+  display: flex;
+  gap: 16px;
+  animation: scroll 25s linear infinite;
+}
 
-    .premio {
-      background: #fafafa;
-      border-radius: 10px;
-      padding: 10px;
-      text-align: center;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-    }
+.premio {
+  min-width: calc(50% - 8px);
+  background: #fafafa;
+  border-radius: 10px;
+  padding: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
 
-    .premio img {
-      width: 100%;
-      border-radius: 8px;
-    }
+.premio img {
+  width: 100%;
+  border-radius: 8px;
+}
 
-    /* CHAT */
-    .chat-container {
-      display: flex;
-      flex-direction: column;
-      height: 480px;
-      border-radius: 12px;
-      overflow: hidden;
-      border: 1px solid #ddd;
-    }
+/* ANIMAÇÃO */
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
 
-    .chat-header {
-      background: #b5121b;
-      color: #fff;
-      padding: 14px;
-      text-align: center;
-      font-weight: bold;
-    }
+/* MOBILE */
+@media (max-width: 600px) {
+  .premio {
+    min-width: 100%;
+  }
+}
 
-    .chat-messages {
-      flex: 1;
-      padding: 14px;
-      overflow-y: auto;
-      background: #fafafa;
-    }
+/* CHAT */
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  height: 460px;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid #ddd;
+}
 
-    .message {
-      margin-bottom: 10px;
-      padding: 10px 14px;
-      border-radius: 8px;
-      max-width: 80%;
-      font-size: 14px;
-      line-height: 1.4;
-    }
+.chat-header {
+  background: #b5121b;
+  color: #fff;
+  padding: 14px;
+  text-align: center;
+  font-weight: bold;
+}
 
-    .user {
-      background: #d1e7ff;
-      margin-left: auto;
-    }
+.chat-messages {
+  flex: 1;
+  padding: 14px;
+  overflow-y: auto;
+  background: #fafafa;
+}
 
-    .bot {
-      background: #eeeeee;
-      margin-right: auto;
-    }
+.message {
+  margin-bottom: 10px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  max-width: 80%;
+  font-size: 14px;
+}
 
-    .chat-input {
-      display: flex;
-      border-top: 1px solid #ddd;
-    }
+.user {
+  background: #d1e7ff;
+  margin-left: auto;
+}
 
-    .chat-input input {
-      flex: 1;
-      padding: 14px;
-      border: none;
-      outline: none;
-      font-size: 14px;
-    }
+.bot {
+  background: #eeeeee;
+}
 
-    .chat-input button {
-      background: #b5121b;
-      color: #fff;
-      border: none;
-      padding: 0 20px;
-      cursor: pointer;
-    }
+.chat-input {
+  display: flex;
+  border-top: 1px solid #ddd;
+}
 
-    .chat-input button:hover {
-      background: #8e0e15;
-    }
-  </style>
+.chat-input input {
+  flex: 1;
+  padding: 14px;
+  border: none;
+  outline: none;
+}
+
+.chat-input button {
+  background: #b5121b;
+  color: #fff;
+  border: none;
+  padding: 0 20px;
+  cursor: pointer;
+}
+</style>
 </head>
 
 <body>
 
-  <!-- TOPO -->
-  <div class="top-banner">
-    <img src="topo.png" alt="Evento Nichele">
+<!-- TOPO -->
+<div class="top-banner">
+  <img src="assets/topo.png" alt="Evento Nichele">
+</div>
+
+<div class="container">
+
+  <!-- ROLETA -->
+  <div class="section roleta">
+    <h2>🎯 Roleta de Prêmios</h2>
+    <img src="assets/roleta.png" alt="Roleta">
+    <p>Gire a roleta e concorra a prêmios incríveis durante o evento.</p>
   </div>
 
-  <div class="container">
+  <!-- PRÊMIOS -->
+  <div class="section">
+    <h2>🎁 Prêmios do Evento</h2>
 
-    <!-- ROLETA -->
-    <div class="section roleta">
-      <h2>🎯 Roleta de Prêmios</h2>
-      <img src="roleta.png" alt="Roleta de Prêmios">
-      <p>
-        Participe do nosso evento especial e concorra a diversos prêmios incríveis.
-        Fale com o assistente abaixo para saber como participar!
-      </p>
-    </div>
+    <div class="carousel">
+      <div class="carousel-track">
+        <!-- DUPLICADO DE PROPÓSITO PRA LOOP -->
+        <div class="premio"><img src="assets/4.png"></div>
+        <div class="premio"><img src="assets/5.png"></div>
+        <div class="premio"><img src="assets/6.png"></div>
+        <div class="premio"><img src="assets/7.png"></div>
+        <div class="premio"><img src="assets/8.png"></div>
+        <div class="premio"><img src="assets/9.png"></div>
+        <div class="premio"><img src="assets/10.png"></div>
+        <div class="premio"><img src="assets/11.png"></div>
+        <div class="premio"><img src="assets/12.png"></div>
+        <div class="premio"><img src="assets/13.png"></div>
+        <div class="premio"><img src="assets/14.png"></div>
+        <div class="premio"><img src="assets/15.png"></div>
+        <div class="premio"><img src="assets/16.png"></div>
+        <div class="premio"><img src="assets/17.png"></div>
 
-    <!-- PRÊMIOS -->
-    <div class="section">
-      <h2>🎁 Prêmios do Evento</h2>
-
-      <div class="premios-grid">
-        <div class="premio"><img src="4.png"></div>
-        <div class="premio"><img src="5.png"></div>
-        <div class="premio"><img src="6.png"></div>
-        <div class="premio"><img src="7.png"></div>
-        <div class="premio"><img src="8.png"></div>
-        <div class="premio"><img src="9.png"></div>
-        <div class="premio"><img src="10.png"></div>
-        <div class="premio"><img src="11.png"></div>
-        <div class="premio"><img src="12.png"></div>
-        <div class="premio"><img src="13.png"></div>
-        <div class="premio"><img src="14.png"></div>
-        <div class="premio"><img src="15.png"></div>
-        <div class="premio"><img src="16.png"></div>
-        <div class="premio"><img src="17.png"></div>
+        <!-- REPEAT -->
+        <div class="premio"><img src="assets/4.png"></div>
+        <div class="premio"><img src="assets/5.png"></div>
+        <div class="premio"><img src="assets/6.png"></div>
+        <div class="premio"><img src="assets/7.png"></div>
       </div>
     </div>
-
-    <!-- CHAT -->
-    <div class="section">
-      <h2>💬 Fale com o Assistente</h2>
-
-      <div class="chat-container">
-        <div class="chat-header">
-          Assistente do Evento Nichele
-        </div>
-
-        <div class="chat-messages" id="messages">
-          <div class="message bot">
-            Olá! 👋<br>
-            Posso te ajudar com informações sobre o evento 😊
-          </div>
-        </div>
-
-        <div class="chat-input">
-          <input id="input" type="text" placeholder="Digite sua pergunta..." />
-          <button onclick="sendMessage()">Enviar</button>
-        </div>
-      </div>
-    </div>
-
   </div>
+
+  <!-- CHAT -->
+  <div class="section">
+    <h2>💬 Fale com o Assistente</h2>
+
+    <div class="chat-container">
+      <div class="chat-header">Assistente do Evento</div>
+
+      <div class="chat-messages" id="messages">
+        <div class="message bot">
+          Olá! 👋 Posso te ajudar com informações sobre o evento.
+        </div>
+      </div>
+
+      <div class="chat-input">
+        <input id="input" placeholder="Digite sua pergunta..." />
+        <button onclick="sendMessage()">Enviar</button>
+      </div>
+    </div>
+  </div>
+
+</div>
 
 <script>
-  const messages = document.getElementById("messages");
-  const input = document.getElementById("input");
+const messages = document.getElementById("messages");
+const input = document.getElementById("input");
 
-  const API_URL = "https://nichele-ai-proxy.vercel.app/api/chat";
-  const WHATS_URL = "https://wa.me/5541997550040";
+const API_URL = "https://nichele-ai-proxy.vercel.app/api/chat";
+const WHATS_URL = "https://wa.me/5541997550040";
 
-  function addMessage(text, sender) {
-    const div = document.createElement("div");
-    div.className = `message ${sender}`;
-    div.innerHTML = text;
-    messages.appendChild(div);
-    messages.scrollTop = messages.scrollHeight;
+function addMessage(text, sender) {
+  const div = document.createElement("div");
+  div.className = `message ${sender}`;
+  div.innerHTML = text;
+  messages.appendChild(div);
+  messages.scrollTop = messages.scrollHeight;
+}
+
+async function sendMessage() {
+  const text = input.value.trim();
+  if (!text) return;
+
+  addMessage(text, "user");
+  input.value = "";
+
+  try {
+    const response = await fetch(API_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ message: text })
+    });
+
+    const data = await response.json();
+    addMessage(data.reply, "bot");
+
+  } catch {
+    addMessage(
+      `⚠️ Erro no atendimento.<br>
+      <a href="${WHATS_URL}" target="_blank">Falar no WhatsApp</a>`,
+      "bot"
+    );
   }
+}
 
-  async function sendMessage() {
-    const text = input.value.trim();
-    if (!text) return;
-
-    addMessage(text, "user");
-    input.value = "";
-
-    try {
-      const response = await fetch(API_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: text })
-      });
-
-      if (!response.ok) throw new Error();
-
-      const data = await response.json();
-      addMessage(data.reply, "bot");
-
-    } catch {
-      addMessage(
-        `⚠️ Não consegui responder agora.<br>
-        <a href="${WHATS_URL}" target="_blank">
-          Clique aqui para falar conosco no WhatsApp
-        </a>`,
-        "bot"
-      );
-    }
-  }
-
-  input.addEventListener("keypress", e => {
-    if (e.key === "Enter") sendMessage();
-  });
+input.addEventListener("keypress", e => {
+  if (e.key === "Enter") sendMessage();
+});
 </script>
 
 </body>
