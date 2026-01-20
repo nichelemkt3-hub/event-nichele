@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Evento Nichele</title>
 
 <style>
@@ -24,7 +24,7 @@ body {
 
 /* CONTAINER */
 .container {
-  max-width: 1100px;
+  max-width: 1000px;
   margin: auto;
   padding: 20px;
 }
@@ -49,15 +49,14 @@ body {
 }
 
 .roleta img {
-  max-width: 320px;
+  max-width: 300px;
   width: 100%;
 }
 
-/* ===== SLIDER DE PRÊMIOS ===== */
+/* ===== SLIDER ===== */
 .slider {
-  overflow: hidden;
   width: 100%;
-  position: relative;
+  overflow: hidden;
 }
 
 .slider-track {
@@ -72,7 +71,7 @@ body {
 }
 
 .premio {
-  flex: 1;
+  width: 50%;
   background: #fafafa;
   border-radius: 10px;
   padding: 10px;
@@ -81,21 +80,15 @@ body {
 
 .premio img {
   width: 100%;
+  display: block;
   border-radius: 8px;
-}
-
-/* MOBILE */
-@media (max-width: 600px) {
-  .slide {
-    flex-direction: column;
-  }
 }
 
 /* CHAT */
 .chat-container {
   display: flex;
   flex-direction: column;
-  height: 460px;
+  height: 420px;
   border-radius: 12px;
   overflow: hidden;
   border: 1px solid #ddd;
@@ -159,7 +152,7 @@ body {
 
 <!-- TOPO -->
 <div class="top-banner">
-  <img src="assets/topo.png" alt="Evento Nichele">
+  <img src="./assets/topo.png" alt="Topo do Evento">
 </div>
 
 <div class="container">
@@ -167,50 +160,50 @@ body {
   <!-- ROLETA -->
   <div class="section roleta">
     <h2>🎯 Roleta de Prêmios</h2>
-    <img src="assets/roleta.png" alt="Roleta">
-    <p>Participe do evento e concorra a diversos prêmios.</p>
+    <img src="./assets/roleta.png" alt="Roleta">
+    <p>Confira alguns dos prêmios disponíveis no evento.</p>
   </div>
 
   <!-- PRÊMIOS -->
   <div class="section">
-    <h2>🎁 Prêmios do Evento</h2>
+    <h2>🎁 Prêmios</h2>
 
     <div class="slider">
       <div class="slider-track" id="sliderTrack">
 
         <div class="slide">
-          <div class="premio"><img src="assets/4.png"></div>
-          <div class="premio"><img src="assets/5.png"></div>
+          <div class="premio"><img src="./assets/4.png"></div>
+          <div class="premio"><img src="./assets/5.png"></div>
         </div>
 
         <div class="slide">
-          <div class="premio"><img src="assets/6.png"></div>
-          <div class="premio"><img src="assets/7.png"></div>
+          <div class="premio"><img src="./assets/6.png"></div>
+          <div class="premio"><img src="./assets/7.png"></div>
         </div>
 
         <div class="slide">
-          <div class="premio"><img src="assets/8.png"></div>
-          <div class="premio"><img src="assets/9.png"></div>
+          <div class="premio"><img src="./assets/8.png"></div>
+          <div class="premio"><img src="./assets/9.png"></div>
         </div>
 
         <div class="slide">
-          <div class="premio"><img src="assets/10.png"></div>
-          <div class="premio"><img src="assets/11.png"></div>
+          <div class="premio"><img src="./assets/10.png"></div>
+          <div class="premio"><img src="./assets/11.png"></div>
         </div>
 
         <div class="slide">
-          <div class="premio"><img src="assets/12.png"></div>
-          <div class="premio"><img src="assets/13.png"></div>
+          <div class="premio"><img src="./assets/12.png"></div>
+          <div class="premio"><img src="./assets/13.png"></div>
         </div>
 
         <div class="slide">
-          <div class="premio"><img src="assets/14.png"></div>
-          <div class="premio"><img src="assets/15.png"></div>
+          <div class="premio"><img src="./assets/14.png"></div>
+          <div class="premio"><img src="./assets/15.png"></div>
         </div>
 
         <div class="slide">
-          <div class="premio"><img src="assets/16.png"></div>
-          <div class="premio"><img src="assets/17.png"></div>
+          <div class="premio"><img src="./assets/16.png"></div>
+          <div class="premio"><img src="./assets/17.png"></div>
         </div>
 
       </div>
@@ -231,7 +224,7 @@ body {
       </div>
 
       <div class="chat-input">
-        <input id="input" placeholder="Digite sua pergunta..." />
+        <input id="input" placeholder="Digite sua pergunta...">
         <button onclick="sendMessage()">Enviar</button>
       </div>
     </div>
@@ -242,13 +235,13 @@ body {
 <script>
 /* SLIDER */
 const track = document.getElementById("sliderTrack");
-const slides = document.querySelectorAll(".slide");
-let index = 0;
+const totalSlides = document.querySelectorAll(".slide").length;
+let current = 0;
 
 setInterval(() => {
-  index++;
-  if (index >= slides.length) index = 0;
-  track.style.transform = `translateX(-${index * 100}%)`;
+  current++;
+  if (current >= totalSlides) current = 0;
+  track.style.transform = `translateX(-${current * 100}%)`;
 }, 3000);
 
 /* CHAT */
@@ -274,19 +267,17 @@ async function sendMessage() {
   input.value = "";
 
   try {
-    const response = await fetch(API_URL, {
+    const res = await fetch(API_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ message: text })
     });
-
-    const data = await response.json();
+    const data = await res.json();
     addMessage(data.reply, "bot");
-
   } catch {
     addMessage(
       `⚠️ Erro no atendimento.<br>
-      <a href="${WHATS_URL}" target="_blank">Falar no WhatsApp</a>`,
+       <a href="${WHATS_URL}" target="_blank">Falar no WhatsApp</a>`,
       "bot"
     );
   }
