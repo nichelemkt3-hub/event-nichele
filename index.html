@@ -1,326 +1,181 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Evento Nichele</title>
+<meta charset="UTF-8" />
+<title>Assistente do Evento</title>
 
 <style>
-* {
-  box-sizing: border-box;
-  font-family: Arial, Helvetica, sans-serif;
-}
-
 body {
   margin: 0;
-  background: #0d2a4a; /* azul del rey */
+  font-family: Arial, sans-serif;
+  background: #0a3cff;
 }
 
-/* TOPO */
-.top-banner img {
-  width: 100%;
-  display: block;
-}
-
-/* BOTÕES PRINCIPAIS */
-.main-buttons {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  padding: 20px;
-}
-
-.main-buttons img {
-  width: 100%;
-  max-width: 900px;
-  margin: auto;
-  cursor: pointer;
-  border-radius: 14px;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.25);
-  transition: transform 0.3s ease;
-}
-
-.main-buttons img:hover {
-  transform: scale(1.02);
-}
-
-/* CONTAINER */
 .container {
-  max-width: 1000px;
+  max-width: 420px;
   margin: auto;
-  padding: 20px;
-}
-
-/* SECTIONS */
-.section {
-  background: #ffffff;
-  border-radius: 16px;
-  padding: 20px;
-  margin-bottom: 24px;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-}
-
-.section h2 {
-  text-align: center;
-  color: #b5121b;
-  margin-top: 0;
-}
-
-/* CHAT */
-.chat-container {
+  height: 100vh;
   display: flex;
   flex-direction: column;
-  height: 440px;
-  border-radius: 14px;
-  overflow: hidden;
-  border: 1px solid #ddd;
 }
 
-.chat-header {
-  background: #b5121b;
-  color: #fff;
-  padding: 14px;
+.header {
+  padding: 15px;
+  color: white;
   text-align: center;
   font-weight: bold;
-  position: relative;
 }
 
-.reset-chat {
-  position: absolute;
-  right: 12px;
-  top: 10px;
-  background: transparent;
-  border: none;
-  color: #fff;
-  cursor: pointer;
-  font-size: 14px;
+.buttons-area {
+  background: white;
+  border-radius: 20px 20px 0 0;
+  padding: 15px;
+  display: flex;
+  justify-content: space-around;
 }
 
-.chat-messages {
+.buttons-area a {
+  background: #0a3cff;
+  color: white;
+  text-decoration: none;
+  padding: 10px;
+  border-radius: 12px;
+  width: 45%;
+  text-align: center;
+}
+
+.chat {
   flex: 1;
-  padding: 14px;
+  background: #f4f4f4;
+  padding: 10px;
   overflow-y: auto;
-  background: #fafafa;
 }
 
-.message {
+.msg {
   margin-bottom: 10px;
-  padding: 10px 14px;
-  border-radius: 10px;
-  max-width: 80%;
-  font-size: 14px;
-  line-height: 1.4;
-}
-
-.user {
-  background: #d1e7ff;
-  margin-left: auto;
 }
 
 .bot {
-  background: #eeeeee;
+  background: white;
+  padding: 10px;
+  border-radius: 10px;
 }
 
-.options {
+.user {
+  background: #0a3cff;
+  color: white;
+  padding: 10px;
+  border-radius: 10px;
+  text-align: right;
+}
+
+.footer {
+  display: flex;
+  padding: 10px;
+  background: white;
+}
+
+.footer input {
+  flex: 1;
+  padding: 10px;
+}
+
+.footer button {
+  padding: 10px;
+}
+
+.context-buttons {
   display: flex;
   gap: 10px;
-  margin-top: 8px;
+  margin-top: 5px;
 }
 
-.options button {
-  background: #b5121b;
-  color: #fff;
-  border: none;
-  padding: 6px 14px;
-  border-radius: 20px;
-  cursor: pointer;
-  font-size: 13px;
-}
-
-.typing {
-  font-size: 12px;
-  color: #777;
-  margin-bottom: 8px;
-}
-
-.chat-input {
-  display: flex;
-  border-top: 1px solid #ddd;
-}
-
-.chat-input input {
+.context-buttons button {
   flex: 1;
-  padding: 14px;
-  border: none;
-  outline: none;
-}
-
-.chat-input button {
-  background: #b5121b;
-  color: #fff;
-  border: none;
-  padding: 0 20px;
-  cursor: pointer;
+  padding: 8px;
 }
 </style>
 </head>
 
 <body>
-
-<!-- TOPO -->
-<div class="top-banner">
-  <img src="topo.png" alt="Topo do Evento">
-</div>
-
-<!-- BOTÕES -->
-<div class="main-buttons">
-  <img src="sorteiocl.png" onclick="location.href='sorteio.html'">
-  <img src="roletacl.png" onclick="location.href='roleta.html'">
-</div>
-
 <div class="container">
 
-<!-- CHAT -->
-<div class="section">
-  <h2>💬 Fale com o Assistente</h2>
-
-  <div class="chat-container">
-    <div class="chat-header">
-      Assistente do Evento
-      <button class="reset-chat" onclick="resetChat()">🔄 Reiniciar</button>
-    </div>
-
-    <div class="chat-messages" id="messages">
-      <div class="message bot">
-        Olá! 👋 Seja muito bem-vindo ao Evento Nichele.<br><br>
-        Sua dúvida é sobre <b>Sorteio</b> ou <b>Roleta</b>?
-        <div class="options">
-          <button onclick="chooseContext('sorteio')">Sorteio</button>
-          <button onclick="chooseContext('roleta')">Roleta</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="chat-input">
-      <input id="input" placeholder="Digite sua pergunta...">
-      <button onclick="sendMessage()">Enviar</button>
-    </div>
+  <div class="header">
+    🎉 Assistente do Evento Nichele
   </div>
-</div>
+
+  <div class="buttons-area">
+    <a href="roleta.html">🎡 Roleta</a>
+    <a href="sorteio.html">🎁 Sorteio</a>
+  </div>
+
+  <div class="chat" id="chat"></div>
+
+  <div class="footer">
+    <input id="input" placeholder="Digite sua mensagem..." />
+    <button onclick="send()">Enviar</button>
+  </div>
 
 </div>
 
 <script>
-const API_URL = "https://assistente-nichele-ai.vercel.app/api/chat";
-const messages = document.getElementById("messages");
-const input = document.getElementById("input");
-
 let contexto = null;
+const chat = document.getElementById("chat");
 
-function addMessage(text, sender) {
+function addMsg(text, cls) {
   const div = document.createElement("div");
-  div.className = `message ${sender}`;
+  div.className = "msg " + cls;
   div.innerHTML = text;
-  messages.appendChild(div);
-  messages.scrollTop = messages.scrollHeight;
+  chat.appendChild(div);
+  chat.scrollTop = chat.scrollHeight;
 }
 
-function addTyping() {
-  const div = document.createElement("div");
-  div.className = "typing";
-  div.id = "typing";
-  div.innerText = "Assistente está digitando...";
-  messages.appendChild(div);
-  messages.scrollTop = messages.scrollHeight;
+addMsg(
+  "Olá! 😊 Sou o assistente do evento Nichele. Como posso te ajudar hoje?",
+  "bot"
+);
+
+function askContext() {
+  addMsg(
+    `Essa dúvida é sobre <b>Roleta</b> ou <b>Sorteio</b>?
+     <div class="context-buttons">
+       <button onclick="setContext('roleta')">Roleta</button>
+       <button onclick="setContext('sorteio')">Sorteio</button>
+     </div>`,
+    "bot"
+  );
 }
 
-function removeTyping() {
-  const t = document.getElementById("typing");
-  if (t) t.remove();
+function setContext(c) {
+  contexto = c;
+  addMsg("Perfeito! Pode mandar sua dúvida 😊", "bot");
 }
 
-function chooseContext(type) {
-  contexto = type;
-  addMessage(type === "sorteio"
-    ? "Minha dúvida é sobre o sorteio."
-    : "Minha dúvida é sobre a roleta.", "user");
-
-  addTyping();
-
-  setTimeout(() => {
-    removeTyping();
-    addMessage(
-      type === "sorteio"
-        ? "Perfeito 😊 Qual é sua dúvida sobre o Sorteio?"
-        : "Ótimo 🎯 Qual é sua dúvida sobre a Roleta?",
-      "bot"
-    );
-  }, 800);
-}
-
-async function sendMessage() {
+async function send() {
+  const input = document.getElementById("input");
   const text = input.value.trim();
   if (!text) return;
-
-  addMessage(text, "user");
   input.value = "";
 
-  addTyping();
+  addMsg(text, "user");
 
-  try {
-    const res = await fetch(API_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ message: text, contexto })
-    });
-
-    const data = await res.json();
-    removeTyping();
-
-    if (data.contexto) contexto = data.contexto;
-
-    if (data.options) {
-      addMessage(
-        `${data.reply}
-        <div class="options">
-          ${data.options.map(o =>
-            `<button onclick="chooseContext('${o.toLowerCase()}')">${o}</button>`
-          ).join("")}
-        </div>`,
-        "bot"
-      );
-    } else {
-      addMessage(data.reply, "bot");
-    }
-
-  } catch {
-    removeTyping();
-    addMessage(
-      `⚠️ Não consegui te atender agora.<br>
-       <a href="https://wa.me/5541997550040" target="_blank">
-       Falar no WhatsApp</a>`,
-      "bot"
-    );
+  if (!contexto && text.length > 5) {
+    askContext();
+    return;
   }
-}
 
-function resetChat() {
-  contexto = null;
-  messages.innerHTML = `
-    <div class="message bot">
-      Olá novamente 👋<br><br>
-      Sua dúvida é sobre <b>Sorteio</b> ou <b>Roleta</b>?
-      <div class="options">
-        <button onclick="chooseContext('sorteio')">Sorteio</button>
-        <button onclick="chooseContext('roleta')">Roleta</button>
-      </div>
-    </div>`;
-}
+  addMsg("Digitando...", "bot");
 
-input.addEventListener("keypress", e => {
-  if (e.key === "Enter") sendMessage();
-});
+  const res = await fetch("/api/chat", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ message: text, contexto })
+  });
+
+  const data = await res.json();
+  chat.lastChild.remove();
+  addMsg(data.reply, "bot");
+}
 </script>
-
 </body>
 </html>
