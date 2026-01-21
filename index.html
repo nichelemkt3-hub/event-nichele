@@ -6,43 +6,49 @@
 <title>Evento Nichele</title>
 
 <style>
-* { box-sizing: border-box; font-family: Arial, Helvetica, sans-serif; }
+* {
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
 
 body {
   margin: 0;
-  background: linear-gradient(180deg, #e6f0fb, #ffffff);
+  background: linear-gradient(180deg, #0d2a4a, #123a63);
 }
 
 /* TOPO */
-.top-banner img { width: 100%; display: block; }
+.top-banner img {
+  width: 100%;
+  display: block;
+}
 
 /* CONTAINER */
 .container {
   max-width: 1000px;
   margin: auto;
-  padding: 20px;
+  padding: 20px 20px 40px;
 }
 
-/* SEÇÕES */
+/* SECTIONS */
 .section {
   background: #fff;
-  border-radius: 18px;
-  padding: 24px;
-  margin-bottom: 28px;
-  box-shadow: 0 10px 28px rgba(0,0,0,0.08);
-  opacity: 0;
-  transform: translateY(20px);
-  transition: all .45s ease;
+  border-radius: 14px;
+  padding: 20px;
+  margin-bottom: 24px;
+  box-shadow: 0 10px 26px rgba(0,0,0,0.15);
+  animation: fade 0.4s ease;
 }
 
-.section.active {
-  opacity: 1;
-  transform: translateY(0);
+.hidden {
+  display: none;
 }
 
-.hidden { display: none; }
+@keyframes fade {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 
-/* HOME */
+/* MENU HOME */
 .menu-buttons {
   display: flex;
   flex-direction: column;
@@ -51,70 +57,85 @@ body {
 
 .menu-buttons img {
   width: 100%;
-  border-radius: 18px;
+  border-radius: 14px;
   cursor: pointer;
-  transition: transform .3s ease, box-shadow .3s ease;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
 }
 
-.menu-buttons img:hover {
-  transform: scale(1.02);
-  box-shadow: 0 12px 26px rgba(0,0,0,0.18);
-}
-
-/* IMAGENS GERAIS */
+/* IMAGENS */
 .content-img {
   width: 100%;
-  border-radius: 16px;
-  margin-bottom: 20px;
+  border-radius: 12px;
+  margin-bottom: 16px;
 }
 
-/* IMAGENS DE DÚVIDAS (MAIORES) */
-.rules-track img {
-  min-width: 100%;
-  border-radius: 16px;
-  padding: 6px;
-  background: #f7f9fc;
-}
-
-/* BOTÕES BASE */
+/* BOTÕES DELICADOS */
 .btn {
   width: 100%;
-  background: #f6f8fc;
-  color: #444;
-  border: 1px solid #e1e6ef;
-  padding: 10px;
-  border-radius: 10px;
-  font-size: 14px;
+  background: #b5121b;
+  color: #fff;
+  border: none;
+  padding: 12px;
+  border-radius: 20px;
+  font-size: 15px;
   cursor: pointer;
-  margin-bottom: 14px;
-  transition: background .2s ease;
+  margin-bottom: 16px;
 }
 
-.btn:hover { background: #eef2f8; }
-
-/* BOTÃO VOLTAR */
-.btn-back {
-  font-size: 13px;
-  color: #666;
+.btn.light {
+  background: #e5e5e5;
+  color: #333;
 }
 
-/* BOTÕES SLIDER FINOS */
-.rules-nav {
-  display: flex;
-  gap: 10px;
-  margin-top: 12px;
-}
-
-.rules-nav .btn {
-  height: 32px;
-  padding: 0;
-  font-size: 13px;
-}
-
-/* SLIDER */
-.rules-slider {
+/* SLIDER DÚVIDAS */
+.slider {
   overflow: hidden;
-  border-radius: 18px;
+}
+
+.slider-track {
+  display: flex;
+  transition: transform 0.4s ease;
+}
+
+.slide {
+  min-width: 100%;
+}
+
+/* LUPA */
+.zoom-wrapper {
+  position: relative;
+}
+
+.zoom-icon {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  background: rgba(0,0,0,0.6);
+  color: #fff;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+/* OVERLAY ZOOM */
+#zoomOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.8);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+#zoomOverlay img {
+  max-width: 95%;
+  max-height: 95%;
+  border-radius: 10px;
 }
 
 /* CHAT */
@@ -122,9 +143,9 @@ body {
   display: flex;
   flex-direction: column;
   height: 420px;
-  border-radius: 18px;
+  border-radius: 12px;
   overflow: hidden;
-  border: 1px solid #e1e6ef;
+  border: 1px solid #ddd;
 }
 
 .chat-header {
@@ -145,17 +166,23 @@ body {
 .message {
   margin-bottom: 10px;
   padding: 10px 14px;
-  border-radius: 14px;
+  border-radius: 8px;
   max-width: 80%;
   font-size: 14px;
 }
 
-.user { background: #dbeeff; margin-left: auto; }
-.bot { background: #eeeeee; }
+.user {
+  background: #d1e7ff;
+  margin-left: auto;
+}
+
+.bot {
+  background: #eeeeee;
+}
 
 .chat-input {
   display: flex;
-  border-top: 1px solid #e1e6ef;
+  border-top: 1px solid #ddd;
 }
 
 .chat-input input {
@@ -170,23 +197,7 @@ body {
   color: #fff;
   border: none;
   padding: 0 20px;
-}
-
-/* OVERLAY ZOOM */
-.zoom-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,.85);
-  display: none;
-  align-items: center;
-  justify-content: center;
-  z-index: 9999;
-}
-
-.zoom-overlay img {
-  max-width: 95%;
-  max-height: 95%;
-  border-radius: 12px;
+  cursor: pointer;
 }
 </style>
 </head>
@@ -200,7 +211,7 @@ body {
 <div class="container">
 
   <!-- HOME -->
-  <div id="home" class="section active">
+  <div id="home" class="section">
     <div class="menu-buttons">
       <img src="sorteiocl.png" onclick="showPage('sorteio')">
       <img src="roletacl.png" onclick="showPage('roleta')">
@@ -209,59 +220,60 @@ body {
 
   <!-- SORTEIO -->
   <div id="sorteio" class="section hidden">
-    <button class="btn btn-back" onclick="showPage('home')">← Voltar</button>
+    <button class="btn light" onclick="showPage('home')">⬅ Voltar</button>
 
     <img src="sorteio1.png" class="content-img">
     <img src="sorteio2.png" class="content-img">
 
-    <button class="btn" onclick="toggleRules('rules-sorteio')">Confira as regras</button>
+    <button class="btn" onclick="toggle('regrasSorteio')">Confira as regras</button>
 
-    <div id="rules-sorteio" class="hidden">
-      <div class="rules-slider" data-index="0">
-        <div class="rules-track">
-          <img src="duvidas1.png" class="zoomable">
-          <img src="duvidas2.png" class="zoomable">
+    <div id="regrasSorteio" class="hidden">
+      <div class="slider" data-slider>
+        <div class="slider-track">
+          <div class="slide zoom-wrapper">
+            <img src="duvidas1.png" class="content-img">
+            <div class="zoom-icon">🔍</div>
+          </div>
+          <div class="slide zoom-wrapper">
+            <img src="duvidas2.png" class="content-img">
+            <div class="zoom-icon">🔍</div>
+          </div>
         </div>
-      </div>
-
-      <div class="rules-nav">
-        <button class="btn" onclick="prevRule(this)">◀</button>
-        <button class="btn" onclick="nextRule(this)">▶</button>
       </div>
     </div>
   </div>
 
   <!-- ROLETA -->
   <div id="roleta" class="section hidden">
-    <button class="btn btn-back" onclick="showPage('home')">← Voltar</button>
+    <button class="btn light" onclick="showPage('home')">⬅ Voltar</button>
 
     <img src="roleta.png" class="content-img">
 
-    <button class="btn" onclick="toggleRules('rules-roleta')">Confira as regras</button>
+    <button class="btn" onclick="toggle('regrasRoleta')">Confira as regras</button>
 
-    <div id="rules-roleta" class="hidden">
-      <div class="rules-slider" data-index="0">
-        <div class="rules-track">
-          <img src="duvidar1.png" class="zoomable">
-          <img src="duvidar2.png" class="zoomable">
+    <div id="regrasRoleta" class="hidden">
+      <div class="slider" data-slider>
+        <div class="slider-track">
+          <div class="slide zoom-wrapper">
+            <img src="duvidar1.png" class="content-img">
+            <div class="zoom-icon">🔍</div>
+          </div>
+          <div class="slide zoom-wrapper">
+            <img src="duvidar2.png" class="content-img">
+            <div class="zoom-icon">🔍</div>
+          </div>
         </div>
-      </div>
-
-      <div class="rules-nav">
-        <button class="btn" onclick="prevRule(this)">◀</button>
-        <button class="btn" onclick="nextRule(this)">▶</button>
       </div>
     </div>
   </div>
 
   <!-- CHAT -->
-  <div class="section active">
+  <div class="section">
     <h2>💬 Fale com o Assistente</h2>
-
     <div class="chat-container">
       <div class="chat-header">Assistente do Evento</div>
       <div class="chat-messages" id="messages">
-        <div class="message bot">Olá! 👋 Posso ajudar.</div>
+        <div class="message bot">Olá! 👋 Posso te ajudar.</div>
       </div>
       <div class="chat-input">
         <input id="input" placeholder="Digite sua pergunta...">
@@ -272,76 +284,47 @@ body {
 
 </div>
 
-<!-- ZOOM OVERLAY -->
-<div class="zoom-overlay" id="zoomOverlay" onclick="closeZoom()">
+<!-- ZOOM -->
+<div id="zoomOverlay" onclick="this.style.display='none'">
   <img id="zoomImg">
 </div>
 
 <script>
 function showPage(page) {
-  ["home", "sorteio", "roleta"].forEach(id => {
-    const el = document.getElementById(id);
-    el.classList.add("hidden");
-    el.classList.remove("active");
-  });
-  const target = document.getElementById(page);
-  target.classList.remove("hidden");
-  setTimeout(() => target.classList.add("active"), 50);
+  ["home", "sorteio", "roleta"].forEach(id =>
+    document.getElementById(id).classList.add("hidden")
+  );
+  document.getElementById(page).classList.remove("hidden");
 }
 
-function toggleRules(id) {
+function toggle(id) {
   document.getElementById(id).classList.toggle("hidden");
 }
 
-/* SLIDER + SWIPE */
-document.querySelectorAll(".rules-slider").forEach(slider => {
-  let startX = 0;
-  let index = 0;
-  const track = slider.querySelector(".rules-track");
+/* SWIPE */
+document.querySelectorAll("[data-slider]").forEach(slider => {
+  let startX = 0, current = 0;
+  const track = slider.querySelector(".slider-track");
+  const slides = slider.querySelectorAll(".slide").length;
 
-  slider.addEventListener("touchstart", e => {
-    startX = e.touches[0].clientX;
-  });
-
+  slider.addEventListener("touchstart", e => startX = e.touches[0].clientX);
   slider.addEventListener("touchend", e => {
     const diff = e.changedTouches[0].clientX - startX;
-    if (diff > 50) index--;
-    if (diff < -50) index++;
-    const total = track.children.length;
-    index = (index + total) % total;
-    track.style.transform = `translateX(-${index * 100}%)`;
+    if (diff < -50 && current < slides - 1) current++;
+    if (diff > 50 && current > 0) current--;
+    track.style.transform = `translateX(-${current * 100}%)`;
   });
 });
-
-function nextRule(btn) {
-  const slider = btn.closest(".rules-nav").previousElementSibling;
-  const track = slider.querySelector(".rules-track");
-  let index = slider.dataset.index || 0;
-  index = (++index) % track.children.length;
-  slider.dataset.index = index;
-  track.style.transform = `translateX(-${index * 100}%)`;
-}
-
-function prevRule(btn) {
-  const slider = btn.closest(".rules-nav").previousElementSibling;
-  const track = slider.querySelector(".rules-track");
-  let index = slider.dataset.index || 0;
-  index = (index - 1 + track.children.length) % track.children.length;
-  slider.dataset.index = index;
-  track.style.transform = `translateX(-${index * 100}%)`;
-}
 
 /* ZOOM */
-document.querySelectorAll(".zoomable").forEach(img => {
-  img.addEventListener("click", () => {
-    document.getElementById("zoomImg").src = img.src;
+document.querySelectorAll(".zoom-icon").forEach(icon => {
+  icon.onclick = e => {
+    e.stopPropagation();
+    document.getElementById("zoomImg").src =
+      icon.parentElement.querySelector("img").src;
     document.getElementById("zoomOverlay").style.display = "flex";
-  });
+  };
 });
-
-function closeZoom() {
-  document.getElementById("zoomOverlay").style.display = "none";
-}
 
 /* CHAT */
 const API_URL = "https://nichele-ai-proxy.vercel.app/api/chat";
@@ -359,18 +342,20 @@ function addMessage(text, sender) {
 async function sendMessage() {
   const text = input.value.trim();
   if (!text) return;
-
   addMessage(text, "user");
   input.value = "";
 
-  const res = await fetch(API_URL, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ message: text })
-  });
-
-  const data = await res.json();
-  addMessage(data.reply, "bot");
+  try {
+    const res = await fetch(API_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ message: text })
+    });
+    const data = await res.json();
+    addMessage(data.reply, "bot");
+  } catch {
+    addMessage("⚠️ Erro no atendimento.", "bot");
+  }
 }
 </script>
 
