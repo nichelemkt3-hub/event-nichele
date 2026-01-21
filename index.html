@@ -13,13 +13,35 @@
 
 body {
   margin: 0;
-  background: #0f2a44; /* azul del rey */
+  background: #0d2a4a; /* azul del rey */
 }
 
 /* TOPO */
 .top-banner img {
   width: 100%;
   display: block;
+}
+
+/* BOTÕES PRINCIPAIS */
+.main-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 20px;
+}
+
+.main-buttons img {
+  width: 100%;
+  max-width: 900px;
+  margin: auto;
+  cursor: pointer;
+  border-radius: 14px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+  transition: transform 0.3s ease;
+}
+
+.main-buttons img:hover {
+  transform: scale(1.02);
 }
 
 /* CONTAINER */
@@ -29,10 +51,10 @@ body {
   padding: 20px;
 }
 
-/* SEÇÕES */
+/* SECTIONS */
 .section {
-  background: #fff;
-  border-radius: 12px;
+  background: #ffffff;
+  border-radius: 16px;
   padding: 20px;
   margin-bottom: 24px;
   box-shadow: 0 8px 20px rgba(0,0,0,0.15);
@@ -48,8 +70,8 @@ body {
 .chat-container {
   display: flex;
   flex-direction: column;
-  height: 460px;
-  border-radius: 12px;
+  height: 440px;
+  border-radius: 14px;
   overflow: hidden;
   border: 1px solid #ddd;
 }
@@ -63,17 +85,15 @@ body {
   position: relative;
 }
 
-.restart {
+.reset-chat {
   position: absolute;
   right: 12px;
   top: 10px;
-  background: rgba(255,255,255,0.2);
+  background: transparent;
   border: none;
   color: #fff;
-  border-radius: 20px;
-  padding: 4px 10px;
-  font-size: 12px;
   cursor: pointer;
+  font-size: 14px;
 }
 
 .chat-messages {
@@ -86,7 +106,7 @@ body {
 .message {
   margin-bottom: 10px;
   padding: 10px 14px;
-  border-radius: 8px;
+  border-radius: 10px;
   max-width: 80%;
   font-size: 14px;
   line-height: 1.4;
@@ -101,39 +121,28 @@ body {
   background: #eeeeee;
 }
 
-/* DIGITANDO */
-.typing {
-  font-style: italic;
-  font-size: 13px;
-  color: #777;
-}
-
-/* BOTÕES DE CONTEXTO */
-.context-buttons {
-  display: none;
+.options {
+  display: flex;
   gap: 10px;
-  padding: 10px;
-  justify-content: center;
-  background: #fafafa;
-  border-top: 1px solid #ddd;
+  margin-top: 8px;
 }
 
-.context-buttons button {
-  padding: 6px 16px;
-  border-radius: 20px;
-  border: 1px solid #b5121b;
-  background: #fff;
-  color: #b5121b;
-  cursor: pointer;
-  font-size: 14px;
-}
-
-.context-buttons button:hover {
+.options button {
   background: #b5121b;
   color: #fff;
+  border: none;
+  padding: 6px 14px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 13px;
 }
 
-/* INPUT */
+.typing {
+  font-size: 12px;
+  color: #777;
+  margin-bottom: 8px;
+}
+
 .chat-input {
   display: flex;
   border-top: 1px solid #ddd;
@@ -158,64 +167,55 @@ body {
 
 <body>
 
+<!-- TOPO -->
 <div class="top-banner">
   <img src="topo.png" alt="Topo do Evento">
 </div>
 
+<!-- BOTÕES -->
+<div class="main-buttons">
+  <img src="sorteiocl.png" onclick="location.href='sorteio.html'">
+  <img src="roletacl.png" onclick="location.href='roleta.html'">
+</div>
+
 <div class="container">
 
-  <div class="section">
-    <h2>💬 Fale com o Assistente</h2>
+<!-- CHAT -->
+<div class="section">
+  <h2>💬 Fale com o Assistente</h2>
 
-    <div class="chat-container">
-      <div class="chat-header">
-        Assistente do Evento
-        <button class="restart" onclick="restartChat()">Reiniciar</button>
-      </div>
+  <div class="chat-container">
+    <div class="chat-header">
+      Assistente do Evento
+      <button class="reset-chat" onclick="resetChat()">🔄 Reiniciar</button>
+    </div>
 
-      <div class="chat-messages" id="messages"></div>
-
-      <div class="context-buttons" id="contextButtons">
-        <button onclick="setContext('sorteio')">🎟 Sorteio</button>
-        <button onclick="setContext('roleta')">🎯 Roleta</button>
-      </div>
-
-      <div class="chat-input">
-        <input id="input" placeholder="Digite sua pergunta...">
-        <button onclick="sendMessage()">Enviar</button>
+    <div class="chat-messages" id="messages">
+      <div class="message bot">
+        Olá! 👋 Seja muito bem-vindo ao Evento Nichele.<br><br>
+        Sua dúvida é sobre <b>Sorteio</b> ou <b>Roleta</b>?
+        <div class="options">
+          <button onclick="chooseContext('sorteio')">Sorteio</button>
+          <button onclick="chooseContext('roleta')">Roleta</button>
+        </div>
       </div>
     </div>
+
+    <div class="chat-input">
+      <input id="input" placeholder="Digite sua pergunta...">
+      <button onclick="sendMessage()">Enviar</button>
+    </div>
   </div>
+</div>
 
 </div>
 
 <script>
-const API_URL = "https://assistente-nichele-ai.vercel.app";
-
+const API_URL = "https://assistente-nichele-ai.vercel.app/api/chat";
 const messages = document.getElementById("messages");
 const input = document.getElementById("input");
-const contextButtons = document.getElementById("contextButtons");
 
-let contextoSelecionado = null;
-let ultimaPergunta = null;
-let typingDiv = null;
-
-/* INICIAL */
-restartChat();
-
-function restartChat() {
-  messages.innerHTML = "";
-  contextoSelecionado = null;
-  ultimaPergunta = null;
-  contextButtons.style.display = "none";
-
-  addMessage(
-    "👋 Olá! Seja bem-vindo(a) ao <strong>Assistente do Evento Nichele</strong> 🎉<br><br>" +
-    "Posso te ajudar com dúvidas sobre a <strong>Roleta</strong> ou os <strong>Sorteios</strong>.<br>" +
-    "É só me perguntar 😊",
-    "bot"
-  );
-}
+let contexto = null;
 
 function addMessage(text, sender) {
   const div = document.createElement("div");
@@ -225,79 +225,96 @@ function addMessage(text, sender) {
   messages.scrollTop = messages.scrollHeight;
 }
 
-function showTyping() {
-  typingDiv = document.createElement("div");
-  typingDiv.className = "message bot typing";
-  typingDiv.innerText = "Digitando...";
-  messages.appendChild(typingDiv);
+function addTyping() {
+  const div = document.createElement("div");
+  div.className = "typing";
+  div.id = "typing";
+  div.innerText = "Assistente está digitando...";
+  messages.appendChild(div);
   messages.scrollTop = messages.scrollHeight;
 }
 
-function hideTyping() {
-  if (typingDiv) typingDiv.remove();
-  typingDiv = null;
+function removeTyping() {
+  const t = document.getElementById("typing");
+  if (t) t.remove();
 }
 
-function detectarContexto(texto) {
-  const t = texto.toLowerCase();
-  if (t.includes("roleta")) return "roleta";
-  if (t.includes("sorteio")) return "sorteio";
-  return null;
+function chooseContext(type) {
+  contexto = type;
+  addMessage(type === "sorteio"
+    ? "Minha dúvida é sobre o sorteio."
+    : "Minha dúvida é sobre a roleta.", "user");
+
+  addTyping();
+
+  setTimeout(() => {
+    removeTyping();
+    addMessage(
+      type === "sorteio"
+        ? "Perfeito 😊 Qual é sua dúvida sobre o Sorteio?"
+        : "Ótimo 🎯 Qual é sua dúvida sobre a Roleta?",
+      "bot"
+    );
+  }, 800);
 }
 
-function setContext(tipo) {
-  contextoSelecionado = tipo;
-  contextButtons.style.display = "none";
-
-  addMessage(
-    tipo === "sorteio"
-      ? "Quero falar sobre Sorteio 🎟"
-      : "Quero falar sobre Roleta 🎯",
-    "user"
-  );
-
-  if (ultimaPergunta) {
-    enviarParaAPI(ultimaPergunta);
-  }
-}
-
-async function enviarParaAPI(texto) {
-  showTyping();
-
-  const res = await fetch(API_URL, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      message: texto,
-      contexto: contextoSelecionado
-    })
-  });
-
-  const data = await res.json();
-  hideTyping();
-  addMessage(data.reply, "bot");
-
-  if (data.askContext) {
-    contextButtons.style.display = "flex";
-  }
-}
-
-function sendMessage() {
+async function sendMessage() {
   const text = input.value.trim();
   if (!text) return;
 
-  ultimaPergunta = text;
   addMessage(text, "user");
   input.value = "";
 
-  if (!contextoSelecionado) {
-    const detectado = detectarContexto(text);
-    if (detectado) {
-      contextoSelecionado = detectado;
-    }
-  }
+  addTyping();
 
-  enviarParaAPI(text);
+  try {
+    const res = await fetch(API_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ message: text, contexto })
+    });
+
+    const data = await res.json();
+    removeTyping();
+
+    if (data.contexto) contexto = data.contexto;
+
+    if (data.options) {
+      addMessage(
+        `${data.reply}
+        <div class="options">
+          ${data.options.map(o =>
+            `<button onclick="chooseContext('${o.toLowerCase()}')">${o}</button>`
+          ).join("")}
+        </div>`,
+        "bot"
+      );
+    } else {
+      addMessage(data.reply, "bot");
+    }
+
+  } catch {
+    removeTyping();
+    addMessage(
+      `⚠️ Não consegui te atender agora.<br>
+       <a href="https://wa.me/5541997550040" target="_blank">
+       Falar no WhatsApp</a>`,
+      "bot"
+    );
+  }
+}
+
+function resetChat() {
+  contexto = null;
+  messages.innerHTML = `
+    <div class="message bot">
+      Olá novamente 👋<br><br>
+      Sua dúvida é sobre <b>Sorteio</b> ou <b>Roleta</b>?
+      <div class="options">
+        <button onclick="chooseContext('sorteio')">Sorteio</button>
+        <button onclick="chooseContext('roleta')">Roleta</button>
+      </div>
+    </div>`;
 }
 
 input.addEventListener("keypress", e => {
