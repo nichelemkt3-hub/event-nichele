@@ -8,54 +8,113 @@
 <style>
 * { box-sizing: border-box; font-family: Arial, Helvetica, sans-serif; }
 
-body { margin: 0; background: #f2f2f2; }
+body {
+  margin: 0;
+  background: linear-gradient(180deg, #f5f5f5, #eeeeee);
+}
 
-.top-banner img { width: 100%; display: block; }
+.top-banner img {
+  width: 100%;
+  display: block;
+}
 
-.container { max-width: 1000px; margin: auto; padding: 20px; }
+/* CONTAINER */
+.container {
+  max-width: 1000px;
+  margin: auto;
+  padding: 20px;
+}
 
+/* SEÇÕES */
 .section {
   background: #fff;
-  border-radius: 12px;
-  padding: 20px;
-  margin-bottom: 24px;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 28px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all .5s ease;
+}
+
+.section.active {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .hidden { display: none; }
 
-/* BOTÕES HOME */
+/* HOME */
 .menu-buttons {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 18px;
 }
 
 .menu-buttons img {
   width: 100%;
-  border-radius: 12px;
+  border-radius: 16px;
   cursor: pointer;
-  box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+  transition: transform .3s ease, box-shadow .3s ease;
 }
 
-/* IMAGENS GRANDES */
+.menu-buttons img:hover {
+  transform: scale(1.02);
+  box-shadow: 0 10px 24px rgba(0,0,0,0.2);
+}
+
+/* IMAGENS */
 .content-img {
   width: 100%;
-  border-radius: 10px;
-  margin-bottom: 16px;
+  border-radius: 14px;
+  margin-bottom: 20px;
 }
 
 /* BOTÕES */
 button {
   width: 100%;
-  background: #b5121b;
+  background: linear-gradient(135deg, #b5121b, #8e0e14);
   color: #fff;
   border: none;
   padding: 14px;
-  border-radius: 8px;
+  border-radius: 10px;
   font-size: 16px;
   cursor: pointer;
   margin-bottom: 16px;
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(0,0,0,0.2);
+}
+
+/* SLIDER DE REGRAS */
+.rules-slider {
+  position: relative;
+  overflow: hidden;
+}
+
+.rules-track {
+  display: flex;
+  transition: transform .5s ease;
+}
+
+.rules-track img {
+  min-width: 100%;
+  border-radius: 14px;
+}
+
+.rules-nav {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.rules-nav button {
+  width: 48%;
+  background: #ddd;
+  color: #333;
 }
 
 /* CHAT */
@@ -63,13 +122,13 @@ button {
   display: flex;
   flex-direction: column;
   height: 420px;
-  border-radius: 12px;
+  border-radius: 16px;
   overflow: hidden;
   border: 1px solid #ddd;
 }
 
 .chat-header {
-  background: #b5121b;
+  background: linear-gradient(135deg, #b5121b, #8e0e14);
   color: #fff;
   padding: 14px;
   text-align: center;
@@ -86,7 +145,7 @@ button {
 .message {
   margin-bottom: 10px;
   padding: 10px 14px;
-  border-radius: 8px;
+  border-radius: 12px;
   max-width: 80%;
   font-size: 14px;
 }
@@ -110,14 +169,12 @@ button {
   background: #b5121b;
   color: #fff;
   border: none;
-  padding: 0 20px;
 }
 </style>
 </head>
 
 <body>
 
-<!-- TOPO -->
 <div class="top-banner">
   <img src="topo.png">
 </div>
@@ -125,7 +182,7 @@ button {
 <div class="container">
 
   <!-- HOME -->
-  <div id="home" class="section">
+  <div id="home" class="section active">
     <div class="menu-buttons">
       <img src="sorteiocl.png" onclick="showPage('sorteio')">
       <img src="roletacl.png" onclick="showPage('roleta')">
@@ -139,11 +196,19 @@ button {
     <img src="sorteio1.png" class="content-img">
     <img src="sorteio2.png" class="content-img">
 
-    <button onclick="toggle('regras-sorteio')">Confira as regras</button>
+    <button onclick="toggleRules('rules-sorteio')">Confira as regras</button>
 
-    <div id="regras-sorteio" class="hidden">
-      <img src="duvidas1.png" class="content-img">
-      <img src="duvidas2.png" class="content-img">
+    <div id="rules-sorteio" class="hidden">
+      <div class="rules-slider">
+        <div class="rules-track" data-index="0">
+          <img src="duvidas1.png">
+          <img src="duvidas2.png">
+        </div>
+      </div>
+      <div class="rules-nav">
+        <button onclick="prevRule(this)">◀ Anterior</button>
+        <button onclick="nextRule(this)">Próximo ▶</button>
+      </div>
     </div>
   </div>
 
@@ -153,24 +218,30 @@ button {
 
     <img src="roleta.png" class="content-img">
 
-    <button onclick="toggle('regras-roleta')">Confira as regras</button>
+    <button onclick="toggleRules('rules-roleta')">Confira as regras</button>
 
-    <div id="regras-roleta" class="hidden">
-      <img src="duvidar1.png" class="content-img">
-      <img src="duvidar2.png" class="content-img">
+    <div id="rules-roleta" class="hidden">
+      <div class="rules-slider">
+        <div class="rules-track" data-index="0">
+          <img src="duvidar1.png">
+          <img src="duvidar2.png">
+        </div>
+      </div>
+      <div class="rules-nav">
+        <button onclick="prevRule(this)">◀ Anterior</button>
+        <button onclick="nextRule(this)">Próximo ▶</button>
+      </div>
     </div>
   </div>
 
-  <!-- CHAT (GLOBAL) -->
-  <div class="section">
+  <!-- CHAT -->
+  <div class="section active">
     <h2>💬 Fale com o Assistente</h2>
 
     <div class="chat-container">
       <div class="chat-header">Assistente do Evento</div>
       <div class="chat-messages" id="messages">
-        <div class="message bot">
-          Olá! 👋 Posso te ajudar com informações do evento.
-        </div>
+        <div class="message bot">Olá! 👋 Posso ajudar com o evento.</div>
       </div>
       <div class="chat-input">
         <input id="input" placeholder="Digite sua pergunta...">
@@ -184,13 +255,35 @@ button {
 <script>
 function showPage(page) {
   ["home", "sorteio", "roleta"].forEach(id => {
-    document.getElementById(id).classList.add("hidden");
+    const el = document.getElementById(id);
+    el.classList.add("hidden");
+    el.classList.remove("active");
   });
-  document.getElementById(page).classList.remove("hidden");
+
+  const target = document.getElementById(page);
+  target.classList.remove("hidden");
+  setTimeout(() => target.classList.add("active"), 50);
 }
 
-function toggle(id) {
+function toggleRules(id) {
   document.getElementById(id).classList.toggle("hidden");
+}
+
+/* SLIDER REGRAS */
+function nextRule(btn) {
+  const track = btn.closest(".rules-nav").previousElementSibling.querySelector(".rules-track");
+  let index = +track.dataset.index;
+  index = (index + 1) % track.children.length;
+  track.dataset.index = index;
+  track.style.transform = `translateX(-${index * 100}%)`;
+}
+
+function prevRule(btn) {
+  const track = btn.closest(".rules-nav").previousElementSibling.querySelector(".rules-track");
+  let index = +track.dataset.index;
+  index = (index - 1 + track.children.length) % track.children.length;
+  track.dataset.index = index;
+  track.style.transform = `translateX(-${index * 100}%)`;
 }
 
 /* CHAT */
@@ -213,17 +306,14 @@ async function sendMessage() {
   addMessage(text, "user");
   input.value = "";
 
-  try {
-    const res = await fetch(API_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ message: text })
-    });
-    const data = await res.json();
-    addMessage(data.reply, "bot");
-  } catch {
-    addMessage("⚠️ Erro no atendimento.", "bot");
-  }
+  const res = await fetch(API_URL, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ message: text })
+  });
+
+  const data = await res.json();
+  addMessage(data.reply, "bot");
 }
 </script>
 
