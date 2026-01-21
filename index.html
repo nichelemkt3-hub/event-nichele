@@ -6,10 +6,7 @@
 <title>Evento Nichele</title>
 
 <style>
-* {
-  box-sizing: border-box;
-  font-family: Arial, Helvetica, sans-serif;
-}
+* { box-sizing: border-box; font-family: Arial, Helvetica, sans-serif; }
 
 body {
   margin: 0;
@@ -17,10 +14,7 @@ body {
 }
 
 /* TOPO */
-.top-banner img {
-  width: 100%;
-  display: block;
-}
+.top-banner img { width: 100%; display: block; }
 
 /* CONTAINER */
 .container {
@@ -36,15 +30,17 @@ body {
   padding: 20px;
   margin-bottom: 24px;
   box-shadow: 0 10px 26px rgba(0,0,0,0.15);
-  animation: fade 0.4s ease;
 }
 
-.hidden {
-  display: none;
+.hidden { display: none; }
+
+/* ANIMAÇÕES */
+.fade-up {
+  animation: fadeUp 0.7s ease;
 }
 
-@keyframes fade {
-  from { opacity: 0; transform: translateY(8px); }
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(30px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
@@ -69,7 +65,7 @@ body {
   margin-bottom: 16px;
 }
 
-/* BOTÕES DELICADOS */
+/* BOTÕES */
 .btn {
   width: 100%;
   background: #b5121b;
@@ -87,24 +83,16 @@ body {
   color: #333;
 }
 
-/* SLIDER DÚVIDAS */
-.slider {
-  overflow: hidden;
-}
-
+/* SLIDER */
+.slider { overflow: hidden; }
 .slider-track {
   display: flex;
   transition: transform 0.4s ease;
 }
-
-.slide {
-  min-width: 100%;
-}
+.slide { min-width: 100%; }
 
 /* LUPA */
-.zoom-wrapper {
-  position: relative;
-}
+.zoom-wrapper { position: relative; }
 
 .zoom-icon {
   position: absolute;
@@ -125,17 +113,59 @@ body {
 #zoomOverlay {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.8);
+  background: rgba(0,0,0,0.85);
   display: none;
-  align-items: center;
-  justify-content: center;
   z-index: 999;
 }
 
-#zoomOverlay img {
+#zoomBox {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+#zoomHeader {
+  display: flex;
+  justify-content: flex-end;
+  padding: 14px;
+}
+
+#zoomHeader button {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+#zoomContent {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#zoomContent img {
   max-width: 95%;
   max-height: 95%;
-  border-radius: 10px;
+  transition: transform 0.2s ease;
+}
+
+#zoomControls {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  padding: 14px;
+}
+
+#zoomControls button {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
 }
 
 /* CHAT */
@@ -171,14 +201,8 @@ body {
   font-size: 14px;
 }
 
-.user {
-  background: #d1e7ff;
-  margin-left: auto;
-}
-
-.bot {
-  background: #eeeeee;
-}
+.user { background: #d1e7ff; margin-left: auto; }
+.bot { background: #eeeeee; }
 
 .chat-input {
   display: flex;
@@ -189,7 +213,6 @@ body {
   flex: 1;
   padding: 14px;
   border: none;
-  outline: none;
 }
 
 .chat-input button {
@@ -197,21 +220,18 @@ body {
   color: #fff;
   border: none;
   padding: 0 20px;
-  cursor: pointer;
 }
 </style>
 </head>
 
 <body>
 
-<div class="top-banner">
-  <img src="topo.png">
-</div>
+<div class="top-banner"><img src="topo.png"></div>
 
 <div class="container">
 
   <!-- HOME -->
-  <div id="home" class="section">
+  <div id="home" class="section fade-up">
     <div class="menu-buttons">
       <img src="sorteiocl.png" onclick="showPage('sorteio')">
       <img src="roletacl.png" onclick="showPage('roleta')">
@@ -219,7 +239,7 @@ body {
   </div>
 
   <!-- SORTEIO -->
-  <div id="sorteio" class="section hidden">
+  <div id="sorteio" class="section hidden fade-up">
     <button class="btn light" onclick="showPage('home')">⬅ Voltar</button>
 
     <img src="sorteio1.png" class="content-img">
@@ -244,7 +264,7 @@ body {
   </div>
 
   <!-- ROLETA -->
-  <div id="roleta" class="section hidden">
+  <div id="roleta" class="section hidden fade-up">
     <button class="btn light" onclick="showPage('home')">⬅ Voltar</button>
 
     <img src="roleta.png" class="content-img">
@@ -268,7 +288,7 @@ body {
   </div>
 
   <!-- CHAT -->
-  <div class="section">
+  <div class="section fade-up">
     <h2>💬 Fale com o Assistente</h2>
     <div class="chat-container">
       <div class="chat-header">Assistente do Evento</div>
@@ -285,16 +305,31 @@ body {
 </div>
 
 <!-- ZOOM -->
-<div id="zoomOverlay" onclick="this.style.display='none'">
-  <img id="zoomImg">
+<div id="zoomOverlay">
+  <div id="zoomBox">
+    <div id="zoomHeader">
+      <button onclick="closeZoom()">✕</button>
+    </div>
+    <div id="zoomContent">
+      <img id="zoomImg">
+    </div>
+    <div id="zoomControls">
+      <button onclick="zoomOut()">➖</button>
+      <button onclick="zoomIn()">➕</button>
+    </div>
+  </div>
 </div>
 
 <script>
+let zoomLevel = 1;
+
 function showPage(page) {
   ["home", "sorteio", "roleta"].forEach(id =>
     document.getElementById(id).classList.add("hidden")
   );
-  document.getElementById(page).classList.remove("hidden");
+  const el = document.getElementById(page);
+  el.classList.remove("hidden");
+  el.classList.add("fade-up");
 }
 
 function toggle(id) {
@@ -320,11 +355,29 @@ document.querySelectorAll("[data-slider]").forEach(slider => {
 document.querySelectorAll(".zoom-icon").forEach(icon => {
   icon.onclick = e => {
     e.stopPropagation();
+    zoomLevel = 1;
+    document.body.style.overflow = "hidden";
+    document.getElementById("zoomImg").style.transform = "scale(1)";
     document.getElementById("zoomImg").src =
       icon.parentElement.querySelector("img").src;
-    document.getElementById("zoomOverlay").style.display = "flex";
+    document.getElementById("zoomOverlay").style.display = "block";
   };
 });
+
+function closeZoom() {
+  document.getElementById("zoomOverlay").style.display = "none";
+  document.body.style.overflow = "";
+}
+
+function zoomIn() {
+  zoomLevel += 0.2;
+  document.getElementById("zoomImg").style.transform = `scale(${zoomLevel})`;
+}
+
+function zoomOut() {
+  zoomLevel = Math.max(1, zoomLevel - 0.2);
+  document.getElementById("zoomImg").style.transform = `scale(${zoomLevel})`;
+}
 
 /* CHAT */
 const API_URL = "https://nichele-ai-proxy.vercel.app/api/chat";
