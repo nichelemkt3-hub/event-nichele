@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Evento Nichele</title>
 
 <style>
@@ -13,63 +13,198 @@
 
 body {
   margin: 0;
-  background: #0b2a4a; /* azul del rey */
+  background: linear-gradient(180deg, #0d2a4a, #123a63);
 }
 
+/* TOPO */
 .top-banner img {
   width: 100%;
   display: block;
 }
 
+/* CONTAINER */
 .container {
   max-width: 1000px;
   margin: auto;
   padding: 20px;
 }
 
-/* cartões brancos */
+/* SEÇÕES */
 .section {
   background: #fff;
   border-radius: 14px;
   padding: 20px;
-  margin-bottom: 24px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-  animation: fadeUp 1.5s ease;
+  margin-bottom: 26px;
+  box-shadow: 0 12px 28px rgba(0,0,0,0.18);
+}
+
+/* TRANSIÇÕES */
+.hidden {
+  display: none;
+}
+
+.fade-up {
+  animation: fadeUp 1.8s ease forwards;
 }
 
 @keyframes fadeUp {
-  from { opacity: 0; transform: translateY(40px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(120px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-/* BOTÕES GRANDES */
+/* MENU HOME */
 .menu-buttons {
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  margin-bottom: 24px;
+  gap: 18px;
 }
 
 .menu-buttons img {
   width: 100%;
-  max-height: 160px;
-  object-fit: cover;
-  border-radius: 12px;
+  border-radius: 14px;
   cursor: pointer;
-  transition: transform .3s;
+  box-shadow: 0 8px 22px rgba(0,0,0,0.25);
 }
 
-.menu-buttons img:hover {
-  transform: scale(1.02);
+/* IMAGENS */
+.content-img {
+  width: 100%;
+  border-radius: 12px;
+  margin-bottom: 16px;
 }
 
-/* PÁGINAS */
-.page {
+/* BOTÕES */
+.btn {
+  width: 100%;
+  background: #b5121b;
+  color: #fff;
+  border: none;
+  padding: 12px;
+  border-radius: 22px;
+  font-size: 15px;
+  cursor: pointer;
+  margin-bottom: 16px;
+}
+
+.btn.light {
+  background: #e6e6e6;
+  color: #333;
+}
+
+/* SLIDER */
+.slider {
+  overflow: hidden;
+}
+
+.slider-track {
+  display: flex;
+  transition: transform 0.4s ease;
+}
+
+.slide {
+  min-width: 100%;
+  position: relative;
+}
+
+/* PONTINHOS */
+.slider-dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.slider-dots span {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #cfd8e3;
+}
+
+.slider-dots span.active {
+  background: #0d2a4a;
+}
+
+/* LUPA */
+.zoom-icon {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  width: 34px;
+  height: 34px;
+  background: rgba(0,0,0,0.6);
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+/* OVERLAY ZOOM */
+#zoomOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.88);
   display: none;
+  z-index: 999;
 }
 
-.page.active {
-  display: block;
+#zoomBox {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+#zoomHeader {
+  display: flex;
+  justify-content: flex-end;
+  padding: 14px;
+}
+
+#zoomHeader button {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+#zoomContent {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+#zoomImg {
+  max-width: 95%;
+  max-height: 95%;
+  transition: transform 0.2s ease;
+}
+
+#zoomControls {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  padding: 14px;
+}
+
+#zoomControls button {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
 }
 
 /* CHAT */
@@ -100,7 +235,7 @@ body {
 .message {
   margin-bottom: 10px;
   padding: 10px 14px;
-  border-radius: 10px;
+  border-radius: 8px;
   max-width: 80%;
   font-size: 14px;
 }
@@ -114,12 +249,6 @@ body {
   background: #eeeeee;
 }
 
-.typing {
-  font-style: italic;
-  font-size: 13px;
-  opacity: .7;
-}
-
 .chat-input {
   display: flex;
   border-top: 1px solid #ddd;
@@ -129,7 +258,6 @@ body {
   flex: 1;
   padding: 14px;
   border: none;
-  outline: none;
 }
 
 .chat-input button {
@@ -137,89 +265,234 @@ body {
   color: #fff;
   border: none;
   padding: 0 20px;
-  cursor: pointer;
 }
 </style>
 </head>
 
 <body>
 
-<!-- TOPO -->
 <div class="top-banner">
-  <img src="topo.png" alt="Evento Nichele">
+  <img src="topo.png">
 </div>
 
 <div class="container">
 
-  <!-- MENU -->
-  <div class="section menu-buttons">
-    <img src="sorteiocl.png" onclick="openPage('sorteio')" alt="Sorteio">
-    <img src="roletacl.png" onclick="openPage('roleta')" alt="Roleta">
+<!-- HOME -->
+<div id="home" class="section fade-up">
+  <div class="menu-buttons">
+    <img src="sorteiocl.png" onclick="showPage('sorteio')">
+    <img src="roletacl.png" onclick="showPage('roleta')">
   </div>
+</div>
 
-  <!-- HOME -->
-  <div class="section page active" id="home">
-    <h2>🎉 Bem-vindo ao Evento Nichele</h2>
-    <p>Escolha uma das opções acima para saber mais.</p>
-  </div>
+<!-- SORTEIO -->
+<div id="sorteio" class="section hidden">
+  <button class="btn light" onclick="showPage('home')">⬅ Voltar</button>
 
-  <!-- SORTEIO -->
-  <div class="section page" id="sorteio">
-    <h2>🎁 Sorteio</h2>
-    <img src="sorteio1.png" style="width:100%;border-radius:12px">
-    <img src="sorteio2.png" style="width:100%;border-radius:12px;margin-top:12px">
-    <br><br>
-    <button onclick="goHome()">⬅ Voltar</button>
-  </div>
+  <img src="sorteio1.png" class="content-img">
+  <img src="sorteio2.png" class="content-img">
 
-  <!-- ROLETA -->
-  <div class="section page" id="roleta">
-    <h2>🎯 Roleta</h2>
-    <img src="roleta.png" style="width:100%;border-radius:12px">
-    <br><br>
-    <button onclick="goHome()">⬅ Voltar</button>
-  </div>
+  <button class="btn" onclick="toggle('regrasSorteio')">Confira as regras</button>
 
-  <!-- CHAT -->
-  <div class="section">
-    <h2>💬 Fale com o Assistente</h2>
-
-    <div class="chat-container">
-      <div class="chat-header">Assistente do Evento</div>
-
-      <div class="chat-messages" id="messages">
-        <div class="message bot">
-          Olá! 😊 Posso te ajudar com dúvidas sobre o Sorteio ou a Roleta.
+  <div id="regrasSorteio" class="hidden">
+    <div class="slider" data-slider>
+      <div class="slider-track">
+        <div class="slide">
+          <img src="duvidas1.png" class="content-img">
+          <div class="zoom-icon">🔍</div>
+        </div>
+        <div class="slide">
+          <img src="duvidas2.png" class="content-img">
+          <div class="zoom-icon">🔍</div>
         </div>
       </div>
+    </div>
 
-      <div class="chat-input">
-        <input id="input" placeholder="Digite sua pergunta...">
-        <button onclick="sendMessage()">Enviar</button>
-      </div>
+    <div class="slider-dots">
+      <span class="active"></span>
+      <span></span>
     </div>
   </div>
+</div>
 
+<!-- ROLETA -->
+<div id="roleta" class="section hidden">
+  <button class="btn light" onclick="showPage('home')">⬅ Voltar</button>
+
+  <img src="roleta.png" class="content-img">
+
+  <button class="btn" onclick="toggle('regrasRoleta')">Confira as regras</button>
+
+  <div id="regrasRoleta" class="hidden">
+    <div class="slider" data-slider>
+      <div class="slider-track">
+        <div class="slide">
+          <img src="duvidar1.png" class="content-img">
+          <div class="zoom-icon">🔍</div>
+        </div>
+        <div class="slide">
+          <img src="duvidar2.png" class="content-img">
+          <div class="zoom-icon">🔍</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slider-dots">
+      <span class="active"></span>
+      <span></span>
+    </div>
+  </div>
+</div>
+
+<!-- CHAT -->
+<div class="section">
+  <h2>💬 Fale com o Assistente</h2>
+  <div class="chat-container">
+    <div class="chat-header">Assistente do Evento</div>
+    <div class="chat-messages" id="messages">
+      <div class="message bot">Olá! 👋 Posso te ajudar.</div>
+    </div>
+    <div class="chat-input">
+      <input id="input" placeholder="Digite sua pergunta...">
+      <button onclick="sendMessage()">Enviar</button>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<!-- ZOOM -->
+<div id="zoomOverlay">
+  <div id="zoomBox">
+    <div id="zoomHeader">
+      <button onclick="closeZoom()">✕</button>
+    </div>
+    <div id="zoomContent">
+      <img id="zoomImg">
+    </div>
+    <div id="zoomControls">
+      <button onclick="zoomOut()">➖</button>
+      <button onclick="zoomIn()">➕</button>
+    </div>
+  </div>
 </div>
 
 <script>
 /* NAVEGAÇÃO */
-function openPage(id) {
-  document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
-  document.getElementById(id).classList.add("active");
-  window.scrollTo({ top: 0, behavior: "smooth" });
+function showPage(page) {
+  ["home","sorteio","roleta"].forEach(id => {
+    const el = document.getElementById(id);
+    el.classList.add("hidden");
+    el.classList.remove("fade-up");
+  });
+
+  const target = document.getElementById(page);
+  target.classList.remove("hidden");
+  void target.offsetWidth;
+  target.classList.add("fade-up");
 }
 
-function goHome() {
-  openPage("home");
+function toggle(id) {
+  document.getElementById(id).classList.toggle("hidden");
+}
+
+/* SLIDER + DOTS */
+document.querySelectorAll("[data-slider]").forEach(slider => {
+  let startX = 0;
+  let current = 0;
+  const track = slider.querySelector(".slider-track");
+  const slides = slider.querySelectorAll(".slide").length;
+  const dots = slider.parentElement.querySelectorAll(".slider-dots span");
+
+  function updateDots() {
+    dots.forEach((d,i) => d.classList.toggle("active", i === current));
+  }
+
+  slider.addEventListener("touchstart", e => {
+    startX = e.touches[0].clientX;
+  });
+
+  slider.addEventListener("touchend", e => {
+    const diff = e.changedTouches[0].clientX - startX;
+    if (diff < -50 && current < slides-1) current++;
+    if (diff > 50 && current > 0) current--;
+    track.style.transform = `translateX(-${current*100}%)`;
+    updateDots();
+  });
+});
+
+/* ZOOM */
+let zoomLevel = 1, posX = 0, posY = 0;
+let dragging = false, startX = 0, startY = 0;
+
+const zoomOverlay = document.getElementById("zoomOverlay");
+const zoomImg = document.getElementById("zoomImg");
+
+document.querySelectorAll(".zoom-icon").forEach(icon => {
+  icon.onclick = () => {
+    zoomLevel = 1;
+    posX = 0;
+    posY = 0;
+    zoomImg.src = icon.previousElementSibling.src;
+    updateZoom();
+    document.body.style.overflow = "hidden";
+    zoomOverlay.style.display = "block";
+  };
+});
+
+function updateZoom() {
+  zoomImg.style.transform = `translate(${posX}px, ${posY}px) scale(${zoomLevel})`;
+}
+
+function startDrag(x,y) {
+  if (zoomLevel <= 1) return;
+  dragging = true;
+  startX = x - posX;
+  startY = y - posY;
+}
+
+function moveDrag(x,y) {
+  if (!dragging) return;
+  posX = x - startX;
+  posY = y - startY;
+  updateZoom();
+}
+
+zoomImg.addEventListener("mousedown", e => startDrag(e.clientX,e.clientY));
+window.addEventListener("mousemove", e => moveDrag(e.clientX,e.clientY));
+window.addEventListener("mouseup", () => dragging = false);
+
+zoomImg.addEventListener("touchstart", e =>
+  startDrag(e.touches[0].clientX,e.touches[0].clientY)
+);
+zoomImg.addEventListener("touchmove", e =>
+  moveDrag(e.touches[0].clientX,e.touches[0].clientY)
+);
+zoomImg.addEventListener("touchend", () => dragging = false);
+
+function zoomIn() {
+  zoomLevel += 0.2;
+  updateZoom();
+}
+
+function zoomOut() {
+  zoomLevel = Math.max(1, zoomLevel - 0.2);
+  if (zoomLevel === 1) {
+    posX = 0;
+    posY = 0;
+  }
+  updateZoom();
+}
+
+function closeZoom() {
+  zoomOverlay.style.display = "none";
+  document.body.style.overflow = "";
 }
 
 /* CHAT */
+const API_URL = "https://nichele-ai-proxy.vercel.app/api/chat";
 const messages = document.getElementById("messages");
 const input = document.getElementById("input");
-const API_URL = "https://assistente-nichele-ai.vercel.app/api/chat";
-
-let context = null;
 
 function addMessage(text, sender) {
   const div = document.createElement("div");
@@ -229,55 +502,24 @@ function addMessage(text, sender) {
   messages.scrollTop = messages.scrollHeight;
 }
 
-function addTyping() {
-  const div = document.createElement("div");
-  div.className = "typing";
-  div.id = "typing";
-  div.innerText = "Digitando...";
-  messages.appendChild(div);
-  messages.scrollTop = messages.scrollHeight;
-}
-
-function removeTyping() {
-  const t = document.getElementById("typing");
-  if (t) t.remove();
-}
-
 async function sendMessage() {
   const text = input.value.trim();
   if (!text) return;
-
-  addMessage(text, "user");
+  addMessage(text,"user");
   input.value = "";
-  addTyping();
 
   try {
-    const res = await fetch(API_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ message: text, context })
+    const res = await fetch(API_URL,{
+      method:"POST",
+      headers:{ "Content-Type":"application/json" },
+      body: JSON.stringify({ message:text })
     });
-
     const data = await res.json();
-    removeTyping();
-
-    if (text.toLowerCase().includes("sorteio")) context = "sorteio";
-    if (text.toLowerCase().includes("roleta")) context = "roleta";
-
-    addMessage(data.reply, "bot");
+    addMessage(data.reply,"bot");
   } catch {
-    removeTyping();
-    addMessage(
-      `⚠️ Não consegui te atender agora.<br>
-       <a href="https://wa.me/5541997550040" target="_blank">Falar no WhatsApp</a>`,
-      "bot"
-    );
+    addMessage("⚠️ Erro no atendimento.","bot");
   }
 }
-
-input.addEventListener("keypress", e => {
-  if (e.key === "Enter") sendMessage();
-});
 </script>
 
 </body>
