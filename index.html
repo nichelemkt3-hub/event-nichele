@@ -13,7 +13,7 @@
 
 body {
   margin: 0;
-  background: #0f2a44; /* azul escuro */
+  background: #0f2a44; /* azul del rey */
 }
 
 /* TOPO */
@@ -48,7 +48,7 @@ body {
 .chat-container {
   display: flex;
   flex-direction: column;
-  height: 450px;
+  height: 460px;
   border-radius: 12px;
   overflow: hidden;
   border: 1px solid #ddd;
@@ -60,6 +60,20 @@ body {
   padding: 14px;
   text-align: center;
   font-weight: bold;
+  position: relative;
+}
+
+.restart {
+  position: absolute;
+  right: 12px;
+  top: 10px;
+  background: rgba(255,255,255,0.2);
+  border: none;
+  color: #fff;
+  border-radius: 20px;
+  padding: 4px 10px;
+  font-size: 12px;
+  cursor: pointer;
 }
 
 .chat-messages {
@@ -87,6 +101,13 @@ body {
   background: #eeeeee;
 }
 
+/* DIGITANDO */
+.typing {
+  font-style: italic;
+  font-size: 13px;
+  color: #777;
+}
+
 /* BOTÕES DE CONTEXTO */
 .context-buttons {
   display: none;
@@ -98,7 +119,7 @@ body {
 }
 
 .context-buttons button {
-  padding: 8px 16px;
+  padding: 6px 16px;
   border-radius: 20px;
   border: 1px solid #b5121b;
   background: #fff;
@@ -147,15 +168,12 @@ body {
     <h2>💬 Fale com o Assistente</h2>
 
     <div class="chat-container">
-      <div class="chat-header">Assistente do Evento</div>
-
-      <div class="chat-messages" id="messages">
-        <div class="message bot">
-          👋 Olá! Seja bem-vindo(a) ao <strong>Assistente do Evento Nichele</strong> 🎉<br><br>
-          Posso te ajudar com dúvidas sobre a <strong>Roleta</strong> ou os <strong>Sorteios</strong>.<br>
-          É só me perguntar 😊
-        </div>
+      <div class="chat-header">
+        Assistente do Evento
+        <button class="restart" onclick="restartChat()">Reiniciar</button>
       </div>
+
+      <div class="chat-messages" id="messages"></div>
 
       <div class="context-buttons" id="contextButtons">
         <button onclick="setContext('sorteio')">🎟 Sorteio</button>
@@ -179,13 +197,52 @@ const input = document.getElementById("input");
 const contextButtons = document.getElementById("contextButtons");
 
 let contextoSelecionado = null;
+let ultimaPergunta = null;
+let typingDiv = null;
+
+/* INICIAL */
+restartChat();
+
+function restartChat() {
+  messages.innerHTML = "";
+  contextoSelecionado = null;
+  ultimaPergunta = null;
+  contextButtons.style.display = "none";
+
+  addMessage(
+    "👋 Olá! Seja bem-vindo(a) ao <strong>Assistente do Evento Nichele</strong> 🎉<br><br>" +
+    "Posso te ajudar com dúvidas sobre a <strong>Roleta</strong> ou os <strong>Sorteios</strong>.<br>" +
+    "É só me perguntar 😊",
+    "bot"
+  );
+}
 
 function addMessage(text, sender) {
   const div = document.createElement("div");
   div.className = `message ${sender}`;
-  div.innerHTML = text.replace(/\n/g, "<br>");
+  div.innerHTML = text;
   messages.appendChild(div);
   messages.scrollTop = messages.scrollHeight;
+}
+
+function showTyping() {
+  typingDiv = document.createElement("div");
+  typingDiv.className = "message bot typing";
+  typingDiv.innerText = "Digitando...";
+  messages.appendChild(typingDiv);
+  messages.scrollTop = messages.scrollHeight;
+}
+
+function hideTyping() {
+  if (typingDiv) typingDiv.remove();
+  typingDiv = null;
+}
+
+function detectarContexto(texto) {
+  const t = texto.toLowerCase();
+  if (t.includes("roleta")) return "roleta";
+  if (t.includes("sorteio")) return "sorteio";
+  return null;
 }
 
 function setContext(tipo) {
@@ -198,37 +255,49 @@ function setContext(tipo) {
       : "Quero falar sobre Roleta 🎯",
     "user"
   );
+
+  if (ultimaPergunta) {
+    enviarParaAPI(ultimaPergunta);
+  }
 }
 
-async function sendMessage() {
+async function enviarParaAPI(texto) {
+  showTyping();
+
+  const res = await fetch(API_URL, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      message: texto,
+      contexto: contextoSelecionado
+    })
+  });
+
+  const data = await res.json();
+  hideTyping();
+  addMessage(data.reply, "bot");
+
+  if (data.askContext) {
+    contextButtons.style.display = "flex";
+  }
+}
+
+function sendMessage() {
   const text = input.value.trim();
   if (!text) return;
 
+  ultimaPergunta = text;
   addMessage(text, "user");
   input.value = "";
 
-  try {
-    const res = await fetch(API_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        message: text,
-        contexto: contextoSelecionado
-      })
-    });
-
-    const data = await res.json();
-    addMessage(data.reply, "bot");
-
-    if (data.askContext) {
-      contextButtons.style.display = "flex";
+  if (!contextoSelecionado) {
+    const detectado = detectarContexto(text);
+    if (detectado) {
+      contextoSelecionado = detectado;
     }
-  } catch {
-    addMessage(
-      "⚠️ Erro no atendimento.<br>Por favor, tente novamente mais tarde.",
-      "bot"
-    );
   }
+
+  enviarParaAPI(text);
 }
 
 input.addEventListener("keypress", e => {
