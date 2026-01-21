@@ -1,79 +1,86 @@
-import fs from "fs";
-import path from "path";
+import OpenAI from "openai";
 
-function carregarBase(nome) {
-  const filePath = path.join(process.cwd(), "knowledge", nome);
-  return fs.readFileSync(filePath, "utf8");
-}
+const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY
+});
 
-function extrairQA(texto) {
-  const blocos = texto.split(/\n\s*\n/);
-  const qa = [];
+const BASE_SORTEIO = `
+Até quando vai a campanha?
+Período da Promoção: De 20.01 a 17.12
+Período de Participação: De 20.01 a 14.12
 
-  blocos.forEach(bloco => {
-    const p = bloco.match(/Pergunta:\s*(.+)/i);
-    const r = bloco.match(/Resposta:\s*([\s\S]+)/i);
+Quais lojas participam?
+Todas as lojas Nichele Materiais de Construção + Nichele Tintas. Não vale para Vero Acabamentos.
 
-    if (p && r) {
-      qa.push({
-        pergunta: p[1].toLowerCase(),
-        resposta: r[1].trim()
-      });
-    }
-  });
+Quem pode participar?
+Pessoas físicas e jurídicas maiores de 18 anos com CPF válido no Brasil.
 
-  return qa;
-}
+Quem não pode participar?
+Menores de 18 anos, sem CPF válido, funcionários da empresa e parentes de 1º grau.
 
-function buscarResposta(base, perguntaUsuario) {
-  perguntaUsuario = perguntaUsuario.toLowerCase();
+Como participar?
+Compras a partir de R$ 2.000, cadastro no hotsite ou WhatsApp.
 
-  for (const item of base) {
-    if (perguntaUsuario.includes(item.pergunta)) {
-      return item.resposta;
-    }
+Quando acontecem os sorteios?
+Quartas ou sábados conforme calendário oficial, com base na Loteria Federal.
+`;
+
+const BASE_ROLETA = `
+Até quando vai a campanha?
+De 20/01/2026 a 23/12/2026 ou enquanto durarem os prêmios.
+
+Quais lojas participam?
+Todas as lojas Nichele Materiais de Construção. Não vale Nichele Tintas nem Vero.
+
+Giro da Sorte
+Compras acima de R$ 2.000 dão direito a 1 giro por nota fiscal.
+
+Onde ver o resultado?
+No hotsite ou WhatsApp oficial.
+
+Retirada do prêmio
+Em loja física ou junto ao pedido no e-commerce, em até 180 dias.
+`;
+
+export default async function handler(req, res) {
+  if (req.method !== "POST") {
+    return res.status(405).json({ reply: "Método não permitido" });
   }
-  return null;
-}
 
-export default function handler(req, res) {
-  const { message, contexto } = req.body;
+  try {
+    const { message, contexto } = req.body;
 
-  // Mensagem de boas-vindas
-  if (!message) {
-    return res.status(200).json({
+    let base = "";
+    if (contexto === "sorteio") base = BASE_SORTEIO;
+    if (contexto === "roleta") base = BASE_ROLETA;
+
+    const completion = await openai.chat.completions.create({
+      model: "gpt-4o-mini",
+      messages: [
+        {
+          role: "system",
+          content: `
+Você é o Assistente do Evento Nichele.
+Seja educado, alegre e converse normalmente.
+Use SOMENTE as informações abaixo.
+Se não souber, diga que não encontrou a informação e sugira WhatsApp.
+
+Base de conhecimento:
+${base}
+`
+        },
+        { role: "user", content: message }
+      ]
+    });
+
+    res.status(200).json({
+      reply: completion.choices[0].message.content
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({
       reply:
-        "👋 Olá! Seja bem-vindo(a) ao **Assistente do Evento Nichele** 🎉\n\n" +
-        "Posso te ajudar com dúvidas sobre a **Roleta** ou os **Sorteios**.\n\n" +
-        "É só me perguntar 😊"
+        "Não consegui te atender agora 😔 Por favor, fale com nosso atendimento no WhatsApp 41 99755-0040."
     });
   }
-
-  // Se ainda não sabe se é roleta ou sorteio
-  if (!contexto) {
-    return res.status(200).json({
-      reply:
-        "Essa dúvida é sobre a **Roleta** ou sobre o **Sorteio**? 😊",
-      askContext: true
-    });
-  }
-
-  const base =
-    contexto === "roleta"
-      ? extrairQA(carregarBase("roleta.txt"))
-      : extrairQA(carregarBase("sorteio.txt"));
-
-  const resposta = buscarResposta(base, message);
-
-  if (!resposta) {
-    return res.status(200).json({
-      reply:
-        "🤔 Essa dúvida é um pouco mais específica e não encontrei nas regras oficiais.\n\n" +
-        "👉 Você pode falar com um atendente pelo WhatsApp:\n" +
-        "📱 (41) 99755-0040\n\n" +
-        "Eles vão te ajudar rapidinho 😊"
-    });
-  }
-
-  res.status(200).json({ reply: resposta });
 }
