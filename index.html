@@ -13,7 +13,7 @@
 
 body {
   margin: 0;
-  padding-bottom: 44px;
+  padding-bottom: 46px;
   background: linear-gradient(180deg, #0d2a4a, #123a63);
 }
 
@@ -58,7 +58,7 @@ body {
 .hidden { display: none; }
 
 .fade-up {
-  animation: fadeUp 2.2s ease forwards;
+  animation: fadeUp 2.4s ease forwards;
 }
 
 @keyframes fadeUp {
@@ -70,23 +70,25 @@ body {
 .section-title {
   text-align: center;
   font-size: 22px;
-  margin-bottom: 18px;
+  margin-bottom: 20px;
   color: #0d2a4a;
+  font-weight: bold;
 }
 
-/* PREMIOS */
-.premios {
+/* BLOCO PREMIOS */
+.premios-row {
   display: flex;
   gap: 16px;
-  margin-bottom: 22px;
+  margin-bottom: 18px;
 }
 
-.premios img {
+.premios-row img {
   width: 50%;
   border-radius: 14px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.18);
 }
 
-/* MENU */
+/* MENU EVENTOS */
 .menu-buttons {
   display: flex;
   flex-direction: column;
@@ -127,12 +129,10 @@ body {
 
 /* SLIDER */
 .slider { overflow: hidden; }
-
 .slider-track {
   display: flex;
   transition: transform 0.4s ease;
 }
-
 .slide {
   min-width: 100%;
   position: relative;
@@ -145,14 +145,12 @@ body {
   gap: 8px;
   margin-top: 10px;
 }
-
 .slider-dots span {
   width: 7px;
   height: 7px;
   border-radius: 50%;
   background: #cfd8e3;
 }
-
 .slider-dots span.active {
   background: #0d2a4a;
 }
@@ -175,10 +173,9 @@ body {
 
 /* WHATS */
 .whats {
-  margin-top: 18px;
+  margin-top: 22px;
   text-align: center;
 }
-
 .whats a {
   display: inline-block;
   background: #25D366;
@@ -203,17 +200,26 @@ body {
 
 <!-- HOME -->
 <div id="home" class="section fade-up">
-  <div class="section-title">🎉 Eventos</div>
 
-  <div class="premios">
-    <img src="premio1.png">
-    <img src="premio2.png">
-  </div>
+  <!-- BLOCO PRODUTOS -->
+  <div class="section-title">🎁 Prêmios da Roleta</div>
+
+  <div class="premios-row"><img src="4.png"><img src="5.png"></div>
+  <div class="premios-row"><img src="6.png"><img src="7.png"></div>
+  <div class="premios-row"><img src="8.png"><img src="9.png"></div>
+  <div class="premios-row"><img src="10.png"><img src="11.png"></div>
+  <div class="premios-row"><img src="12.png"><img src="13.png"></div>
+  <div class="premios-row"><img src="14.png"><img src="15.png"></div>
+  <div class="premios-row"><img src="16.png"><img src="17.png"></div>
+
+  <!-- BLOCO EVENTOS -->
+  <div class="section-title" style="margin-top:30px;">🎉 Eventos</div>
 
   <div class="menu-buttons">
     <img src="sorteiocl.png" onclick="showPage('sorteio')">
     <img src="roletacl.png" onclick="showPage('roleta')">
   </div>
+
 </div>
 
 <!-- SORTEIO -->
@@ -239,10 +245,7 @@ body {
       </div>
     </div>
 
-    <div class="slider-dots">
-      <span class="active"></span>
-      <span></span>
-    </div>
+    <div class="slider-dots"><span class="active"></span><span></span></div>
 
     <div class="whats">
       💬 <strong>Dúvidas sobre o evento</strong><br><br>
@@ -255,29 +258,7 @@ body {
 <div id="roleta" class="section hidden">
   <button class="btn light" onclick="showPage('home')">⬅ Voltar</button>
 
-  <div class="section-title">🎁 Prêmios da Roleta</div>
-
-  <div class="premios">
-    <img src="4.png"><img src="5.png">
-  </div>
-  <div class="premios">
-    <img src="6.png"><img src="7.png">
-  </div>
-  <div class="premios">
-    <img src="8.png"><img src="9.png">
-  </div>
-  <div class="premios">
-    <img src="10.png"><img src="11.png">
-  </div>
-  <div class="premios">
-    <img src="12.png"><img src="13.png">
-  </div>
-  <div class="premios">
-    <img src="14.png"><img src="15.png">
-  </div>
-  <div class="premios">
-    <img src="16.png"><img src="17.png">
-  </div>
+  <img src="roleta.png" class="content-img">
 
   <button class="btn" onclick="toggle('regrasRoleta')">Confira as regras</button>
 
@@ -295,10 +276,7 @@ body {
       </div>
     </div>
 
-    <div class="slider-dots">
-      <span class="active"></span>
-      <span></span>
-    </div>
+    <div class="slider-dots"><span class="active"></span><span></span></div>
 
     <div class="whats">
       💬 <strong>Dúvidas sobre o evento</strong><br><br>
