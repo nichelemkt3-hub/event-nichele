@@ -10,9 +10,10 @@
 
 body {
   margin: 0;
-  background: linear-gradient(180deg, #f5f5f5, #eeeeee);
+  background: linear-gradient(180deg, #e8f1fb, #ffffff);
 }
 
+/* TOPO */
 .top-banner img {
   width: 100%;
   display: block;
@@ -28,7 +29,7 @@ body {
 /* SEÇÕES */
 .section {
   background: #fff;
-  border-radius: 16px;
+  border-radius: 18px;
   padding: 24px;
   margin-bottom: 28px;
   box-shadow: 0 10px 30px rgba(0,0,0,0.08);
@@ -53,68 +54,73 @@ body {
 
 .menu-buttons img {
   width: 100%;
-  border-radius: 16px;
+  border-radius: 18px;
   cursor: pointer;
   transition: transform .3s ease, box-shadow .3s ease;
 }
 
 .menu-buttons img:hover {
   transform: scale(1.02);
-  box-shadow: 0 10px 24px rgba(0,0,0,0.2);
+  box-shadow: 0 12px 28px rgba(0,0,0,0.18);
 }
 
 /* IMAGENS */
 .content-img {
   width: 100%;
-  border-radius: 14px;
+  border-radius: 16px;
   margin-bottom: 20px;
 }
 
-/* BOTÕES */
-button {
+/* BOTÕES DELICADOS */
+.btn {
   width: 100%;
-  background: linear-gradient(135deg, #b5121b, #8e0e14);
-  color: #fff;
-  border: none;
-  padding: 14px;
+  background: #f4f8fd;
+  color: #1f4e79;
+  border: 1px solid #d7e4f3;
+  padding: 12px;
   border-radius: 10px;
-  font-size: 16px;
+  font-size: 15px;
   cursor: pointer;
   margin-bottom: 16px;
-  transition: transform .2s ease, box-shadow .2s ease;
+  transition: all .2s ease;
 }
 
-button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 14px rgba(0,0,0,0.2);
+.btn:hover {
+  background: #e8f1fb;
 }
 
-/* SLIDER DE REGRAS */
+.btn-back {
+  margin-bottom: 20px;
+}
+
+/* SLIDER REGRAS */
 .rules-slider {
   position: relative;
   overflow: hidden;
+  border-radius: 16px;
 }
 
 .rules-track {
   display: flex;
-  transition: transform .5s ease;
+  transition: transform .4s ease;
 }
 
 .rules-track img {
   min-width: 100%;
-  border-radius: 14px;
+  border-radius: 16px;
 }
 
+/* BOTÕES SLIDER */
 .rules-nav {
   display: flex;
   justify-content: space-between;
+  gap: 12px;
   margin-top: 10px;
 }
 
-.rules-nav button {
-  width: 48%;
-  background: #ddd;
-  color: #333;
+.rules-nav .btn {
+  width: 50%;
+  font-size: 14px;
 }
 
 /* CHAT */
@@ -122,13 +128,13 @@ button:hover {
   display: flex;
   flex-direction: column;
   height: 420px;
-  border-radius: 16px;
+  border-radius: 18px;
   overflow: hidden;
-  border: 1px solid #ddd;
+  border: 1px solid #d7e4f3;
 }
 
 .chat-header {
-  background: linear-gradient(135deg, #b5121b, #8e0e14);
+  background: linear-gradient(135deg, #1f4e79, #2e6fa3);
   color: #fff;
   padding: 14px;
   text-align: center;
@@ -139,23 +145,23 @@ button:hover {
   flex: 1;
   padding: 14px;
   overflow-y: auto;
-  background: #fafafa;
+  background: #f9fbfe;
 }
 
 .message {
   margin-bottom: 10px;
   padding: 10px 14px;
-  border-radius: 12px;
+  border-radius: 14px;
   max-width: 80%;
   font-size: 14px;
 }
 
-.user { background: #d1e7ff; margin-left: auto; }
+.user { background: #dbeeff; margin-left: auto; }
 .bot { background: #eeeeee; }
 
 .chat-input {
   display: flex;
-  border-top: 1px solid #ddd;
+  border-top: 1px solid #d7e4f3;
 }
 
 .chat-input input {
@@ -166,9 +172,10 @@ button:hover {
 }
 
 .chat-input button {
-  background: #b5121b;
+  background: #1f4e79;
   color: #fff;
   border: none;
+  padding: 0 20px;
 }
 </style>
 </head>
@@ -191,45 +198,47 @@ button:hover {
 
   <!-- SORTEIO -->
   <div id="sorteio" class="section hidden">
-    <button onclick="showPage('home')">⬅ Voltar</button>
+    <button class="btn btn-back" onclick="showPage('home')">← Voltar</button>
 
     <img src="sorteio1.png" class="content-img">
     <img src="sorteio2.png" class="content-img">
 
-    <button onclick="toggleRules('rules-sorteio')">Confira as regras</button>
+    <button class="btn" onclick="toggleRules('rules-sorteio')">Confira as regras</button>
 
     <div id="rules-sorteio" class="hidden">
-      <div class="rules-slider">
-        <div class="rules-track" data-index="0">
+      <div class="rules-slider" data-index="0">
+        <div class="rules-track">
           <img src="duvidas1.png">
           <img src="duvidas2.png">
         </div>
       </div>
+
       <div class="rules-nav">
-        <button onclick="prevRule(this)">◀ Anterior</button>
-        <button onclick="nextRule(this)">Próximo ▶</button>
+        <button class="btn" onclick="prevRule(this)">◀</button>
+        <button class="btn" onclick="nextRule(this)">▶</button>
       </div>
     </div>
   </div>
 
   <!-- ROLETA -->
   <div id="roleta" class="section hidden">
-    <button onclick="showPage('home')">⬅ Voltar</button>
+    <button class="btn btn-back" onclick="showPage('home')">← Voltar</button>
 
     <img src="roleta.png" class="content-img">
 
-    <button onclick="toggleRules('rules-roleta')">Confira as regras</button>
+    <button class="btn" onclick="toggleRules('rules-roleta')">Confira as regras</button>
 
     <div id="rules-roleta" class="hidden">
-      <div class="rules-slider">
-        <div class="rules-track" data-index="0">
+      <div class="rules-slider" data-index="0">
+        <div class="rules-track">
           <img src="duvidar1.png">
           <img src="duvidar2.png">
         </div>
       </div>
+
       <div class="rules-nav">
-        <button onclick="prevRule(this)">◀ Anterior</button>
-        <button onclick="nextRule(this)">Próximo ▶</button>
+        <button class="btn" onclick="prevRule(this)">◀</button>
+        <button class="btn" onclick="nextRule(this)">▶</button>
       </div>
     </div>
   </div>
@@ -241,7 +250,7 @@ button:hover {
     <div class="chat-container">
       <div class="chat-header">Assistente do Evento</div>
       <div class="chat-messages" id="messages">
-        <div class="message bot">Olá! 👋 Posso ajudar com o evento.</div>
+        <div class="message bot">Olá! 👋 Posso ajudar.</div>
       </div>
       <div class="chat-input">
         <input id="input" placeholder="Digite sua pergunta...">
@@ -259,7 +268,6 @@ function showPage(page) {
     el.classList.add("hidden");
     el.classList.remove("active");
   });
-
   const target = document.getElementById(page);
   target.classList.remove("hidden");
   setTimeout(() => target.classList.add("active"), 50);
@@ -269,20 +277,41 @@ function toggleRules(id) {
   document.getElementById(id).classList.toggle("hidden");
 }
 
-/* SLIDER REGRAS */
+/* SLIDER + SWIPE */
+document.querySelectorAll(".rules-slider").forEach(slider => {
+  let startX = 0;
+  let index = 0;
+  const track = slider.querySelector(".rules-track");
+
+  slider.addEventListener("touchstart", e => {
+    startX = e.touches[0].clientX;
+  });
+
+  slider.addEventListener("touchend", e => {
+    const diff = e.changedTouches[0].clientX - startX;
+    if (diff > 50) index--;
+    if (diff < -50) index++;
+    const total = track.children.length;
+    index = (index + total) % total;
+    track.style.transform = `translateX(-${index * 100}%)`;
+  });
+});
+
 function nextRule(btn) {
-  const track = btn.closest(".rules-nav").previousElementSibling.querySelector(".rules-track");
-  let index = +track.dataset.index;
-  index = (index + 1) % track.children.length;
-  track.dataset.index = index;
+  const slider = btn.closest(".rules-nav").previousElementSibling;
+  const track = slider.querySelector(".rules-track");
+  let index = slider.dataset.index || 0;
+  index = (++index) % track.children.length;
+  slider.dataset.index = index;
   track.style.transform = `translateX(-${index * 100}%)`;
 }
 
 function prevRule(btn) {
-  const track = btn.closest(".rules-nav").previousElementSibling.querySelector(".rules-track");
-  let index = +track.dataset.index;
+  const slider = btn.closest(".rules-nav").previousElementSibling;
+  const track = slider.querySelector(".rules-track");
+  let index = slider.dataset.index || 0;
   index = (index - 1 + track.children.length) % track.children.length;
-  track.dataset.index = index;
+  slider.dataset.index = index;
   track.style.transform = `translateX(-${index * 100}%)`;
 }
 
