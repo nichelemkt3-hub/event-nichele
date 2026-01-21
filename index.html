@@ -6,28 +6,13 @@
 <title>Evento Nichele</title>
 
 <style>
-* {
-  box-sizing: border-box;
-  font-family: Arial, Helvetica, sans-serif;
-}
+* { box-sizing: border-box; font-family: Arial, Helvetica, sans-serif; }
 
-body {
-  margin: 0;
-  background: #f2f2f2;
-}
+body { margin: 0; background: #f2f2f2; }
 
-/* TOPO */
-.top-banner img {
-  width: 100%;
-  display: block;
-}
+.top-banner img { width: 100%; display: block; }
 
-/* CONTAINER */
-.container {
-  max-width: 1000px;
-  margin: auto;
-  padding: 20px;
-}
+.container { max-width: 1000px; margin: auto; padding: 20px; }
 
 .section {
   background: #fff;
@@ -37,51 +22,40 @@ body {
   box-shadow: 0 8px 20px rgba(0,0,0,0.08);
 }
 
-.section h2 {
-  text-align: center;
-  color: #b5121b;
-  margin-top: 0;
-}
+.hidden { display: none; }
 
-/* ROLETA */
-.roleta {
-  text-align: center;
-}
-
-.roleta img {
-  max-width: 300px;
-  width: 100%;
-}
-
-/* ===== SLIDER DE PRÊMIOS ===== */
-.slider {
-  width: 100%;
-  overflow: hidden;
-}
-
-.slider-track {
+/* BOTÕES HOME */
+.menu-buttons {
   display: flex;
-  transition: transform 0.6s ease;
-}
-
-.slide {
-  min-width: 100%;
-  display: flex;
+  flex-direction: column;
   gap: 16px;
 }
 
-.premio {
-  width: 50%;
-  background: #fafafa;
-  border-radius: 10px;
-  padding: 10px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+.menu-buttons img {
+  width: 100%;
+  border-radius: 12px;
+  cursor: pointer;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.15);
 }
 
-.premio img {
+/* IMAGENS GRANDES */
+.content-img {
   width: 100%;
-  display: block;
+  border-radius: 10px;
+  margin-bottom: 16px;
+}
+
+/* BOTÕES */
+button {
+  width: 100%;
+  background: #b5121b;
+  color: #fff;
+  border: none;
+  padding: 14px;
   border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-bottom: 16px;
 }
 
 /* CHAT */
@@ -117,14 +91,8 @@ body {
   font-size: 14px;
 }
 
-.user {
-  background: #d1e7ff;
-  margin-left: auto;
-}
-
-.bot {
-  background: #eeeeee;
-}
+.user { background: #d1e7ff; margin-left: auto; }
+.bot { background: #eeeeee; }
 
 .chat-input {
   display: flex;
@@ -143,7 +111,6 @@ body {
   color: #fff;
   border: none;
   padding: 0 20px;
-  cursor: pointer;
 }
 </style>
 </head>
@@ -152,77 +119,59 @@ body {
 
 <!-- TOPO -->
 <div class="top-banner">
-  <img src="topo.png" alt="Topo do Evento">
+  <img src="topo.png">
 </div>
 
 <div class="container">
 
-  <!-- ROLETA -->
-  <div class="section roleta">
-    <h2>🎯 Roleta de Prêmios</h2>
-    <img src="roleta.png" alt="Roleta">
-    <p>Confira alguns dos prêmios disponíveis no evento.</p>
-  </div>
-
-  <!-- PRÊMIOS -->
-  <div class="section">
-    <h2>🎁 Prêmios</h2>
-
-    <div class="slider">
-      <div class="slider-track" id="sliderTrack">
-
-        <div class="slide">
-          <div class="premio"><img src="4.png"></div>
-          <div class="premio"><img src="5.png"></div>
-        </div>
-
-        <div class="slide">
-          <div class="premio"><img src="6.png"></div>
-          <div class="premio"><img src="7.png"></div>
-        </div>
-
-        <div class="slide">
-          <div class="premio"><img src="8.png"></div>
-          <div class="premio"><img src="9.png"></div>
-        </div>
-
-        <div class="slide">
-          <div class="premio"><img src="10.png"></div>
-          <div class="premio"><img src="11.png"></div>
-        </div>
-
-        <div class="slide">
-          <div class="premio"><img src="12.png"></div>
-          <div class="premio"><img src="13.png"></div>
-        </div>
-
-        <div class="slide">
-          <div class="premio"><img src="14.png"></div>
-          <div class="premio"><img src="15.png"></div>
-        </div>
-
-        <div class="slide">
-          <div class="premio"><img src="16.png"></div>
-          <div class="premio"><img src="17.png"></div>
-        </div>
-
-      </div>
+  <!-- HOME -->
+  <div id="home" class="section">
+    <div class="menu-buttons">
+      <img src="sorteiocl.png" onclick="showPage('sorteio')">
+      <img src="roletacl.png" onclick="showPage('roleta')">
     </div>
   </div>
 
-  <!-- CHAT -->
+  <!-- SORTEIO -->
+  <div id="sorteio" class="section hidden">
+    <button onclick="showPage('home')">⬅ Voltar</button>
+
+    <img src="sorteio1.png" class="content-img">
+    <img src="sorteio2.png" class="content-img">
+
+    <button onclick="toggle('regras-sorteio')">Confira as regras</button>
+
+    <div id="regras-sorteio" class="hidden">
+      <img src="duvidas1.png" class="content-img">
+      <img src="duvidas2.png" class="content-img">
+    </div>
+  </div>
+
+  <!-- ROLETA -->
+  <div id="roleta" class="section hidden">
+    <button onclick="showPage('home')">⬅ Voltar</button>
+
+    <img src="roleta.png" class="content-img">
+
+    <button onclick="toggle('regras-roleta')">Confira as regras</button>
+
+    <div id="regras-roleta" class="hidden">
+      <img src="duvidar1.png" class="content-img">
+      <img src="duvidar2.png" class="content-img">
+    </div>
+  </div>
+
+  <!-- CHAT (GLOBAL) -->
   <div class="section">
     <h2>💬 Fale com o Assistente</h2>
 
     <div class="chat-container">
       <div class="chat-header">Assistente do Evento</div>
-
       <div class="chat-messages" id="messages">
         <div class="message bot">
-          Olá! 👋 Posso te ajudar com informações sobre o evento.
+          Olá! 👋 Posso te ajudar com informações do evento.
         </div>
       </div>
-
       <div class="chat-input">
         <input id="input" placeholder="Digite sua pergunta...">
         <button onclick="sendMessage()">Enviar</button>
@@ -233,23 +182,21 @@ body {
 </div>
 
 <script>
-/* SLIDER */
-const track = document.getElementById("sliderTrack");
-const totalSlides = document.querySelectorAll(".slide").length;
-let current = 0;
+function showPage(page) {
+  ["home", "sorteio", "roleta"].forEach(id => {
+    document.getElementById(id).classList.add("hidden");
+  });
+  document.getElementById(page).classList.remove("hidden");
+}
 
-setInterval(() => {
-  current++;
-  if (current >= totalSlides) current = 0;
-  track.style.transform = `translateX(-${current * 100}%)`;
-}, 3000);
+function toggle(id) {
+  document.getElementById(id).classList.toggle("hidden");
+}
 
 /* CHAT */
+const API_URL = "https://nichele-ai-proxy.vercel.app/api/chat";
 const messages = document.getElementById("messages");
 const input = document.getElementById("input");
-
-const API_URL = "https://nichele-ai-proxy.vercel.app/api/chat";
-const WHATS_URL = "https://wa.me/5541997550040";
 
 function addMessage(text, sender) {
   const div = document.createElement("div");
@@ -275,17 +222,9 @@ async function sendMessage() {
     const data = await res.json();
     addMessage(data.reply, "bot");
   } catch {
-    addMessage(
-      `⚠️ Erro no atendimento.<br>
-       <a href="${WHATS_URL}" target="_blank">Falar no WhatsApp</a>`,
-      "bot"
-    );
+    addMessage("⚠️ Erro no atendimento.", "bot");
   }
 }
-
-input.addEventListener("keypress", e => {
-  if (e.key === "Enter") sendMessage();
-});
 </script>
 
 </body>
