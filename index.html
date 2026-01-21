@@ -2,180 +2,283 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8" />
-<title>Assistente do Evento</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Evento Nichele</title>
 
 <style>
+* {
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
 body {
   margin: 0;
-  font-family: Arial, sans-serif;
-  background: #0a3cff;
+  background: #0b2a4a; /* azul del rey */
+}
+
+.top-banner img {
+  width: 100%;
+  display: block;
 }
 
 .container {
-  max-width: 420px;
+  max-width: 1000px;
   margin: auto;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
+  padding: 20px;
 }
 
-.header {
-  padding: 15px;
-  color: white;
+/* cartões brancos */
+.section {
+  background: #fff;
+  border-radius: 14px;
+  padding: 20px;
+  margin-bottom: 24px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+  animation: fadeUp 1.5s ease;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* BOTÕES GRANDES */
+.menu-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.menu-buttons img {
+  width: 100%;
+  max-height: 160px;
+  object-fit: cover;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: transform .3s;
+}
+
+.menu-buttons img:hover {
+  transform: scale(1.02);
+}
+
+/* PÁGINAS */
+.page {
+  display: none;
+}
+
+.page.active {
+  display: block;
+}
+
+/* CHAT */
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  height: 420px;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid #ddd;
+}
+
+.chat-header {
+  background: #b5121b;
+  color: #fff;
+  padding: 14px;
   text-align: center;
   font-weight: bold;
 }
 
-.buttons-area {
-  background: white;
-  border-radius: 20px 20px 0 0;
-  padding: 15px;
-  display: flex;
-  justify-content: space-around;
-}
-
-.buttons-area a {
-  background: #0a3cff;
-  color: white;
-  text-decoration: none;
-  padding: 10px;
-  border-radius: 12px;
-  width: 45%;
-  text-align: center;
-}
-
-.chat {
+.chat-messages {
   flex: 1;
-  background: #f4f4f4;
-  padding: 10px;
+  padding: 14px;
   overflow-y: auto;
+  background: #fafafa;
 }
 
-.msg {
+.message {
   margin-bottom: 10px;
-}
-
-.bot {
-  background: white;
-  padding: 10px;
+  padding: 10px 14px;
   border-radius: 10px;
+  max-width: 80%;
+  font-size: 14px;
 }
 
 .user {
-  background: #0a3cff;
-  color: white;
-  padding: 10px;
-  border-radius: 10px;
-  text-align: right;
+  background: #d1e7ff;
+  margin-left: auto;
 }
 
-.footer {
+.bot {
+  background: #eeeeee;
+}
+
+.typing {
+  font-style: italic;
+  font-size: 13px;
+  opacity: .7;
+}
+
+.chat-input {
   display: flex;
-  padding: 10px;
-  background: white;
+  border-top: 1px solid #ddd;
 }
 
-.footer input {
+.chat-input input {
   flex: 1;
-  padding: 10px;
+  padding: 14px;
+  border: none;
+  outline: none;
 }
 
-.footer button {
-  padding: 10px;
-}
-
-.context-buttons {
-  display: flex;
-  gap: 10px;
-  margin-top: 5px;
-}
-
-.context-buttons button {
-  flex: 1;
-  padding: 8px;
+.chat-input button {
+  background: #b5121b;
+  color: #fff;
+  border: none;
+  padding: 0 20px;
+  cursor: pointer;
 }
 </style>
 </head>
 
 <body>
+
+<!-- TOPO -->
+<div class="top-banner">
+  <img src="topo.png" alt="Evento Nichele">
+</div>
+
 <div class="container">
 
-  <div class="header">
-    🎉 Assistente do Evento Nichele
+  <!-- MENU -->
+  <div class="section menu-buttons">
+    <img src="sorteiocl.png" onclick="openPage('sorteio')" alt="Sorteio">
+    <img src="roletacl.png" onclick="openPage('roleta')" alt="Roleta">
   </div>
 
-  <div class="buttons-area">
-    <a href="roleta.html">🎡 Roleta</a>
-    <a href="sorteio.html">🎁 Sorteio</a>
+  <!-- HOME -->
+  <div class="section page active" id="home">
+    <h2>🎉 Bem-vindo ao Evento Nichele</h2>
+    <p>Escolha uma das opções acima para saber mais.</p>
   </div>
 
-  <div class="chat" id="chat"></div>
+  <!-- SORTEIO -->
+  <div class="section page" id="sorteio">
+    <h2>🎁 Sorteio</h2>
+    <img src="sorteio1.png" style="width:100%;border-radius:12px">
+    <img src="sorteio2.png" style="width:100%;border-radius:12px;margin-top:12px">
+    <br><br>
+    <button onclick="goHome()">⬅ Voltar</button>
+  </div>
 
-  <div class="footer">
-    <input id="input" placeholder="Digite sua mensagem..." />
-    <button onclick="send()">Enviar</button>
+  <!-- ROLETA -->
+  <div class="section page" id="roleta">
+    <h2>🎯 Roleta</h2>
+    <img src="roleta.png" style="width:100%;border-radius:12px">
+    <br><br>
+    <button onclick="goHome()">⬅ Voltar</button>
+  </div>
+
+  <!-- CHAT -->
+  <div class="section">
+    <h2>💬 Fale com o Assistente</h2>
+
+    <div class="chat-container">
+      <div class="chat-header">Assistente do Evento</div>
+
+      <div class="chat-messages" id="messages">
+        <div class="message bot">
+          Olá! 😊 Posso te ajudar com dúvidas sobre o Sorteio ou a Roleta.
+        </div>
+      </div>
+
+      <div class="chat-input">
+        <input id="input" placeholder="Digite sua pergunta...">
+        <button onclick="sendMessage()">Enviar</button>
+      </div>
+    </div>
   </div>
 
 </div>
 
 <script>
-let contexto = null;
-const chat = document.getElementById("chat");
+/* NAVEGAÇÃO */
+function openPage(id) {
+  document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
 
-function addMsg(text, cls) {
+function goHome() {
+  openPage("home");
+}
+
+/* CHAT */
+const messages = document.getElementById("messages");
+const input = document.getElementById("input");
+const API_URL = "https://assistente-nichele-ai.vercel.app/api/chat";
+
+let context = null;
+
+function addMessage(text, sender) {
   const div = document.createElement("div");
-  div.className = "msg " + cls;
+  div.className = `message ${sender}`;
   div.innerHTML = text;
-  chat.appendChild(div);
-  chat.scrollTop = chat.scrollHeight;
+  messages.appendChild(div);
+  messages.scrollTop = messages.scrollHeight;
 }
 
-addMsg(
-  "Olá! 😊 Sou o assistente do evento Nichele. Como posso te ajudar hoje?",
-  "bot"
-);
-
-function askContext() {
-  addMsg(
-    `Essa dúvida é sobre <b>Roleta</b> ou <b>Sorteio</b>?
-     <div class="context-buttons">
-       <button onclick="setContext('roleta')">Roleta</button>
-       <button onclick="setContext('sorteio')">Sorteio</button>
-     </div>`,
-    "bot"
-  );
+function addTyping() {
+  const div = document.createElement("div");
+  div.className = "typing";
+  div.id = "typing";
+  div.innerText = "Digitando...";
+  messages.appendChild(div);
+  messages.scrollTop = messages.scrollHeight;
 }
 
-function setContext(c) {
-  contexto = c;
-  addMsg("Perfeito! Pode mandar sua dúvida 😊", "bot");
+function removeTyping() {
+  const t = document.getElementById("typing");
+  if (t) t.remove();
 }
 
-async function send() {
-  const input = document.getElementById("input");
+async function sendMessage() {
   const text = input.value.trim();
   if (!text) return;
+
+  addMessage(text, "user");
   input.value = "";
+  addTyping();
 
-  addMsg(text, "user");
+  try {
+    const res = await fetch(API_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ message: text, context })
+    });
 
-  if (!contexto && text.length > 5) {
-    askContext();
-    return;
+    const data = await res.json();
+    removeTyping();
+
+    if (text.toLowerCase().includes("sorteio")) context = "sorteio";
+    if (text.toLowerCase().includes("roleta")) context = "roleta";
+
+    addMessage(data.reply, "bot");
+  } catch {
+    removeTyping();
+    addMessage(
+      `⚠️ Não consegui te atender agora.<br>
+       <a href="https://wa.me/5541997550040" target="_blank">Falar no WhatsApp</a>`,
+      "bot"
+    );
   }
-
-  addMsg("Digitando...", "bot");
-
-  const res = await fetch("/api/chat", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ message: text, contexto })
-  });
-
-  const data = await res.json();
-  chat.lastChild.remove();
-  addMsg(data.reply, "bot");
 }
+
+input.addEventListener("keypress", e => {
+  if (e.key === "Enter") sendMessage();
+});
 </script>
+
 </body>
 </html>
