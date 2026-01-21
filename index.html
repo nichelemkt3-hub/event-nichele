@@ -30,67 +30,71 @@ body {
 }
 
 /* SEÇÕES */
-.section, .balloon {
+.section {
   background: #fff;
   border-radius: 16px;
   padding: 22px;
   margin-bottom: 30px;
-  box-shadow: 0 14px 30px rgba(0,0,0,0.2);
+  box-shadow: 0 14px 32px rgba(0,0,0,0.2);
 }
 
-/* TRANSIÇÃO */
+/* TRANSIÇÕES */
 .hidden { display: none; }
 
 .fade-up {
-  animation: fadeUp 2.6s ease forwards;
+  animation: fadeUp 3.2s ease forwards;
 }
 
 @keyframes fadeUp {
-  from { opacity: 0; transform: translateY(120px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(160px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-/* TÍTULOS */
-.title {
+/* TITULOS */
+.section-title {
   text-align: center;
-  font-size: 24px;
-  font-weight: bold;
-  color: #0d2a4a;
+  font-size: 22px;
   margin-bottom: 20px;
+  color: #0d2a4a;
 }
 
-/* MENU */
+/* MENU HOME */
 .menu-buttons {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 18px;
 }
 
-.menu-item {
-  position: relative;
-}
-
-.menu-item img {
+.menu-buttons img {
   width: 100%;
-  border-radius: 14px;
+  border-radius: 16px;
   cursor: pointer;
+  box-shadow: 0 10px 26px rgba(0,0,0,0.25);
 }
 
-.menu-item span {
-  position: absolute;
-  bottom: 8px;
-  right: 8px;
-  background: #fff;
-  padding: 4px 10px;
-  border-radius: 12px;
-  font-size: 11px;
-  font-weight: bold;
+/* PREMIOS */
+.premios {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 22px;
+}
+
+.premios img {
+  width: 50%;
+  border-radius: 14px;
 }
 
 /* IMAGENS */
 .content-img {
   width: 100%;
-  border-radius: 12px;
+  border-radius: 14px;
+  margin-bottom: 16px;
 }
 
 /* BOTÕES */
@@ -103,37 +107,25 @@ body {
   border-radius: 22px;
   font-size: 15px;
   cursor: pointer;
-  margin: 16px 0;
+  margin-bottom: 14px;
 }
 
 .btn.light {
-  background: #e6e6e6;
+  background: #ededed;
   color: #333;
 }
 
 /* SLIDER */
-.slider {
-  overflow: hidden;
-}
+.slider { overflow: hidden; }
 
 .slider-track {
   display: flex;
-  transition: transform 0.5s ease;
+  transition: transform 0.4s ease;
 }
 
 .slide {
   min-width: 100%;
   position: relative;
-}
-
-/* PRÊMIOS */
-.premios-slide {
-  display: flex;
-  gap: 12px;
-}
-
-.premios-slide img {
-  width: 50%;
 }
 
 /* DOTS */
@@ -160,10 +152,10 @@ body {
   position: absolute;
   bottom: 10px;
   right: 10px;
-  background: rgba(0,0,0,0.6);
-  color: #fff;
   width: 34px;
   height: 34px;
+  background: rgba(0,0,0,0.65);
+  color: #fff;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -171,13 +163,20 @@ body {
   cursor: pointer;
 }
 
-/* OVERLAY ZOOM */
+/* ZOOM OVERLAY */
 #zoomOverlay {
   position: fixed;
   inset: 0;
   background: rgba(0,0,0,0.9);
   display: none;
   z-index: 999;
+}
+
+#zoomBox {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 #zoomHeader {
@@ -190,12 +189,12 @@ body {
   background: none;
   border: none;
   color: #fff;
-  font-size: 22px;
+  font-size: 24px;
   cursor: pointer;
 }
 
 #zoomContent {
-  height: calc(100% - 120px);
+  flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -203,10 +202,9 @@ body {
 }
 
 #zoomImg {
-  max-width: 100%;
-  max-height: 100%;
-  cursor: grab;
-  transition: transform .2s ease;
+  max-width: 95%;
+  max-height: 95%;
+  transition: transform 0.2s ease;
 }
 
 #zoomControls {
@@ -222,6 +220,25 @@ body {
   border-radius: 50%;
   border: none;
   font-size: 20px;
+  cursor: pointer;
+}
+
+/* WHATS */
+.whats {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.whats a {
+  display: inline-block;
+  background: #25D366;
+  color: #fff;
+  padding: 10px 18px;
+  border-radius: 22px;
+  font-size: 14px;
+  text-decoration: none;
+  font-weight: bold;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.2);
 }
 </style>
 </head>
@@ -229,88 +246,92 @@ body {
 <body>
 
 <div class="top-banner">
-  <img src="topoat.png">
+  <img src="topo.png">
 </div>
 
 <div class="container">
 
 <!-- HOME -->
-<div id="home" class="fade-up">
+<div id="home" class="section fade-up">
+  <div class="section-title">🎉 Eventos</div>
 
-  <div class="balloon">
-    <div class="title">🎁 Prêmios</div>
-    <div class="slider">
-      <div class="slider-track" id="premiosTrack">
-        <div class="slide premios-slide">
-          <img src="4.png"><img src="5.png">
-        </div>
-        <div class="slide premios-slide">
-          <img src="6.png"><img src="7.png">
-        </div>
-      </div>
-    </div>
+  <div class="premios">
+    <img src="premio1.png">
+    <img src="premio2.png">
   </div>
 
-  <div class="balloon">
-    <div class="title">🎉 Eventos</div>
-    <div class="menu-buttons">
-      <div class="menu-item" onclick="showPage('sorteio')">
-        <img src="sorteiocl.png"><span>Clique e saiba mais</span>
-      </div>
-      <div class="menu-item" onclick="showPage('roleta')">
-        <img src="roletacl.png"><span>Clique e saiba mais</span>
-      </div>
-    </div>
+  <div class="menu-buttons">
+    <img src="sorteiocl.png" onclick="showPage('sorteio')">
+    <img src="roletacl.png" onclick="showPage('roleta')">
   </div>
-
 </div>
 
 <!-- SORTEIO -->
 <div id="sorteio" class="section hidden">
   <button class="btn light" onclick="showPage('home')">⬅ Voltar</button>
+
   <img src="sorteio1.png" class="content-img">
   <img src="sorteio2.png" class="content-img">
 
   <button class="btn" onclick="toggle('regrasSorteio')">Confira as regras</button>
 
+  <div class="whats">
+    💬 <strong>Dúvidas sobre o evento</strong><br><br>
+    <a href="https://wa.me/5541997550040" target="_blank">📱 Falar no WhatsApp</a>
+  </div>
+
   <div id="regrasSorteio" class="hidden">
-    <div class="slider regras-slider">
+    <div class="slider" data-slider>
       <div class="slider-track">
         <div class="slide">
           <img src="duvidas1.png" class="content-img">
-          <div class="zoom-icon" onclick="openZoom(this)">🔍</div>
+          <div class="zoom-icon">🔍</div>
         </div>
         <div class="slide">
           <img src="duvidas2.png" class="content-img">
-          <div class="zoom-icon" onclick="openZoom(this)">🔍</div>
+          <div class="zoom-icon">🔍</div>
         </div>
       </div>
     </div>
-    <div class="slider-dots"><span class="active"></span><span></span></div>
+
+    <div class="slider-dots">
+      <span class="active"></span>
+      <span></span>
+    </div>
   </div>
 </div>
 
 <!-- ROLETA -->
 <div id="roleta" class="section hidden">
   <button class="btn light" onclick="showPage('home')">⬅ Voltar</button>
+
   <img src="roleta.png" class="content-img">
 
   <button class="btn" onclick="toggle('regrasRoleta')">Confira as regras</button>
 
+  <div class="whats">
+    💬 <strong>Dúvidas sobre o evento</strong><br><br>
+    <a href="https://wa.me/5541997550040" target="_blank">📱 Falar no WhatsApp</a>
+  </div>
+
   <div id="regrasRoleta" class="hidden">
-    <div class="slider regras-slider">
+    <div class="slider" data-slider>
       <div class="slider-track">
         <div class="slide">
           <img src="duvidar1.png" class="content-img">
-          <div class="zoom-icon" onclick="openZoom(this)">🔍</div>
+          <div class="zoom-icon">🔍</div>
         </div>
         <div class="slide">
           <img src="duvidar2.png" class="content-img">
-          <div class="zoom-icon" onclick="openZoom(this)">🔍</div>
+          <div class="zoom-icon">🔍</div>
         </div>
       </div>
     </div>
-    <div class="slider-dots"><span class="active"></span><span></span></div>
+
+    <div class="slider-dots">
+      <span class="active"></span>
+      <span></span>
+    </div>
   </div>
 </div>
 
@@ -318,70 +339,78 @@ body {
 
 <!-- ZOOM -->
 <div id="zoomOverlay">
-  <div id="zoomHeader"><button onclick="closeZoom()">✕</button></div>
-  <div id="zoomContent"><img id="zoomImg"></div>
-  <div id="zoomControls">
-    <button onclick="zoomOut()">➖</button>
-    <button onclick="zoomIn()">➕</button>
+  <div id="zoomBox">
+    <div id="zoomHeader">
+      <button onclick="closeZoom()">✕</button>
+    </div>
+    <div id="zoomContent">
+      <img id="zoomImg">
+    </div>
+    <div id="zoomControls">
+      <button onclick="zoomOut()">➖</button>
+      <button onclick="zoomIn()">➕</button>
+    </div>
   </div>
 </div>
 
 <script>
-function showPage(id) {
-  ["home","sorteio","roleta"].forEach(p => document.getElementById(p)?.classList.add("hidden"));
-  const el = document.getElementById(id);
+function showPage(page) {
+  ["home","sorteio","roleta"].forEach(id => {
+    document.getElementById(id).classList.add("hidden");
+  });
+  const el = document.getElementById(page);
   el.classList.remove("hidden");
+  void el.offsetWidth;
   el.classList.add("fade-up");
-  window.scrollTo({top:0,behavior:"smooth"});
 }
 
-function toggle(id){ document.getElementById(id).classList.toggle("hidden"); }
+function toggle(id) {
+  document.getElementById(id).classList.toggle("hidden");
+}
 
-/* SLIDER PRÊMIOS */
-let p = 0;
-setInterval(()=>{
-  const t=document.getElementById("premiosTrack");
-  p=(p+1)%t.children.length;
-  t.style.transform=`translateX(-${p*100}%)`;
-},4000);
+/* SLIDER */
+document.querySelectorAll("[data-slider]").forEach(slider => {
+  let startX = 0, current = 0;
+  const track = slider.querySelector(".slider-track");
+  const slides = slider.querySelectorAll(".slide").length;
+  const dots = slider.parentElement.querySelectorAll(".slider-dots span");
 
-/* SLIDERS REGRAS (SWIPE) */
-document.querySelectorAll(".regras-slider").forEach(slider=>{
-  let start=0,idx=0;
-  const track=slider.querySelector(".slider-track");
-  const dots=slider.parentElement.querySelectorAll(".slider-dots span");
-  slider.addEventListener("touchstart",e=>start=e.touches[0].clientX);
-  slider.addEventListener("touchend",e=>{
-    const diff=e.changedTouches[0].clientX-start;
-    if(diff<-50&&idx<1)idx++;
-    if(diff>50&&idx>0)idx--;
-    track.style.transform=`translateX(-${idx*100}%)`;
-    dots.forEach((d,i)=>d.classList.toggle("active",i===idx));
+  slider.addEventListener("touchstart", e => startX = e.touches[0].clientX);
+  slider.addEventListener("touchend", e => {
+    const diff = e.changedTouches[0].clientX - startX;
+    if (diff < -50 && current < slides-1) current++;
+    if (diff > 50 && current > 0) current--;
+    track.style.transform = `translateX(-${current*100}%)`;
+    dots.forEach((d,i)=>d.classList.toggle("active",i===current));
   });
 });
 
 /* ZOOM */
-let z=1,x=0,y=0,drag=false,sx=0,sy=0;
-const overlay=document.getElementById("zoomOverlay");
-const img=document.getElementById("zoomImg");
+let zoomLevel=1,posX=0,posY=0,drag=false,sx=0,sy=0;
+const zoomOverlay=document.getElementById("zoomOverlay");
+const zoomImg=document.getElementById("zoomImg");
 
-function openZoom(el){
-  img.src=el.previousElementSibling.src;
-  z=1;x=0;y=0;update();
-  overlay.style.display="block";
-  document.body.style.overflow="hidden";
-}
-function closeZoom(){
-  overlay.style.display="none";
-  document.body.style.overflow="";
-}
-function update(){ img.style.transform=`translate(${x}px,${y}px) scale(${z})`; }
-function zoomIn(){ z+=0.2;update(); }
-function zoomOut(){ z=Math.max(1,z-0.2);if(z===1){x=0;y=0;}update(); }
+document.querySelectorAll(".zoom-icon").forEach(icon=>{
+  icon.onclick=()=>{
+    zoomLevel=1;posX=0;posY=0;
+    zoomImg.src=icon.previousElementSibling.src;
+    zoomImg.style.transform="scale(1)";
+    document.body.style.overflow="hidden";
+    zoomOverlay.style.display="block";
+  };
+});
 
-img.onmousedown=e=>{ if(z<=1)return; drag=true; sx=e.clientX-x; sy=e.clientY-y; }
-window.onmousemove=e=>{ if(!drag)return; x=e.clientX-sx; y=e.clientY-sy; update(); }
+zoomImg.onmousedown=e=>{ if(zoomLevel>1){drag=true;sx=e.clientX-posX;sy=e.clientY-posY;} };
+window.onmousemove=e=>{ if(drag){posX=e.clientX-sx;posY=e.clientY-sy;zoomImg.style.transform=`translate(${posX}px,${posY}px) scale(${zoomLevel})`;} };
 window.onmouseup=()=>drag=false;
+
+zoomImg.ontouchstart=e=>{ if(zoomLevel>1){drag=true;sx=e.touches[0].clientX-posX;sy=e.touches[0].clientY-posY;} };
+zoomImg.ontouchmove=e=>{ if(drag){posX=e.touches[0].clientX-sx;posY=e.touches[0].clientY-sy;zoomImg.style.transform=`translate(${posX}px,${posY}px) scale(${zoomLevel})`;} };
+zoomImg.ontouchend=()=>drag=false;
+
+function zoomIn(){ zoomLevel+=0.2; zoomImg.style.transform=`translate(${posX}px,${posY}px) scale(${zoomLevel})`; }
+function zoomOut(){ zoomLevel=Math.max(1,zoomLevel-0.2); if(zoomLevel===1){posX=0;posY=0;} zoomImg.style.transform=`translate(${posX}px,${posY}px) scale(${zoomLevel})`; }
+function closeZoom(){ zoomOverlay.style.display="none"; document.body.style.overflow=""; }
 </script>
 
 </body>
