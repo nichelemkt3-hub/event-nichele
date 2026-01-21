@@ -36,11 +36,11 @@ body {
 
 /* ANIMAÇÕES */
 .fade-up {
-  animation: fadeUp 0.7s ease;
+  animation: fadeUp 1.5s ease;
 }
 
 @keyframes fadeUp {
-  from { opacity: 0; transform: translateY(30px); }
+  from { opacity: 0; transform: translateY(40px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
@@ -141,15 +141,18 @@ body {
 
 #zoomContent {
   flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  overflow: hidden;
+  position: relative;
+  touch-action: none;
 }
 
 #zoomContent img {
-  max-width: 95%;
-  max-height: 95%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(1);
   transition: transform 0.2s ease;
+  cursor: grab;
 }
 
 #zoomControls {
@@ -322,9 +325,12 @@ body {
 
 <script>
 let zoomLevel = 1;
+let posX = 0, posY = 0;
+let dragging = false;
+let startX = 0, startY = 0;
 
 function showPage(page) {
-  ["home", "sorteio", "roleta"].forEach(id =>
+  ["home","sorteio","roleta"].forEach(id =>
     document.getElementById(id).classList.add("hidden")
   );
   const el = document.getElementById(page);
@@ -336,15 +342,15 @@ function toggle(id) {
   document.getElementById(id).classList.toggle("hidden");
 }
 
-/* SWIPE */
+/* SWIPE SLIDER */
 document.querySelectorAll("[data-slider]").forEach(slider => {
-  let startX = 0, current = 0;
+  let sx = 0, current = 0;
   const track = slider.querySelector(".slider-track");
   const slides = slider.querySelectorAll(".slide").length;
 
-  slider.addEventListener("touchstart", e => startX = e.touches[0].clientX);
+  slider.addEventListener("touchstart", e => sx = e.touches[0].clientX);
   slider.addEventListener("touchend", e => {
-    const diff = e.changedTouches[0].clientX - startX;
+    const diff = e.changedTouches[0].clientX - sx;
     if (diff < -50 && current < slides - 1) current++;
     if (diff > 50 && current > 0) current--;
     track.style.transform = `translateX(-${current * 100}%)`;
@@ -356,12 +362,49 @@ document.querySelectorAll(".zoom-icon").forEach(icon => {
   icon.onclick = e => {
     e.stopPropagation();
     zoomLevel = 1;
+    posX = 0;
+    posY = 0;
     document.body.style.overflow = "hidden";
-    document.getElementById("zoomImg").style.transform = "scale(1)";
-    document.getElementById("zoomImg").src =
-      icon.parentElement.querySelector("img").src;
+    const img = document.getElementById("zoomImg");
+    img.src = icon.parentElement.querySelector("img").src;
+    img.style.transform = `translate(-50%, -50%) scale(1)`;
     document.getElementById("zoomOverlay").style.display = "block";
   };
+});
+
+const zoomImg = document.getElementById("zoomImg");
+
+zoomImg.addEventListener("mousedown", e => {
+  dragging = true;
+  startX = e.clientX - posX;
+  startY = e.clientY - posY;
+});
+
+window.addEventListener("mouseup", () => dragging = false);
+
+window.addEventListener("mousemove", e => {
+  if (!dragging) return;
+  posX = e.clientX - startX;
+  posY = e.clientY - startY;
+  zoomImg.style.transform =
+    `translate(calc(-50% + ${posX}px), calc(-50% + ${posY}px)) scale(${zoomLevel})`;
+});
+
+/* TOUCH */
+zoomImg.addEventListener("touchstart", e => {
+  dragging = true;
+  startX = e.touches[0].clientX - posX;
+  startY = e.touches[0].clientY - posY;
+});
+
+zoomImg.addEventListener("touchend", () => dragging = false);
+
+zoomImg.addEventListener("touchmove", e => {
+  if (!dragging) return;
+  posX = e.touches[0].clientX - startX;
+  posY = e.touches[0].clientY - startY;
+  zoomImg.style.transform =
+    `translate(calc(-50% + ${posX}px), calc(-50% + ${posY}px)) scale(${zoomLevel})`;
 });
 
 function closeZoom() {
@@ -371,12 +414,14 @@ function closeZoom() {
 
 function zoomIn() {
   zoomLevel += 0.2;
-  document.getElementById("zoomImg").style.transform = `scale(${zoomLevel})`;
+  zoomImg.style.transform =
+    `translate(calc(-50% + ${posX}px), calc(-50% + ${posY}px)) scale(${zoomLevel})`;
 }
 
 function zoomOut() {
   zoomLevel = Math.max(1, zoomLevel - 0.2);
-  document.getElementById("zoomImg").style.transform = `scale(${zoomLevel})`;
+  zoomImg.style.transform =
+    `translate(calc(-50% + ${posX}px), calc(-50% + ${posY}px)) scale(${zoomLevel})`;
 }
 
 /* CHAT */
