@@ -42,12 +42,21 @@ body {
 .hidden { display: none; }
 
 .fade-up {
-  animation: fadeUp 1.8s ease forwards;
+  animation: fadeUp 2.4s ease forwards;
 }
 
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(120px); }
   to { opacity: 1; transform: translateY(0); }
+}
+
+/* TÍTULO HOME */
+.home-title {
+  text-align: center;
+  font-size: 26px;
+  font-weight: bold;
+  color: #0d2a4a;
+  margin-bottom: 22px;
 }
 
 /* MENU HOME */
@@ -70,13 +79,12 @@ body {
 
 .menu-item span {
   position: absolute;
-  bottom: 14px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: rgba(255,255,255,0.92);
-  padding: 6px 14px;
-  border-radius: 18px;
-  font-size: 14px;
+  bottom: 10px;
+  right: 10px;
+  background: rgba(255,255,255,0.9);
+  padding: 4px 10px;
+  border-radius: 14px;
+  font-size: 12px;
   color: #0d2a4a;
   font-weight: bold;
 }
@@ -106,6 +114,15 @@ body {
   margin-bottom: 16px;
 }
 
+/* PRÊMIOS */
+.premios-title {
+  text-align: center;
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 16px;
+  color: #0d2a4a;
+}
+
 /* SLIDER PRÊMIOS */
 .slider {
   overflow: hidden;
@@ -113,17 +130,18 @@ body {
 
 .slider-track {
   display: flex;
-  transition: transform 0.6s ease;
+  transition: transform 0.8s ease;
 }
 
 .slide {
   min-width: 100%;
   display: flex;
   gap: 16px;
+  justify-content: center;
 }
 
 .premio {
-  width: 50%;
+  width: 45%;
 }
 
 .premio img {
@@ -238,6 +256,27 @@ body {
 <!-- HOME -->
 <div id="home" class="section fade-up">
 
+  <div class="premios-title">🎁 Prêmios</div>
+
+  <div class="slider">
+    <div class="slider-track" id="premiosTrack">
+      <div class="slide">
+        <div class="premio"><img src="4.png"></div>
+        <div class="premio"><img src="5.png"></div>
+      </div>
+      <div class="slide">
+        <div class="premio"><img src="6.png"></div>
+        <div class="premio"><img src="7.png"></div>
+      </div>
+      <div class="slide">
+        <div class="premio"><img src="8.png"></div>
+        <div class="premio"><img src="9.png"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="home-title">Eventos</div>
+
   <div class="menu-buttons">
     <div class="menu-item" onclick="showPage('sorteio')">
       <img src="sorteiocl.png">
@@ -252,111 +291,22 @@ body {
 
 </div>
 
-<!-- PRÊMIOS -->
-<div class="section">
-  <h2>🎁 Prêmios</h2>
-
-  <div class="slider">
-    <div class="slider-track" id="premiosTrack">
-
-      <div class="slide">
-        <div class="premio"><img src="4.png"></div>
-        <div class="premio"><img src="5.png"></div>
-      </div>
-
-      <div class="slide">
-        <div class="premio"><img src="6.png"></div>
-        <div class="premio"><img src="7.png"></div>
-      </div>
-
-      <div class="slide">
-        <div class="premio"><img src="8.png"></div>
-        <div class="premio"><img src="9.png"></div>
-      </div>
-
-    </div>
-  </div>
-</div>
-
 <!-- SORTEIO -->
 <div id="sorteio" class="section hidden">
   <button class="btn light" onclick="showPage('home')">⬅ Voltar</button>
-
   <img src="sorteio1.png" class="content-img">
   <img src="sorteio2.png" class="content-img">
-
-  <button class="btn" onclick="toggle('regrasSorteio')">Confira as regras</button>
-
-  <div id="regrasSorteio" class="hidden">
-    <div class="slider" data-slider>
-      <div class="slider-track">
-        <div class="slide">
-          <img src="duvidas1.png" class="content-img">
-          <div class="zoom-icon">🔍</div>
-        </div>
-        <div class="slide">
-          <img src="duvidas2.png" class="content-img">
-          <div class="zoom-icon">🔍</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="slider-dots">
-      <span class="active"></span>
-      <span></span>
-    </div>
-  </div>
 </div>
 
 <!-- ROLETA -->
 <div id="roleta" class="section hidden">
   <button class="btn light" onclick="showPage('home')">⬅ Voltar</button>
-
   <img src="roleta.png" class="content-img">
-
-  <button class="btn" onclick="toggle('regrasRoleta')">Confira as regras</button>
-
-  <div id="regrasRoleta" class="hidden">
-    <div class="slider" data-slider>
-      <div class="slider-track">
-        <div class="slide">
-          <img src="duvidar1.png" class="content-img">
-          <div class="zoom-icon">🔍</div>
-        </div>
-        <div class="slide">
-          <img src="duvidar2.png" class="content-img">
-          <div class="zoom-icon">🔍</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="slider-dots">
-      <span class="active"></span>
-      <span></span>
-    </div>
-  </div>
 </div>
 
-</div>
-
-<!-- ZOOM -->
-<div id="zoomOverlay">
-  <div id="zoomBox">
-    <div id="zoomHeader">
-      <button onclick="closeZoom()">✕</button>
-    </div>
-    <div id="zoomContent">
-      <img id="zoomImg">
-    </div>
-    <div id="zoomControls">
-      <button onclick="zoomOut()">➖</button>
-      <button onclick="zoomIn()">➕</button>
-    </div>
-  </div>
 </div>
 
 <script>
-/* NAVEGAÇÃO */
 function showPage(page) {
   ["home","sorteio","roleta"].forEach(id => {
     document.getElementById(id).classList.add("hidden");
@@ -365,10 +315,6 @@ function showPage(page) {
   el.classList.remove("hidden");
   el.classList.add("fade-up");
   window.scrollTo({ top: 0, behavior: "smooth" });
-}
-
-function toggle(id) {
-  document.getElementById(id).classList.toggle("hidden");
 }
 
 /* SLIDER PRÊMIOS */
@@ -380,99 +326,6 @@ setInterval(() => {
   premioIndex = (premioIndex + 1) % premioSlides;
   premiosTrack.style.transform = `translateX(-${premioIndex * 100}%)`;
 }, 3000);
-
-/* SLIDER REGRAS */
-document.querySelectorAll("[data-slider]").forEach(slider => {
-  let startX = 0;
-  let current = 0;
-  const track = slider.querySelector(".slider-track");
-  const slides = slider.querySelectorAll(".slide").length;
-  const dots = slider.parentElement.querySelectorAll(".slider-dots span");
-
-  function updateDots() {
-    dots.forEach((d,i) => d.classList.toggle("active", i === current));
-  }
-
-  slider.addEventListener("touchstart", e => {
-    startX = e.touches[0].clientX;
-  });
-
-  slider.addEventListener("touchend", e => {
-    const diff = e.changedTouches[0].clientX - startX;
-    if (diff < -50 && current < slides-1) current++;
-    if (diff > 50 && current > 0) current--;
-    track.style.transform = `translateX(-${current*100}%)`;
-    updateDots();
-  });
-});
-
-/* ZOOM */
-let zoomLevel = 1, posX = 0, posY = 0;
-let dragging = false, startX = 0, startY = 0;
-
-const zoomOverlay = document.getElementById("zoomOverlay");
-const zoomImg = document.getElementById("zoomImg");
-
-document.querySelectorAll(".zoom-icon").forEach(icon => {
-  icon.onclick = () => {
-    zoomLevel = 1;
-    posX = 0;
-    posY = 0;
-    zoomImg.src = icon.previousElementSibling.src;
-    updateZoom();
-    document.body.style.overflow = "hidden";
-    zoomOverlay.style.display = "block";
-  };
-});
-
-function updateZoom() {
-  zoomImg.style.transform = `translate(${posX}px, ${posY}px) scale(${zoomLevel})`;
-}
-
-function startDrag(x,y) {
-  if (zoomLevel <= 1) return;
-  dragging = true;
-  startX = x - posX;
-  startY = y - posY;
-}
-
-function moveDrag(x,y) {
-  if (!dragging) return;
-  posX = x - startX;
-  posY = y - startY;
-  updateZoom();
-}
-
-zoomImg.addEventListener("mousedown", e => startDrag(e.clientX,e.clientY));
-window.addEventListener("mousemove", e => moveDrag(e.clientX,e.clientY));
-window.addEventListener("mouseup", () => dragging = false);
-
-zoomImg.addEventListener("touchstart", e =>
-  startDrag(e.touches[0].clientX,e.touches[0].clientY)
-);
-zoomImg.addEventListener("touchmove", e =>
-  moveDrag(e.touches[0].clientX,e.touches[0].clientY)
-);
-zoomImg.addEventListener("touchend", () => dragging = false);
-
-function zoomIn() {
-  zoomLevel += 0.2;
-  updateZoom();
-}
-
-function zoomOut() {
-  zoomLevel = Math.max(1, zoomLevel - 0.2);
-  if (zoomLevel === 1) {
-    posX = 0;
-    posY = 0;
-  }
-  updateZoom();
-}
-
-function closeZoom() {
-  zoomOverlay.style.display = "none";
-  document.body.style.overflow = "";
-}
 </script>
 
 </body>
