@@ -38,24 +38,16 @@ body {
   box-shadow: 0 12px 28px rgba(0,0,0,0.18);
 }
 
-/* TRANSIÇÕES */
-.hidden {
-  display: none;
-}
+/* ANIMAÇÃO */
+.hidden { display: none; }
 
 .fade-up {
   animation: fadeUp 1.8s ease forwards;
 }
 
 @keyframes fadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(120px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(120px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 /* MENU HOME */
@@ -65,18 +57,28 @@ body {
   gap: 18px;
 }
 
-.menu-buttons img {
+.menu-item {
+  position: relative;
+}
+
+.menu-item img {
   width: 100%;
   border-radius: 14px;
   cursor: pointer;
   box-shadow: 0 8px 22px rgba(0,0,0,0.25);
 }
 
-/* IMAGENS */
-.content-img {
-  width: 100%;
-  border-radius: 12px;
-  margin-bottom: 16px;
+.menu-item span {
+  position: absolute;
+  bottom: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(255,255,255,0.92);
+  padding: 6px 14px;
+  border-radius: 18px;
+  font-size: 14px;
+  color: #0d2a4a;
+  font-weight: bold;
 }
 
 /* BOTÕES */
@@ -97,22 +99,39 @@ body {
   color: #333;
 }
 
-/* SLIDER */
+/* IMAGENS */
+.content-img {
+  width: 100%;
+  border-radius: 12px;
+  margin-bottom: 16px;
+}
+
+/* SLIDER PRÊMIOS */
 .slider {
   overflow: hidden;
 }
 
 .slider-track {
   display: flex;
-  transition: transform 0.4s ease;
+  transition: transform 0.6s ease;
 }
 
 .slide {
   min-width: 100%;
-  position: relative;
+  display: flex;
+  gap: 16px;
 }
 
-/* PONTINHOS */
+.premio {
+  width: 50%;
+}
+
+.premio img {
+  width: 100%;
+  border-radius: 12px;
+}
+
+/* SLIDER REGRAS */
 .slider-dots {
   display: flex;
   justify-content: center;
@@ -182,7 +201,6 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow: hidden;
 }
 
 #zoomImg {
@@ -206,66 +224,6 @@ body {
   font-size: 20px;
   cursor: pointer;
 }
-
-/* CHAT */
-.chat-container {
-  display: flex;
-  flex-direction: column;
-  height: 420px;
-  border-radius: 12px;
-  overflow: hidden;
-  border: 1px solid #ddd;
-}
-
-.chat-header {
-  background: #b5121b;
-  color: #fff;
-  padding: 14px;
-  text-align: center;
-  font-weight: bold;
-}
-
-.chat-messages {
-  flex: 1;
-  padding: 14px;
-  overflow-y: auto;
-  background: #fafafa;
-}
-
-.message {
-  margin-bottom: 10px;
-  padding: 10px 14px;
-  border-radius: 8px;
-  max-width: 80%;
-  font-size: 14px;
-}
-
-.user {
-  background: #d1e7ff;
-  margin-left: auto;
-}
-
-.bot {
-  background: #eeeeee;
-}
-
-.chat-input {
-  display: flex;
-  border-top: 1px solid #ddd;
-}
-
-.chat-input input {
-  flex: 1;
-  padding: 14px;
-  border: none;
-}
-
-.chat-input button {
-  background: #b5121b;
-  color: #fff;
-  border: none;
-  padding: 0 20px;
-}
 </style>
 </head>
 
@@ -279,9 +237,44 @@ body {
 
 <!-- HOME -->
 <div id="home" class="section fade-up">
+
   <div class="menu-buttons">
-    <img src="sorteiocl.png" onclick="showPage('sorteio')">
-    <img src="roletacl.png" onclick="showPage('roleta')">
+    <div class="menu-item" onclick="showPage('sorteio')">
+      <img src="sorteiocl.png">
+      <span>Clique e saiba mais</span>
+    </div>
+
+    <div class="menu-item" onclick="showPage('roleta')">
+      <img src="roletacl.png">
+      <span>Clique e saiba mais</span>
+    </div>
+  </div>
+
+</div>
+
+<!-- PRÊMIOS -->
+<div class="section">
+  <h2>🎁 Prêmios</h2>
+
+  <div class="slider">
+    <div class="slider-track" id="premiosTrack">
+
+      <div class="slide">
+        <div class="premio"><img src="4.png"></div>
+        <div class="premio"><img src="5.png"></div>
+      </div>
+
+      <div class="slide">
+        <div class="premio"><img src="6.png"></div>
+        <div class="premio"><img src="7.png"></div>
+      </div>
+
+      <div class="slide">
+        <div class="premio"><img src="8.png"></div>
+        <div class="premio"><img src="9.png"></div>
+      </div>
+
+    </div>
   </div>
 </div>
 
@@ -344,21 +337,6 @@ body {
   </div>
 </div>
 
-<!-- CHAT -->
-<div class="section">
-  <h2>💬 Fale com o Assistente</h2>
-  <div class="chat-container">
-    <div class="chat-header">Assistente do Evento</div>
-    <div class="chat-messages" id="messages">
-      <div class="message bot">Olá! 👋 Posso te ajudar.</div>
-    </div>
-    <div class="chat-input">
-      <input id="input" placeholder="Digite sua pergunta...">
-      <button onclick="sendMessage()">Enviar</button>
-    </div>
-  </div>
-</div>
-
 </div>
 
 <!-- ZOOM -->
@@ -381,22 +359,29 @@ body {
 /* NAVEGAÇÃO */
 function showPage(page) {
   ["home","sorteio","roleta"].forEach(id => {
-    const el = document.getElementById(id);
-    el.classList.add("hidden");
-    el.classList.remove("fade-up");
+    document.getElementById(id).classList.add("hidden");
   });
-
-  const target = document.getElementById(page);
-  target.classList.remove("hidden");
-  void target.offsetWidth;
-  target.classList.add("fade-up");
+  const el = document.getElementById(page);
+  el.classList.remove("hidden");
+  el.classList.add("fade-up");
+  window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
 function toggle(id) {
   document.getElementById(id).classList.toggle("hidden");
 }
 
-/* SLIDER + DOTS */
+/* SLIDER PRÊMIOS */
+const premiosTrack = document.getElementById("premiosTrack");
+let premioIndex = 0;
+const premioSlides = premiosTrack.children.length;
+
+setInterval(() => {
+  premioIndex = (premioIndex + 1) % premioSlides;
+  premiosTrack.style.transform = `translateX(-${premioIndex * 100}%)`;
+}, 3000);
+
+/* SLIDER REGRAS */
 document.querySelectorAll("[data-slider]").forEach(slider => {
   let startX = 0;
   let current = 0;
@@ -487,38 +472,6 @@ function zoomOut() {
 function closeZoom() {
   zoomOverlay.style.display = "none";
   document.body.style.overflow = "";
-}
-
-/* CHAT */
-const API_URL = "https://nichele-ai-proxy.vercel.app/api/chat";
-const messages = document.getElementById("messages");
-const input = document.getElementById("input");
-
-function addMessage(text, sender) {
-  const div = document.createElement("div");
-  div.className = `message ${sender}`;
-  div.innerHTML = text;
-  messages.appendChild(div);
-  messages.scrollTop = messages.scrollHeight;
-}
-
-async function sendMessage() {
-  const text = input.value.trim();
-  if (!text) return;
-  addMessage(text,"user");
-  input.value = "";
-
-  try {
-    const res = await fetch(API_URL,{
-      method:"POST",
-      headers:{ "Content-Type":"application/json" },
-      body: JSON.stringify({ message:text })
-    });
-    const data = await res.json();
-    addMessage(data.reply,"bot");
-  } catch {
-    addMessage("⚠️ Erro no atendimento.","bot");
-  }
 }
 </script>
 
