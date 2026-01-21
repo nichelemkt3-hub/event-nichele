@@ -34,14 +34,20 @@ body {
 
 .hidden { display: none; }
 
-/* ANIMAÇÕES */
+/* ANIMAÇÃO GLOBAL */
 .fade-up {
-  animation: fadeUp 1.5s ease;
+  animation: fadeUp 2.3s ease;
 }
 
 @keyframes fadeUp {
-  from { opacity: 0; transform: translateY(40px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(80px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* MENU HOME */
@@ -342,7 +348,7 @@ function toggle(id) {
   document.getElementById(id).classList.toggle("hidden");
 }
 
-/* SWIPE SLIDER */
+/* SLIDER SWIPE */
 document.querySelectorAll("[data-slider]").forEach(slider => {
   let sx = 0, current = 0;
   const track = slider.querySelector(".slider-track");
@@ -357,7 +363,7 @@ document.querySelectorAll("[data-slider]").forEach(slider => {
   });
 });
 
-/* ZOOM */
+/* ZOOM COM PAN */
 document.querySelectorAll(".zoom-icon").forEach(icon => {
   icon.onclick = e => {
     e.stopPropagation();
