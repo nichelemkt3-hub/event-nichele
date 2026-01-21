@@ -1,18 +1,76 @@
-.slider-dots {
-  display: flex;
-  justify-content: center;
-  gap: 8px;
-  margin-top: 10px;
+let zoomLevel = 1;
+let posX = 0, posY = 0;
+let dragging = false;
+let startX = 0, startY = 0;
+
+document.querySelectorAll(".zoom-icon").forEach(icon => {
+  icon.onclick = e => {
+    e.stopPropagation();
+    zoomLevel = 1;
+    posX = 0;
+    posY = 0;
+
+    document.body.style.overflow = "hidden";
+
+    const img = document.getElementById("zoomImg");
+    img.src = icon.parentElement.querySelector("img").src;
+    updateZoom();
+
+    document.getElementById("zoomOverlay").style.display = "block";
+  };
+});
+
+const zoomImg = document.getElementById("zoomImg");
+
+function updateZoom() {
+  zoomImg.style.transform =
+    `translate(calc(-50% + ${posX}px), calc(-50% + ${posY}px)) scale(${zoomLevel})`;
 }
 
-.slider-dots span {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: #cfd8e3;
-  transition: background 0.3s;
+/* SÓ ARRASTA SE ZOOM > 1 */
+function startDrag(x, y) {
+  if (zoomLevel <= 1) return;
+  dragging = true;
+  startX = x - posX;
+  startY = y - posY;
 }
 
-.slider-dots span.active {
-  background: #0d2a4a;
+function moveDrag(x, y) {
+  if (!dragging || zoomLevel <= 1) return;
+  posX = x - startX;
+  posY = y - startY;
+  updateZoom();
+}
+
+zoomImg.addEventListener("mousedown", e => startDrag(e.clientX, e.clientY));
+window.addEventListener("mousemove", e => moveDrag(e.clientX, e.clientY));
+window.addEventListener("mouseup", () => dragging = false);
+
+zoomImg.addEventListener("touchstart", e =>
+  startDrag(e.touches[0].clientX, e.touches[0].clientY)
+);
+
+zoomImg.addEventListener("touchmove", e =>
+  moveDrag(e.touches[0].clientX, e.touches[0].clientY)
+);
+
+zoomImg.addEventListener("touchend", () => dragging = false);
+
+function zoomIn() {
+  zoomLevel += 0.2;
+  updateZoom();
+}
+
+function zoomOut() {
+  zoomLevel = Math.max(1, zoomLevel - 0.2);
+  if (zoomLevel === 1) {
+    posX = 0;
+    posY = 0;
+  }
+  updateZoom();
+}
+
+function closeZoom() {
+  document.getElementById("zoomOverlay").style.display = "none";
+  document.body.style.overflow = "";
 }
