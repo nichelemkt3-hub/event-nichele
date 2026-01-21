@@ -13,7 +13,7 @@
 
 body {
   margin: 0;
-  background: linear-gradient(180deg, #0d2a4a, #123a63);
+  background: #0f2a44; /* azul escuro */
 }
 
 /* TOPO */
@@ -32,186 +32,23 @@ body {
 /* SEÇÕES */
 .section {
   background: #fff;
-  border-radius: 14px;
-  padding: 20px;
-  margin-bottom: 26px;
-  box-shadow: 0 12px 28px rgba(0,0,0,0.18);
-}
-
-/* TRANSIÇÕES */
-.hidden {
-  display: none;
-}
-
-.fade-up {
-  animation: fadeUp 1.8s ease forwards;
-}
-
-@keyframes fadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(120px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* MENU HOME */
-.menu-buttons {
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-}
-
-.menu-buttons img {
-  width: 100%;
-  border-radius: 14px;
-  cursor: pointer;
-  box-shadow: 0 8px 22px rgba(0,0,0,0.25);
-}
-
-/* IMAGENS */
-.content-img {
-  width: 100%;
   border-radius: 12px;
-  margin-bottom: 16px;
+  padding: 20px;
+  margin-bottom: 24px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
 }
 
-/* BOTÕES */
-.btn {
-  width: 100%;
-  background: #b5121b;
-  color: #fff;
-  border: none;
-  padding: 12px;
-  border-radius: 22px;
-  font-size: 15px;
-  cursor: pointer;
-  margin-bottom: 16px;
-}
-
-.btn.light {
-  background: #e6e6e6;
-  color: #333;
-}
-
-/* SLIDER */
-.slider {
-  overflow: hidden;
-}
-
-.slider-track {
-  display: flex;
-  transition: transform 0.4s ease;
-}
-
-.slide {
-  min-width: 100%;
-  position: relative;
-}
-
-/* PONTINHOS */
-.slider-dots {
-  display: flex;
-  justify-content: center;
-  gap: 8px;
-  margin-top: 10px;
-}
-
-.slider-dots span {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: #cfd8e3;
-}
-
-.slider-dots span.active {
-  background: #0d2a4a;
-}
-
-/* LUPA */
-.zoom-icon {
-  position: absolute;
-  bottom: 10px;
-  right: 10px;
-  width: 34px;
-  height: 34px;
-  background: rgba(0,0,0,0.6);
-  color: #fff;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-}
-
-/* OVERLAY ZOOM */
-#zoomOverlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.88);
-  display: none;
-  z-index: 999;
-}
-
-#zoomBox {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-}
-
-#zoomHeader {
-  display: flex;
-  justify-content: flex-end;
-  padding: 14px;
-}
-
-#zoomHeader button {
-  background: none;
-  border: none;
-  color: #fff;
-  font-size: 22px;
-  cursor: pointer;
-}
-
-#zoomContent {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-}
-
-#zoomImg {
-  max-width: 95%;
-  max-height: 95%;
-  transition: transform 0.2s ease;
-}
-
-#zoomControls {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  padding: 14px;
-}
-
-#zoomControls button {
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  border: none;
-  font-size: 20px;
-  cursor: pointer;
+.section h2 {
+  text-align: center;
+  color: #b5121b;
+  margin-top: 0;
 }
 
 /* CHAT */
 .chat-container {
   display: flex;
   flex-direction: column;
-  height: 420px;
+  height: 450px;
   border-radius: 12px;
   overflow: hidden;
   border: 1px solid #ddd;
@@ -238,6 +75,7 @@ body {
   border-radius: 8px;
   max-width: 80%;
   font-size: 14px;
+  line-height: 1.4;
 }
 
 .user {
@@ -249,6 +87,32 @@ body {
   background: #eeeeee;
 }
 
+/* BOTÕES DE CONTEXTO */
+.context-buttons {
+  display: none;
+  gap: 10px;
+  padding: 10px;
+  justify-content: center;
+  background: #fafafa;
+  border-top: 1px solid #ddd;
+}
+
+.context-buttons button {
+  padding: 8px 16px;
+  border-radius: 20px;
+  border: 1px solid #b5121b;
+  background: #fff;
+  color: #b5121b;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.context-buttons button:hover {
+  background: #b5121b;
+  color: #fff;
+}
+
+/* INPUT */
 .chat-input {
   display: flex;
   border-top: 1px solid #ddd;
@@ -258,6 +122,7 @@ body {
   flex: 1;
   padding: 14px;
   border: none;
+  outline: none;
 }
 
 .chat-input button {
@@ -265,6 +130,7 @@ body {
   color: #fff;
   border: none;
   padding: 0 20px;
+  cursor: pointer;
 }
 </style>
 </head>
@@ -272,254 +138,102 @@ body {
 <body>
 
 <div class="top-banner">
-  <img src="topo.png">
+  <img src="topo.png" alt="Topo do Evento">
 </div>
 
 <div class="container">
 
-<!-- HOME -->
-<div id="home" class="section fade-up">
-  <div class="menu-buttons">
-    <img src="sorteiocl.png" onclick="showPage('sorteio')">
-    <img src="roletacl.png" onclick="showPage('roleta')">
-  </div>
-</div>
+  <div class="section">
+    <h2>💬 Fale com o Assistente</h2>
 
-<!-- SORTEIO -->
-<div id="sorteio" class="section hidden">
-  <button class="btn light" onclick="showPage('home')">⬅ Voltar</button>
+    <div class="chat-container">
+      <div class="chat-header">Assistente do Evento</div>
 
-  <img src="sorteio1.png" class="content-img">
-  <img src="sorteio2.png" class="content-img">
-
-  <button class="btn" onclick="toggle('regrasSorteio')">Confira as regras</button>
-
-  <div id="regrasSorteio" class="hidden">
-    <div class="slider" data-slider>
-      <div class="slider-track">
-        <div class="slide">
-          <img src="duvidas1.png" class="content-img">
-          <div class="zoom-icon">🔍</div>
-        </div>
-        <div class="slide">
-          <img src="duvidas2.png" class="content-img">
-          <div class="zoom-icon">🔍</div>
+      <div class="chat-messages" id="messages">
+        <div class="message bot">
+          👋 Olá! Seja bem-vindo(a) ao <strong>Assistente do Evento Nichele</strong> 🎉<br><br>
+          Posso te ajudar com dúvidas sobre a <strong>Roleta</strong> ou os <strong>Sorteios</strong>.<br>
+          É só me perguntar 😊
         </div>
       </div>
-    </div>
 
-    <div class="slider-dots">
-      <span class="active"></span>
-      <span></span>
-    </div>
-  </div>
-</div>
+      <div class="context-buttons" id="contextButtons">
+        <button onclick="setContext('sorteio')">🎟 Sorteio</button>
+        <button onclick="setContext('roleta')">🎯 Roleta</button>
+      </div>
 
-<!-- ROLETA -->
-<div id="roleta" class="section hidden">
-  <button class="btn light" onclick="showPage('home')">⬅ Voltar</button>
-
-  <img src="roleta.png" class="content-img">
-
-  <button class="btn" onclick="toggle('regrasRoleta')">Confira as regras</button>
-
-  <div id="regrasRoleta" class="hidden">
-    <div class="slider" data-slider>
-      <div class="slider-track">
-        <div class="slide">
-          <img src="duvidar1.png" class="content-img">
-          <div class="zoom-icon">🔍</div>
-        </div>
-        <div class="slide">
-          <img src="duvidar2.png" class="content-img">
-          <div class="zoom-icon">🔍</div>
-        </div>
+      <div class="chat-input">
+        <input id="input" placeholder="Digite sua pergunta...">
+        <button onclick="sendMessage()">Enviar</button>
       </div>
     </div>
-
-    <div class="slider-dots">
-      <span class="active"></span>
-      <span></span>
-    </div>
   </div>
-</div>
 
-<!-- CHAT -->
-<div class="section">
-  <h2>💬 Fale com o Assistente</h2>
-  <div class="chat-container">
-    <div class="chat-header">Assistente do Evento</div>
-    <div class="chat-messages" id="messages">
-      <div class="message bot">Olá! 👋 Posso te ajudar.</div>
-    </div>
-    <div class="chat-input">
-      <input id="input" placeholder="Digite sua pergunta...">
-      <button onclick="sendMessage()">Enviar</button>
-    </div>
-  </div>
-</div>
-
-</div>
-
-<!-- ZOOM -->
-<div id="zoomOverlay">
-  <div id="zoomBox">
-    <div id="zoomHeader">
-      <button onclick="closeZoom()">✕</button>
-    </div>
-    <div id="zoomContent">
-      <img id="zoomImg">
-    </div>
-    <div id="zoomControls">
-      <button onclick="zoomOut()">➖</button>
-      <button onclick="zoomIn()">➕</button>
-    </div>
-  </div>
 </div>
 
 <script>
-/* NAVEGAÇÃO */
-function showPage(page) {
-  ["home","sorteio","roleta"].forEach(id => {
-    const el = document.getElementById(id);
-    el.classList.add("hidden");
-    el.classList.remove("fade-up");
-  });
+const API_URL = "https://event-nichele.vercel.app/api/chat";
 
-  const target = document.getElementById(page);
-  target.classList.remove("hidden");
-  void target.offsetWidth;
-  target.classList.add("fade-up");
-}
-
-function toggle(id) {
-  document.getElementById(id).classList.toggle("hidden");
-}
-
-/* SLIDER + DOTS */
-document.querySelectorAll("[data-slider]").forEach(slider => {
-  let startX = 0;
-  let current = 0;
-  const track = slider.querySelector(".slider-track");
-  const slides = slider.querySelectorAll(".slide").length;
-  const dots = slider.parentElement.querySelectorAll(".slider-dots span");
-
-  function updateDots() {
-    dots.forEach((d,i) => d.classList.toggle("active", i === current));
-  }
-
-  slider.addEventListener("touchstart", e => {
-    startX = e.touches[0].clientX;
-  });
-
-  slider.addEventListener("touchend", e => {
-    const diff = e.changedTouches[0].clientX - startX;
-    if (diff < -50 && current < slides-1) current++;
-    if (diff > 50 && current > 0) current--;
-    track.style.transform = `translateX(-${current*100}%)`;
-    updateDots();
-  });
-});
-
-/* ZOOM */
-let zoomLevel = 1, posX = 0, posY = 0;
-let dragging = false, startX = 0, startY = 0;
-
-const zoomOverlay = document.getElementById("zoomOverlay");
-const zoomImg = document.getElementById("zoomImg");
-
-document.querySelectorAll(".zoom-icon").forEach(icon => {
-  icon.onclick = () => {
-    zoomLevel = 1;
-    posX = 0;
-    posY = 0;
-    zoomImg.src = icon.previousElementSibling.src;
-    updateZoom();
-    document.body.style.overflow = "hidden";
-    zoomOverlay.style.display = "block";
-  };
-});
-
-function updateZoom() {
-  zoomImg.style.transform = `translate(${posX}px, ${posY}px) scale(${zoomLevel})`;
-}
-
-function startDrag(x,y) {
-  if (zoomLevel <= 1) return;
-  dragging = true;
-  startX = x - posX;
-  startY = y - posY;
-}
-
-function moveDrag(x,y) {
-  if (!dragging) return;
-  posX = x - startX;
-  posY = y - startY;
-  updateZoom();
-}
-
-zoomImg.addEventListener("mousedown", e => startDrag(e.clientX,e.clientY));
-window.addEventListener("mousemove", e => moveDrag(e.clientX,e.clientY));
-window.addEventListener("mouseup", () => dragging = false);
-
-zoomImg.addEventListener("touchstart", e =>
-  startDrag(e.touches[0].clientX,e.touches[0].clientY)
-);
-zoomImg.addEventListener("touchmove", e =>
-  moveDrag(e.touches[0].clientX,e.touches[0].clientY)
-);
-zoomImg.addEventListener("touchend", () => dragging = false);
-
-function zoomIn() {
-  zoomLevel += 0.2;
-  updateZoom();
-}
-
-function zoomOut() {
-  zoomLevel = Math.max(1, zoomLevel - 0.2);
-  if (zoomLevel === 1) {
-    posX = 0;
-    posY = 0;
-  }
-  updateZoom();
-}
-
-function closeZoom() {
-  zoomOverlay.style.display = "none";
-  document.body.style.overflow = "";
-}
-
-/* CHAT */
-const API_URL = "https://nichele-ai-proxy.vercel.app/api/chat";
 const messages = document.getElementById("messages");
 const input = document.getElementById("input");
+const contextButtons = document.getElementById("contextButtons");
+
+let contextoSelecionado = null;
 
 function addMessage(text, sender) {
   const div = document.createElement("div");
   div.className = `message ${sender}`;
-  div.innerHTML = text;
+  div.innerHTML = text.replace(/\n/g, "<br>");
   messages.appendChild(div);
   messages.scrollTop = messages.scrollHeight;
+}
+
+function setContext(tipo) {
+  contextoSelecionado = tipo;
+  contextButtons.style.display = "none";
+
+  addMessage(
+    tipo === "sorteio"
+      ? "Quero falar sobre Sorteio 🎟"
+      : "Quero falar sobre Roleta 🎯",
+    "user"
+  );
 }
 
 async function sendMessage() {
   const text = input.value.trim();
   if (!text) return;
-  addMessage(text,"user");
+
+  addMessage(text, "user");
   input.value = "";
 
   try {
-    const res = await fetch(API_URL,{
-      method:"POST",
-      headers:{ "Content-Type":"application/json" },
-      body: JSON.stringify({ message:text })
+    const res = await fetch(API_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        message: text,
+        contexto: contextoSelecionado
+      })
     });
+
     const data = await res.json();
-    addMessage(data.reply,"bot");
+    addMessage(data.reply, "bot");
+
+    if (data.askContext) {
+      contextButtons.style.display = "flex";
+    }
   } catch {
-    addMessage("⚠️ Erro no atendimento.","bot");
+    addMessage(
+      "⚠️ Erro no atendimento.<br>Por favor, tente novamente mais tarde.",
+      "bot"
+    );
   }
 }
+
+input.addEventListener("keypress", e => {
+  if (e.key === "Enter") sendMessage();
+});
 </script>
 
 </body>
