@@ -91,7 +91,7 @@ body {
 
 /* MENU */
 .menu-buttons { display: flex; flex-direction: column; gap: 18px; }
-.menu-buttons img {
+.menu-buttons video {
   width: 100%;
   border-radius: 16px;
   cursor: pointer;
@@ -213,8 +213,8 @@ body {
 
 <div class="section-title" style="margin-top:30px;">🎉 Eventos</div>
 <div class="menu-buttons">
-  <img src="videosorteio.mp4" onclick="showPage('sorteio')">
-  <img src="videoroleta.mp4" onclick="showPage('roleta')">
+  <video src="videosorteio.mp4" autoplay muted loop playsinline onclick="showPage('sorteio')"></video>
+  <video src="videoroleta.mp4" autoplay muted loop playsinline onclick="showPage('roleta')"></video>
 </div>
 </div>
 
@@ -339,7 +339,7 @@ document.querySelectorAll(".zoom-icon").forEach(icon=>{
     const img=overlay.querySelector(".zoom-img");
 
     function apply(){
-      img.style.transform=`translate(calc(-50% + ${posX}px), calc(-50% + ${posY}px)) scale(${scale})`;
+      img.style.transform=\`translate(calc(-50% + \${posX}px), calc(-50% + \${posY}px)) scale(\${scale})\`;
     }
 
     overlay.addEventListener("touchstart",e=>{
