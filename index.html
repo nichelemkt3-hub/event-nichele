@@ -148,6 +148,7 @@ body {
   transform: translate(-50%, -50%) scale(1);
   max-width: 95vw;
   max-height: 85vh;
+  touch-action: none;
 }
 .zoom-controls {
   position: fixed;
@@ -315,22 +316,61 @@ document.querySelectorAll("[data-slider]").forEach(slider=>{
   });
 });
 
-/* ZOOM */
+/* ZOOM COM PINÇA + BOTÕES */
 document.querySelectorAll(".zoom-icon").forEach(icon=>{
   icon.onclick=()=>{
     let scale=1;
+    let startDist=0;
+    const imgSrc=icon.previousElementSibling.src;
+
     document.body.style.overflow="hidden";
 
     const overlay=document.createElement("div");
     overlay.className="zoom-overlay";
     overlay.innerHTML=`
-      <img src="${icon.previousElementSibling.src}" class="zoom-img">
+      <img src="${imgSrc}" class="zoom-img">
       <div class="zoom-controls">
-        <button onclick="scale+=0.2;document.querySelector('.zoom-img').style.transform='translate(-50%,-50%) scale('+scale+')'">+</button>
-        <button onclick="scale=Math.max(1,scale-0.2);document.querySelector('.zoom-img').style.transform='translate(-50%,-50%) scale('+scale+')'">−</button>
-        <button onclick="document.body.style.overflow='';this.closest('.zoom-overlay').remove()">✕</button>
+        <button id="zoomPlus">+</button>
+        <button id="zoomMinus">−</button>
+        <button id="zoomClose">✕</button>
       </div>`;
     document.body.appendChild(overlay);
+
+    const img=overlay.querySelector(".zoom-img");
+
+    function applyScale(){
+      scale=Math.max(1,Math.min(scale,4));
+      img.style.transform=`translate(-50%,-50%) scale(${scale})`;
+    }
+
+    overlay.addEventListener("touchstart",e=>{
+      if(e.touches.length===2){
+        startDist=Math.hypot(
+          e.touches[0].clientX-e.touches[1].clientX,
+          e.touches[0].clientY-e.touches[1].clientY
+        );
+      }
+    },{passive:false});
+
+    overlay.addEventListener("touchmove",e=>{
+      if(e.touches.length===2){
+        e.preventDefault();
+        const dist=Math.hypot(
+          e.touches[0].clientX-e.touches[1].clientX,
+          e.touches[0].clientY-e.touches[1].clientY
+        );
+        scale+= (dist-startDist)/300;
+        startDist=dist;
+        applyScale();
+      }
+    },{passive:false});
+
+    overlay.querySelector("#zoomPlus").onclick=()=>{scale+=0.2;applyScale();};
+    overlay.querySelector("#zoomMinus").onclick=()=>{scale-=0.2;applyScale();};
+    overlay.querySelector("#zoomClose").onclick=()=>{
+      document.body.style.overflow="";
+      overlay.remove();
+    };
   };
 });
 </script>
