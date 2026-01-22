@@ -83,7 +83,7 @@ body {
 }
 
 .premios-row img {
-  width: 50%;
+  width: calc(50% - 8px);
   border-radius: 14px;
   box-shadow: 0 8px 20px rgba(0,0,0,0.18);
 }
@@ -171,6 +171,22 @@ body {
   cursor: pointer;
 }
 
+/* ZOOM */
+.zoom-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+}
+.zoom-overlay img {
+  max-width: 95%;
+  max-height: 95%;
+  border-radius: 10px;
+}
+
 /* WHATS */
 .whats {
   margin-top: 22px;
@@ -198,10 +214,8 @@ body {
 
 <div class="container">
 
-<!-- HOME -->
 <div id="home" class="section fade-up">
 
-  <!-- PRÊMIOS -->
 <h2 class="section-title">🎁 Prêmios da Roleta</h2>
 
 <div class="slider" id="premiosSlider">
@@ -221,18 +235,16 @@ body {
 <div class="slider-dots" id="premiosDots">
   <span class="active"></span><span></span><span></span><span></span><span></span><span></span><span></span>
 </div>
-  
-  <!-- BLOCO EVENTOS -->
-  <div class="section-title" style="margin-top:30px;">🎉 Eventos</div>
 
-  <div class="menu-buttons">
-    <img src="sorteiocl.png" onclick="showPage('sorteio')">
-    <img src="roletacl.png" onclick="showPage('roleta')">
-  </div>
+<div class="section-title" style="margin-top:30px;">🎉 Eventos</div>
+
+<div class="menu-buttons">
+  <img src="sorteiocl.png" onclick="showPage('sorteio')">
+  <img src="roletacl.png" onclick="showPage('roleta')">
+</div>
 
 </div>
 
-<!-- SORTEIO -->
 <div id="sorteio" class="section hidden">
   <button class="btn light" onclick="showPage('home')">⬅ Voltar</button>
 
@@ -264,7 +276,6 @@ body {
   </div>
 </div>
 
-<!-- ROLETA -->
 <div id="roleta" class="section hidden">
   <button class="btn light" onclick="showPage('home')">⬅ Voltar</button>
 
@@ -332,8 +343,19 @@ document.querySelectorAll("[data-slider]").forEach(slider=>{
     dots.forEach((d,i)=>d.classList.toggle("active",i===current));
   });
 });
+
+/* ZOOM */
+document.querySelectorAll(".zoom-icon").forEach(icon=>{
+  icon.addEventListener("click",()=>{
+    const img = icon.parentElement.querySelector("img");
+    const overlay = document.createElement("div");
+    overlay.className = "zoom-overlay";
+    overlay.innerHTML = `<img src="${img.src}">`;
+    overlay.addEventListener("click",()=>overlay.remove());
+    document.body.appendChild(overlay);
+  });
+});
 </script>
 
 </body>
 </html>
-
