@@ -286,14 +286,14 @@ body {
       <div class="premios-slide">
         <div class="premios-row">
           <img src="4.png">
-          <img src="5.png">
+          <img src="7.png">
         </div>
       </div>
 
       <div class="premios-slide">
         <div class="premios-row">
           <img src="6.png">
-          <img src="7.png">
+          <img src="5.png">
         </div>
       </div>
 
@@ -301,6 +301,34 @@ body {
         <div class="premios-row">
           <img src="8.png">
           <img src="9.png">
+        </div>
+      </div>
+
+      <div class="premios-slide">
+        <div class="premios-row">
+          <img src="10.png">
+          <img src="11.png">
+        </div>
+      </div>
+
+      <div class="premios-slide">
+        <div class="premios-row">
+          <img src="12.png">
+          <img src="13.png">
+        </div>
+      </div>
+
+      <div class="premios-slide">
+        <div class="premios-row">
+          <img src="14.png">
+          <img src="15.png">
+        </div>
+      </div>
+
+      <div class="premios-slide">
+        <div class="premios-row">
+          <img src="16.png">
+          <img src="17.png">
         </div>
       </div>
 
@@ -312,6 +340,11 @@ body {
     <span></span>
     <span></span>
   </div>
+
+  <!-- 🔽 BOTÃO ADICIONADO (SEM MEXER NO RESTO) -->
+  <button class="btn" onclick="showPage('home')">
+    🎉 Acessar os Eventos
+  </button>
 </div>
 
 <!-- EVENTOS -->
@@ -361,7 +394,6 @@ body {
 </div>
 
 <script>
-/* NAVEGAÇÃO */
 function showPage(page) {
   document.querySelectorAll(".section").forEach(s => {
     s.classList.add("hidden");
@@ -373,7 +405,6 @@ function showPage(page) {
   el.classList.add("fade-up");
 }
 
-/* TOGGLE */
 function toggle(id) {
   document.getElementById(id).classList.toggle("hidden");
 }
@@ -388,41 +419,12 @@ document.getElementById("premios").addEventListener("touchstart", e => {
 });
 document.getElementById("premios").addEventListener("touchend", e => {
   const diff = e.changedTouches[0].clientX - startX;
-  if (diff < -50 && pIndex < 2) pIndex++;
+  if (diff < -50 && pIndex < 6) pIndex++;
   if (diff > 50 && pIndex > 0) pIndex--;
   pTrack.style.transform = `translateX(-${pIndex * 100}%)`;
   pDots.forEach((d,i)=>d.classList.toggle("active",i===pIndex));
 });
-
-/* ZOOM */
-let zoomLevel = 1, posX = 0, posY = 0;
-const zoomOverlay = document.getElementById("zoomOverlay");
-const zoomImg = document.getElementById("zoomImg");
-
-document.querySelectorAll(".zoom-icon").forEach(icon => {
-  icon.onclick = () => {
-    zoomImg.src = icon.previousElementSibling.src;
-    zoomOverlay.style.display = "block";
-    document.body.style.overflow = "hidden";
-  };
-});
 </script>
-
-<!-- OVERLAY ZOOM -->
-<div id="zoomOverlay">
-  <div id="zoomBox">
-    <div id="zoomHeader">
-      <button onclick="zoomOverlay.style.display='none';document.body.style.overflow=''">✕</button>
-    </div>
-    <div id="zoomContent">
-      <img id="zoomImg">
-    </div>
-    <div id="zoomControls">
-      <button onclick="zoomLevel=Math.max(1,zoomLevel-0.2);zoomImg.style.transform=`scale(${zoomLevel})`">➖</button>
-      <button onclick="zoomLevel+=0.2;zoomImg.style.transform=`scale(${zoomLevel})`">➕</button>
-    </div>
-  </div>
-</div>
 
 </body>
 </html>
