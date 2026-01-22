@@ -91,7 +91,7 @@ body {
 
 /* MENU */
 .menu-buttons { display: flex; flex-direction: column; gap: 18px; }
-.menu-buttons video {
+.menu-buttons img {
   width: 100%;
   border-radius: 16px;
   cursor: pointer;
@@ -339,7 +339,7 @@ document.querySelectorAll(".zoom-icon").forEach(icon=>{
     const img=overlay.querySelector(".zoom-img");
 
     function apply(){
-      img.style.transform=\`translate(calc(-50% + \${posX}px), calc(-50% + \${posY}px)) scale(\${scale})\`;
+      img.style.transform=`translate(calc(-50% + ${posX}px), calc(-50% + ${posY}px)) scale(${scale})`;
     }
 
     overlay.addEventListener("touchstart",e=>{
