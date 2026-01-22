@@ -145,7 +145,7 @@ body {
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%) scale(1);
+  transform: translate(-50%,-50%) scale(1);
   max-width: 95vw;
   max-height: 85vh;
   touch-action: none;
@@ -316,11 +316,11 @@ document.querySelectorAll("[data-slider]").forEach(slider=>{
   });
 });
 
-/* ZOOM COM PINÇA + BOTÕES */
+/* ZOOM COM PAN */
 document.querySelectorAll(".zoom-icon").forEach(icon=>{
   icon.onclick=()=>{
-    let scale=1;
-    let startDist=0;
+    let scale=1, posX=0, posY=0;
+    let startX=0,startY=0,startDist=0;
     const imgSrc=icon.previousElementSibling.src;
 
     document.body.style.overflow="hidden";
@@ -338,12 +338,15 @@ document.querySelectorAll(".zoom-icon").forEach(icon=>{
 
     const img=overlay.querySelector(".zoom-img");
 
-    function applyScale(){
-      scale=Math.max(1,Math.min(scale,4));
-      img.style.transform=`translate(-50%,-50%) scale(${scale})`;
+    function apply(){
+      img.style.transform=`translate(calc(-50% + ${posX}px), calc(-50% + ${posY}px)) scale(${scale})`;
     }
 
     overlay.addEventListener("touchstart",e=>{
+      if(e.touches.length===1){
+        startX=e.touches[0].clientX-posX;
+        startY=e.touches[0].clientY-posY;
+      }
       if(e.touches.length===2){
         startDist=Math.hypot(
           e.touches[0].clientX-e.touches[1].clientX,
@@ -353,20 +356,26 @@ document.querySelectorAll(".zoom-icon").forEach(icon=>{
     },{passive:false});
 
     overlay.addEventListener("touchmove",e=>{
+      e.preventDefault();
+      if(e.touches.length===1 && scale>1){
+        posX=e.touches[0].clientX-startX;
+        posY=e.touches[0].clientY-startY;
+        apply();
+      }
       if(e.touches.length===2){
-        e.preventDefault();
         const dist=Math.hypot(
           e.touches[0].clientX-e.touches[1].clientX,
           e.touches[0].clientY-e.touches[1].clientY
         );
         scale+= (dist-startDist)/300;
+        scale=Math.max(1,Math.min(scale,4));
         startDist=dist;
-        applyScale();
+        apply();
       }
     },{passive:false});
 
-    overlay.querySelector("#zoomPlus").onclick=()=>{scale+=0.2;applyScale();};
-    overlay.querySelector("#zoomMinus").onclick=()=>{scale-=0.2;applyScale();};
+    overlay.querySelector("#zoomPlus").onclick=()=>{scale=Math.min(scale+0.2,4);apply();};
+    overlay.querySelector("#zoomMinus").onclick=()=>{scale=Math.max(scale-0.2,1);apply();};
     overlay.querySelector("#zoomClose").onclick=()=>{
       document.body.style.overflow="";
       overlay.remove();
