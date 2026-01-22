@@ -88,6 +88,34 @@ body {
   box-shadow: 0 8px 20px rgba(0,0,0,0.18);
 }
 
+/* SLIDER */
+.slider { overflow: hidden; }
+.slider-track {
+  display: flex;
+  transition: transform 0.4s ease;
+}
+.slide {
+  min-width: 100%;
+  position: relative;
+}
+
+/* DOTS */
+.slider-dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 10px;
+}
+.slider-dots span {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #cfd8e3;
+}
+.slider-dots span.active {
+  background: #0d2a4a;
+}
+
 /* MENU EVENTOS */
 .menu-buttons {
   display: flex;
@@ -127,34 +155,6 @@ body {
   color: #333;
 }
 
-/* SLIDER */
-.slider { overflow: hidden; }
-.slider-track {
-  display: flex;
-  transition: transform 0.4s ease;
-}
-.slide {
-  min-width: 100%;
-  position: relative;
-}
-
-/* DOTS */
-.slider-dots {
-  display: flex;
-  justify-content: center;
-  gap: 8px;
-  margin-top: 10px;
-}
-.slider-dots span {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: #cfd8e3;
-}
-.slider-dots span.active {
-  background: #0d2a4a;
-}
-
 /* LUPA */
 .zoom-icon {
   position: absolute;
@@ -171,20 +171,42 @@ body {
   cursor: pointer;
 }
 
-/* ZOOM */
+/* ZOOM OVERLAY */
 .zoom-overlay {
   position: fixed;
   inset: 0;
   background: rgba(0,0,0,0.9);
+  z-index: 3000;
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 2000;
 }
-.zoom-overlay img {
-  max-width: 95%;
-  max-height: 95%;
-  border-radius: 10px;
+
+.zoom-box {
+  position: relative;
+}
+
+.zoom-box img {
+  max-width: 95vw;
+  max-height: 85vh;
+  transform-origin: center;
+}
+
+.zoom-controls {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  gap: 10px;
+}
+
+.zoom-controls button {
+  width: 38px;
+  height: 38px;
+  border: none;
+  border-radius: 50%;
+  font-size: 18px;
+  cursor: pointer;
 }
 
 /* WHATS */
@@ -218,9 +240,8 @@ body {
 
 <h2 class="section-title">🎁 Prêmios da Roleta</h2>
 
-<div class="slider" id="premiosSlider">
+<div class="slider" data-slider>
   <div class="slider-track">
-
     <div class="slide"><div class="premios-row"><img src="4.png"><img src="7.png"></div></div>
     <div class="slide"><div class="premios-row"><img src="6.png"><img src="5.png"></div></div>
     <div class="slide"><div class="premios-row"><img src="8.png"><img src="9.png"></div></div>
@@ -228,11 +249,10 @@ body {
     <div class="slide"><div class="premios-row"><img src="12.png"><img src="13.png"></div></div>
     <div class="slide"><div class="premios-row"><img src="14.png"><img src="15.png"></div></div>
     <div class="slide"><div class="premios-row"><img src="16.png"><img src="17.png"></div></div>
-
   </div>
 </div>
 
-<div class="slider-dots" id="premiosDots">
+<div class="slider-dots">
   <span class="active"></span><span></span><span></span><span></span><span></span><span></span><span></span>
 </div>
 
@@ -327,7 +347,7 @@ function toggle(id){
   document.getElementById(id).classList.toggle("hidden");
 }
 
-/* SLIDER */
+/* SLIDERS */
 document.querySelectorAll("[data-slider]").forEach(slider=>{
   let startX=0,current=0;
   const track=slider.querySelector(".slider-track");
@@ -347,11 +367,21 @@ document.querySelectorAll("[data-slider]").forEach(slider=>{
 /* ZOOM */
 document.querySelectorAll(".zoom-icon").forEach(icon=>{
   icon.addEventListener("click",()=>{
-    const img = icon.parentElement.querySelector("img");
-    const overlay = document.createElement("div");
-    overlay.className = "zoom-overlay";
-    overlay.innerHTML = `<img src="${img.src}">`;
-    overlay.addEventListener("click",()=>overlay.remove());
+    let scale=1;
+    const imgSrc=icon.parentElement.querySelector("img").src;
+
+    const overlay=document.createElement("div");
+    overlay.className="zoom-overlay";
+    overlay.innerHTML=`
+      <div class="zoom-box">
+        <img src="${imgSrc}">
+      </div>
+      <div class="zoom-controls">
+        <button onclick="this.closest('.zoom-overlay').querySelector('img').style.transform='scale('+(++window.zoomScale||1)+')'">+</button>
+        <button onclick="this.closest('.zoom-overlay').querySelector('img').style.transform='scale('+(--window.zoomScale||1)+')'">−</button>
+        <button onclick="this.closest('.zoom-overlay').remove()">✕</button>
+      </div>`;
+    window.zoomScale=1;
     document.body.appendChild(overlay);
   });
 });
