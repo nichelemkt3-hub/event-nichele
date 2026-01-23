@@ -480,6 +480,54 @@ document.querySelectorAll("[data-slider]").forEach(slider=>{
     dots.forEach((d,i)=>d.classList.toggle("active",i===current));
   });
 });
+
+  <script>
+/* ===== ZOOM IMAGENS (LUPA) ===== */
+document.addEventListener("click", function(e) {
+  if (e.target.classList.contains("zoom-icon")) {
+    const img = e.target.previousElementSibling;
+    if (!img) return;
+
+    const overlay = document.createElement("div");
+    overlay.className = "zoom-overlay";
+
+    const zoomImg = document.createElement("img");
+    zoomImg.src = img.src;
+    zoomImg.className = "zoom-img";
+
+    overlay.appendChild(zoomImg);
+    document.body.appendChild(overlay);
+
+    let scale = 1;
+    let startX = 0, startY = 0;
+    let currentX = 0, currentY = 0;
+
+    overlay.addEventListener("click", () => overlay.remove());
+
+    overlay.addEventListener("wheel", e => {
+      e.preventDefault();
+      scale += e.deltaY * -0.001;
+      scale = Math.min(Math.max(1, scale), 4);
+      zoomImg.style.transform =
+        `translate(-50%, -50%) scale(${scale}) translate(${currentX}px, ${currentY}px)`;
+    });
+
+    zoomImg.addEventListener("touchstart", e => {
+      startX = e.touches[0].clientX - currentX;
+      startY = e.touches[0].clientY - currentY;
+    });
+
+    zoomImg.addEventListener("touchmove", e => {
+      currentX = e.touches[0].clientX - startX;
+      currentY = e.touches[0].clientY - startY;
+
+      zoomImg.style.transform =
+        `translate(-50%, -50%) scale(${scale}) translate(${currentX}px, ${currentY}px)`;
+    });
+  }
+});
+</script>
+
 </script>
 
 </body>
