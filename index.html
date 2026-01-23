@@ -482,52 +482,94 @@ document.querySelectorAll("[data-slider]").forEach(slider=>{
 });
 
   <script>
-/* ===== ZOOM IMAGENS (LUPA) ===== */
-document.addEventListener("click", function(e) {
-  if (e.target.classList.contains("zoom-icon")) {
-    const img = e.target.previousElementSibling;
-    if (!img) return;
+/* ===== ZOOM COMPLETO (LUPA) ===== */
+document.addEventListener("click", function (e) {
+  if (!e.target.classList.contains("zoom-icon")) return;
 
-    const overlay = document.createElement("div");
-    overlay.className = "zoom-overlay";
+  const img = e.target.previousElementSibling;
+  if (!img) return;
 
-    const zoomImg = document.createElement("img");
-    zoomImg.src = img.src;
-    zoomImg.className = "zoom-img";
+  const overlay = document.createElement("div");
+  overlay.className = "zoom-overlay";
 
-    overlay.appendChild(zoomImg);
-    document.body.appendChild(overlay);
+  const zoomImg = document.createElement("img");
+  zoomImg.src = img.src;
+  zoomImg.className = "zoom-img";
 
-    let scale = 1;
-    let startX = 0, startY = 0;
-    let currentX = 0, currentY = 0;
+  const closeBtn = document.createElement("button");
+  closeBtn.innerHTML = "✕";
+  closeBtn.style.cssText = `
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(0,0,0,0.7);
+    color: #fff;
+    font-size: 20px;
+    cursor: pointer;
+    z-index: 3100;
+  `;
 
-    overlay.addEventListener("click", () => overlay.remove());
+  overlay.appendChild(zoomImg);
+  overlay.appendChild(closeBtn);
+  document.body.appendChild(overlay);
 
-    overlay.addEventListener("wheel", e => {
-      e.preventDefault();
-      scale += e.deltaY * -0.001;
-      scale = Math.min(Math.max(1, scale), 4);
-      zoomImg.style.transform =
-        `translate(-50%, -50%) scale(${scale}) translate(${currentX}px, ${currentY}px)`;
-    });
+  let scale = 1;
+  let lastScale = 1;
+  let posX = 0, posY = 0;
+  let startX = 0, startY = 0;
+  let startDist = 0;
 
-    zoomImg.addEventListener("touchstart", e => {
-      startX = e.touches[0].clientX - currentX;
-      startY = e.touches[0].clientY - currentY;
-    });
+  function updateTransform() {
+    const maxX = (zoomImg.width * scale - window.innerWidth) / 2;
+    const maxY = (zoomImg.height * scale - window.innerHeight) / 2;
 
-    zoomImg.addEventListener("touchmove", e => {
-      currentX = e.touches[0].clientX - startX;
-      currentY = e.touches[0].clientY - startY;
+    posX = Math.max(Math.min(posX, maxX), -maxX);
+    posY = Math.max(Math.min(posY, maxY), -maxY);
 
-      zoomImg.style.transform =
-        `translate(-50%, -50%) scale(${scale}) translate(${currentX}px, ${currentY}px)`;
-    });
+    zoomImg.style.transform =
+      `translate(-50%, -50%) scale(${scale}) translate(${posX / scale}px, ${posY / scale}px)`;
   }
-});
-</script>
 
+  closeBtn.onclick = () => overlay.remove();
+  overlay.onclick = e => { if (e.target === overlay) overlay.remove(); };
+
+  /* DRAG */
+  zoomImg.addEventListener("touchstart", e => {
+    if (e.touches.length === 1) {
+      startX = e.touches[0].clientX - posX;
+      startY = e.touches[0].clientY - posY;
+    }
+    if (e.touches.length === 2) {
+      const dx = e.touches[0].clientX - e.touches[1].clientX;
+      const dy = e.touches[0].clientY - e.touches[1].clientY;
+      startDist = Math.sqrt(dx * dx + dy * dy);
+      lastScale = scale;
+    }
+  });
+
+  zoomImg.addEventListener("touchmove", e => {
+    e.preventDefault();
+
+    if (e.touches.length === 1 && scale > 1) {
+      posX = e.touches[0].clientX - startX;
+      posY = e.touches[0].clientY - startY;
+    }
+
+    if (e.touches.length === 2) {
+      const dx = e.touches[0].clientX - e.touches[1].clientX;
+      const dy = e.touches[0].clientY - e.touches[1].clientY;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      scale = Math.min(Math.max(1, lastScale * (dist / startDist)), 4);
+    }
+
+    updateTransform();
+  }, { passive: false });
+
+});
 </script>
 
 </body>
