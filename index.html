@@ -302,7 +302,7 @@ body {
 
   <div class="whats">
     💬 <strong>Dúvidas sobre o evento</strong><br><br>
-    <a href="https://wa.me/5541997550040" target="_blank">📱 Falar no WhatsApp</a>
+    <a href="https://wa.me/5541995120357" target="_blank">📱 Falar no WhatsApp</a>
   </div>
 </div>
 </div>
@@ -352,6 +352,73 @@ document.querySelectorAll("[data-slider]").forEach(slider=>{
     track.style.transform=`translateX(-${current*100}%)`;
     dots.forEach((d,i)=>d.classList.toggle("active",i===current));
   });
+});
+
+/* ZOOM COM PAN */
+document.querySelectorAll(".zoom-icon").forEach(icon=>{
+  icon.onclick=()=>{
+    let scale=1, posX=0, posY=0;
+    let startX=0,startY=0,startDist=0;
+    const imgSrc=icon.previousElementSibling.src;
+
+    document.body.style.overflow="hidden";
+
+    const overlay=document.createElement("div");
+    overlay.className="zoom-overlay";
+    overlay.innerHTML=`
+      <img src="${imgSrc}" class="zoom-img">
+      <div class="zoom-controls">
+        <button id="zoomPlus">+</button>
+        <button id="zoomMinus">−</button>
+        <button id="zoomClose">✕</button>
+      </div>`;
+    document.body.appendChild(overlay);
+
+    const img=overlay.querySelector(".zoom-img");
+
+    function apply(){
+      img.style.transform=`translate(calc(-50% + ${posX}px), calc(-50% + ${posY}px)) scale(${scale})`;
+    }
+
+    overlay.addEventListener("touchstart",e=>{
+      if(e.touches.length===1){
+        startX=e.touches[0].clientX-posX;
+        startY=e.touches[0].clientY-posY;
+      }
+      if(e.touches.length===2){
+        startDist=Math.hypot(
+          e.touches[0].clientX-e.touches[1].clientX,
+          e.touches[0].clientY-e.touches[1].clientY
+        );
+      }
+    },{passive:false});
+
+    overlay.addEventListener("touchmove",e=>{
+      e.preventDefault();
+      if(e.touches.length===1 && scale>1){
+        posX=e.touches[0].clientX-startX;
+        posY=e.touches[0].clientY-startY;
+        apply();
+      }
+      if(e.touches.length===2){
+        const dist=Math.hypot(
+          e.touches[0].clientX-e.touches[1].clientX,
+          e.touches[0].clientY-e.touches[1].clientY
+        );
+        scale+= (dist-startDist)/300;
+        scale=Math.max(1,Math.min(scale,4));
+        startDist=dist;
+        apply();
+      }
+    },{passive:false});
+
+    overlay.querySelector("#zoomPlus").onclick=()=>{scale=Math.min(scale+0.2,4);apply();};
+    overlay.querySelector("#zoomMinus").onclick=()=>{scale=Math.max(scale-0.2,1);apply();};
+    overlay.querySelector("#zoomClose").onclick=()=>{
+      document.body.style.overflow="";
+      overlay.remove();
+    };
+  };
 });
 </script>
 
