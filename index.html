@@ -500,7 +500,6 @@ document.querySelectorAll("[data-slider]").forEach(slider=>{
   });
 });
 
-  <script>
 /* ===== ZOOM COMPLETO (LUPA) ===== */
 document.addEventListener("click", function (e) {
   if (!e.target.classList.contains("zoom-icon")) return;
@@ -556,7 +555,6 @@ document.addEventListener("click", function (e) {
   closeBtn.onclick = () => overlay.remove();
   overlay.onclick = e => { if (e.target === overlay) overlay.remove(); };
 
-  /* DRAG */
   zoomImg.addEventListener("touchstart", e => {
     if (e.touches.length === 1) {
       startX = e.touches[0].clientX - posX;
@@ -587,9 +585,5 @@ document.addEventListener("click", function (e) {
 
     updateTransform();
   }, { passive: false });
-
 });
 </script>
-
-</body>
-</html>
