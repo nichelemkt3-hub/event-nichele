@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
@@ -16,26 +16,24 @@ body {
 
 .top-banner img { width: 100%; display: block; }
 
-/* ===== BARRA SUPERIOR ===== */
+/* ===== QUICK LINKS AJUSTADO ===== */
 .quick-links {
   background: linear-gradient(180deg, #071f36, #0b2e52);
-  padding: 16px;
+  padding: 18px 16px 22px;
 }
 
-.links-bar {
-  max-width: 1100px;
-  margin: auto;
-  display: grid;
-  grid-template-columns: auto 1fr auto auto;
+.quick-bar {
+  display: flex;
   align-items: center;
-  gap: 12px;
+  justify-content: space-between;
 }
 
-.links-bar img {
-  width: 70px;
+.quick-left img {
+  width: 80px;
 }
 
-.link-btn {
+.quick-center a,
+.quick-right a {
   color: #fff;
   text-decoration: none;
   font-weight: bold;
@@ -45,8 +43,11 @@ body {
   background: rgba(255,255,255,0.12);
 }
 
-.center-link {
-  justify-self: center;
+.quick-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  position: relative;
 }
 
 .dropdown {
@@ -54,44 +55,44 @@ body {
 }
 
 .dropdown button {
-  all: unset;
-  cursor: pointer;
+  background: rgba(255,255,255,0.12);
+  border: none;
   color: #fff;
   font-weight: bold;
   font-size: 14px;
   padding: 8px 14px;
   border-radius: 18px;
-  background: rgba(255,255,255,0.12);
+  cursor: pointer;
 }
 
-.dropdown-menu {
+.dropdown-content {
+  display: none;
   position: absolute;
   right: 0;
-  top: 44px;
+  top: 42px;
   background: #0b2e52;
-  border-radius: 12px;
+  border-radius: 14px;
+  box-shadow: 0 10px 26px rgba(0,0,0,0.35);
   overflow: hidden;
-  display: none;
-  min-width: 160px;
   z-index: 1000;
 }
 
-.dropdown-menu a {
+.dropdown-content a {
   display: block;
-  padding: 10px 14px;
+  padding: 10px 16px;
   color: #fff;
   text-decoration: none;
   font-size: 14px;
 }
 
-.dropdown-menu a:hover {
+.dropdown-content a:hover {
   background: rgba(255,255,255,0.15);
 }
 
-.dropdown.open .dropdown-menu {
+.dropdown.open .dropdown-content {
   display: block;
 }
-/* ========================== */
+/* ============================== */
 
 .footer-bar {
   position: fixed;
@@ -147,7 +148,7 @@ body {
 }
 
 /* SLIDER */
-.slider { overflow: hidden; }
+.slider { overflow: hidden; position: relative; }
 .slider-track { display: flex; transition: transform 0.5s ease; }
 .slide { min-width: 100%; position: relative; }
 
@@ -215,8 +216,7 @@ body {
   position: fixed;
   inset: 0;
   background: rgba(0,0,0,0.92);
-  z-index: 3000;
-  overflow: hidden;
+  z-index: 4000;
 }
 
 .zoom-img {
@@ -224,6 +224,7 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%,-50%) scale(1);
+  transform-origin: center;
   max-width: 95vw;
   max-height: 85vh;
   touch-action: none;
@@ -236,6 +237,7 @@ body {
   display: flex;
   gap: 10px;
 }
+
 .zoom-controls button {
   width: 38px;
   height: 38px;
@@ -269,68 +271,97 @@ body {
 <div class="top-banner"><img src="topoat.png"></div>
 
 <div class="quick-links">
-  <div class="links-bar">
-    <img src="logo.png">
+  <div class="quick-bar">
+    <div class="quick-left">
+      <img src="logo.png" alt="Nichele">
+    </div>
 
-    <a class="link-btn center-link" href="https://premiada.premify.com.br/Login/aniversariopremiadonichele" target="_blank">LOGIN</a>
+    <div class="quick-center">
+      <a href="https://premiada.premify.com.br/Login/aniversariopremiadonichele" target="_blank">LOGIN</a>
+    </div>
 
-    <a class="link-btn" href="https://premiada.premify.com.br/Cadastro/aniversariopremiadonichele" target="_blank">CADASTRE-SE</a>
+    <div class="quick-right">
+      <a href="https://premiada.premify.com.br/Cadastro/aniversariopremiadonichele" target="_blank">CADASTRE-SE</a>
 
-    <div class="dropdown">
-      <button onclick="this.parentElement.classList.toggle('open')">☰</button>
-      <div class="dropdown-menu">
-        <a href="https://premiada.premify.com.br/Ganhadores/aniversariopremiadonichele" target="_blank">GANHADORES</a>
-        <a href="https://premiada.premify.com.br/Regulamento/aniversariopremiadonichele" target="_blank">REGULAMENTO</a>
+      <div class="dropdown">
+        <button onclick="this.parentElement.classList.toggle('open')">☰</button>
+        <div class="dropdown-content">
+          <a href="https://premiada.premify.com.br/Ganhadores/aniversariopremiadonichele" target="_blank">GANHADORES</a>
+          <a href="https://premiada.premify.com.br/Regulamento/aniversariopremiadonichele" target="_blank">REGULAMENTO</a>
+        </div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- RESTANTE DO HTML PERMANECE IGUAL -->
-
-<div class="footer-bar">NICHELE LTDA. | CNPJ: 77.172.161/0001-97</div>
+<!-- TODO O RESTANTE DO HTML PERMANECEU IGUAL -->
 
 <script>
-/* ZOOM */
-document.addEventListener("click", e=>{
-  if(!e.target.classList.contains("zoom-icon")) return;
+/* SLIDERS */
+document.querySelectorAll("[data-slider]").forEach(slider=>{
+  let startX=0,current=0;
+  const track=slider.querySelector(".slider-track");
+  const slides=slider.querySelectorAll(".slide").length;
+  const dots=slider.parentElement.querySelectorAll(".slider-dots span");
 
-  const img = e.target.previousElementSibling;
-  let scale = 1, x=0, y=0, startX=0, startY=0;
-
-  const overlay=document.createElement("div");
-  overlay.className="zoom-overlay";
-
-  const zoomImg=img.cloneNode();
-  zoomImg.className="zoom-img";
-
-  const controls=document.createElement("div");
-  controls.className="zoom-controls";
-  controls.innerHTML='<button>+</button><button>-</button><button>✕</button>';
-
-  overlay.append(zoomImg,controls);
-  document.body.appendChild(overlay);
-
-  function update(){
-    zoomImg.style.transform=`translate(calc(-50% + ${x}px), calc(-50% + ${y}px)) scale(${scale})`;
+  if(slider.hasAttribute("data-autoplay")){
+    setInterval(()=>{
+      current=(current+1)%slides;
+      track.style.transform=`translateX(-${current*100}%)`;
+      dots.forEach((d,i)=>d.classList.toggle("active",i===current));
+    },4000);
   }
 
-  controls.children[0].onclick=()=>{scale=Math.min(scale+0.2,4);update();}
-  controls.children[1].onclick=()=>{scale=Math.max(scale-0.2,1);update();}
-  controls.children[2].onclick=()=>overlay.remove();
+  slider.addEventListener("touchstart",e=>startX=e.touches[0].clientX);
+  slider.addEventListener("touchend",e=>{
+    const diff=e.changedTouches[0].clientX-startX;
+    if(diff<-50 && current<slides-1)current++;
+    if(diff>50 && current>0)current--;
+    track.style.transform=`translateX(-${current*100}%)`;
+    dots.forEach((d,i)=>d.classList.toggle("active",i===current));
+  });
+});
+
+/* ZOOM */
+let zoomScale=1, startX=0, startY=0, imgX=0, imgY=0;
+
+document.addEventListener("click",e=>{
+  if(!e.target.classList.contains("zoom-icon")) return;
+
+  const img=e.target.previousElementSibling;
+  const overlay=document.createElement("div");
+  overlay.className="zoom-overlay";
+  overlay.innerHTML=`
+    <img src="${img.src}" class="zoom-img">
+    <div class="zoom-controls">
+      <button onclick="zoomScale+=0.2;updateZoom()">+</button>
+      <button onclick="zoomScale=Math.max(1,zoomScale-0.2);updateZoom()">−</button>
+      <button onclick="this.closest('.zoom-overlay').remove()">✖</button>
+    </div>`;
+  document.body.appendChild(overlay);
+
+  const zoomImg=overlay.querySelector(".zoom-img");
+
+  window.updateZoom=()=>{
+    zoomImg.style.transform=\`translate(calc(-50% + ${imgX}px), calc(-50% + ${imgY}px)) scale(${zoomScale})\`;
+  };
 
   zoomImg.addEventListener("touchstart",e=>{
-    startX=e.touches[0].clientX-x;
-    startY=e.touches[0].clientY-y;
+    startX=e.touches[0].clientX;
+    startY=e.touches[0].clientY;
   });
 
   zoomImg.addEventListener("touchmove",e=>{
-    x=e.touches[0].clientX-startX;
-    y=e.touches[0].clientY-startY;
-    update();
+    imgX+=e.touches[0].clientX-startX;
+    imgY+=e.touches[0].clientY-startY;
+    startX=e.touches[0].clientX;
+    startY=e.touches[0].clientY;
+    updateZoom();
   });
 });
 </script>
+
+<div class="footer-bar">NICHELE LTDA. | CNPJ: 77.172.161/0001-97</div>
 
 </body>
 </html>
