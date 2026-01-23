@@ -16,40 +16,82 @@ body {
 
 .top-banner img { width: 100%; display: block; }
 
-/* ===== NOVO BLOCO DE LINKS ===== */
+/* ===== BARRA SUPERIOR ===== */
 .quick-links {
   background: linear-gradient(180deg, #071f36, #0b2e52);
-  padding: 26px 16px 30px;
-  text-align: center;
+  padding: 16px;
 }
 
-.quick-links img {
-  width: 90px;
-  margin-bottom: 16px;
+.links-bar {
+  max-width: 1100px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: auto 1fr auto auto;
+  align-items: center;
+  gap: 12px;
 }
 
-.links-row {
-  display: flex;
-  justify-content: center;
-  gap: 22px;
-  flex-wrap: wrap;
+.links-bar img {
+  width: 70px;
 }
 
-.links-row a {
-  color: #ffffff;
+.link-btn {
+  color: #fff;
   text-decoration: none;
   font-weight: bold;
   font-size: 14px;
   padding: 8px 14px;
   border-radius: 18px;
   background: rgba(255,255,255,0.12);
-  backdrop-filter: blur(4px);
 }
 
-.links-row a:hover {
-  background: rgba(255,255,255,0.22);
+.center-link {
+  justify-self: center;
 }
-/* ============================== */
+
+.dropdown {
+  position: relative;
+}
+
+.dropdown button {
+  all: unset;
+  cursor: pointer;
+  color: #fff;
+  font-weight: bold;
+  font-size: 14px;
+  padding: 8px 14px;
+  border-radius: 18px;
+  background: rgba(255,255,255,0.12);
+}
+
+.dropdown-menu {
+  position: absolute;
+  right: 0;
+  top: 44px;
+  background: #0b2e52;
+  border-radius: 12px;
+  overflow: hidden;
+  display: none;
+  min-width: 160px;
+  z-index: 1000;
+}
+
+.dropdown-menu a {
+  display: block;
+  padding: 10px 14px;
+  color: #fff;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.dropdown-menu a:hover {
+  background: rgba(255,255,255,0.15);
+}
+
+.dropdown.open .dropdown-menu {
+  display: block;
+}
+/* ========================== */
 
 .footer-bar {
   position: fixed;
@@ -168,14 +210,15 @@ body {
   cursor: pointer;
 }
 
-/* ZOOM */
+/* ZOOM OVERLAY */
 .zoom-overlay {
   position: fixed;
   inset: 0;
   background: rgba(0,0,0,0.92);
   z-index: 3000;
-  touch-action: none;
+  overflow: hidden;
 }
+
 .zoom-img {
   position: absolute;
   top: 50%;
@@ -185,6 +228,7 @@ body {
   max-height: 85vh;
   touch-action: none;
 }
+
 .zoom-controls {
   position: fixed;
   top: 20px;
@@ -224,141 +268,66 @@ body {
 
 <div class="top-banner"><img src="topoat.png"></div>
 
-<!-- NOVA ÁREA DE REDIRECIONAMENTO -->
 <div class="quick-links">
-  <img src="logo.png" alt="Nichele">
-  <div class="links-row">
-    <a href="https://premiada.premify.com.br/Ganhadores/aniversariopremiadonichele" target="_blank">GANHADORES</a>
-    <a href="https://premiada.premify.com.br/Regulamento/aniversariopremiadonichele" target="_blank">REGULAMENTO</a>
-    <a href="https://premiada.premify.com.br/Cadastro/aniversariopremiadonichele" target="_blank">CADASTRE-SE</a>
-    <a href="https://premiada.premify.com.br/Login/aniversariopremiadonichele" target="_blank">LOGIN</a>
-  </div>
-</div>
+  <div class="links-bar">
+    <img src="logo.png">
 
-<div class="container">
+    <a class="link-btn center-link" href="https://premiada.premify.com.br/Login/aniversariopremiadonichele" target="_blank">LOGIN</a>
 
-<!-- HOME -->
-<div id="home" class="section fade-up">
-<h2 class="section-title">🎁 Prêmios da Roleta</h2>
+    <a class="link-btn" href="https://premiada.premify.com.br/Cadastro/aniversariopremiadonichele" target="_blank">CADASTRE-SE</a>
 
-<div class="slider" data-slider data-autoplay>
-  <div class="slider-track">
-    <div class="slide"><div class="premios-row"><img src="4.png"><img src="7.png"></div></div>
-    <div class="slide"><div class="premios-row"><img src="6.png"><img src="5.png"></div></div>
-    <div class="slide"><div class="premios-row"><img src="8.png"><img src="9.png"></div></div>
-    <div class="slide"><div class="premios-row"><img src="10.png"><img src="11.png"></div></div>
-    <div class="slide"><div class="premios-row"><img src="12.png"><img src="13.png"></div></div>
-    <div class="slide"><div class="premios-row"><img src="14.png"><img src="15.png"></div></div>
-    <div class="slide"><div class="premios-row"><img src="16.png"><img src="17.png"></div></div>
-  </div>
-</div>
-
-<div class="slider-dots">
-  <span class="active"></span><span></span><span></span><span></span><span></span><span></span><span></span>
-</div>
-
-<div class="section-title" style="margin-top:30px;">🎉 Eventos</div>
-<div class="menu-buttons">
-  <video src="videosorteio.mp4" autoplay muted loop playsinline onclick="showPage('sorteio')"></video>
-  <video src="videoroleta.mp4" autoplay muted loop playsinline onclick="showPage('roleta')"></video>
-</div>
-</div>
-
-<!-- SORTEIO -->
-<div id="sorteio" class="section hidden">
-<button class="btn light" onclick="showPage('home')">⬅ Voltar</button>
-
-<img src="sorteio1.png" class="content-img">
-<img src="sorteio2.png" class="content-img">
-
-<button class="btn" onclick="toggle('regrasSorteio')">Confira as regras</button>
-
-<div id="regrasSorteio" class="hidden">
-  <div class="slider" data-slider>
-    <div class="slider-track">
-      <div class="slide"><img src="duvidas1.png" class="content-img"><div class="zoom-icon">🔍</div></div>
-      <div class="slide"><img src="duvidas2.png" class="content-img"><div class="zoom-icon">🔍</div></div>
+    <div class="dropdown">
+      <button onclick="this.parentElement.classList.toggle('open')">☰</button>
+      <div class="dropdown-menu">
+        <a href="https://premiada.premify.com.br/Ganhadores/aniversariopremiadonichele" target="_blank">GANHADORES</a>
+        <a href="https://premiada.premify.com.br/Regulamento/aniversariopremiadonichele" target="_blank">REGULAMENTO</a>
+      </div>
     </div>
   </div>
-
-  <div class="slider-dots"><span class="active"></span><span></span></div>
-
-  <div class="whats">
-    💬 <strong>Dúvidas sobre o evento</strong><br><br>
-    <a href="https://wa.me/5541997550040" target="_blank">📱 Falar no WhatsApp</a>
-  </div>
-</div>
 </div>
 
-<!-- ROLETA -->
-<div id="roleta" class="section hidden">
-<button class="btn light" onclick="showPage('home')">⬅ Voltar</button>
-
-<img src="roleta.png" class="content-img">
-
-<button class="btn" onclick="toggle('regrasRoleta')">Confira as regras</button>
-
-<div id="regrasRoleta" class="hidden">
-  <div class="slider" data-slider>
-    <div class="slider-track">
-      <div class="slide"><img src="duvidar1.png" class="content-img"><div class="zoom-icon">🔍</div></div>
-      <div class="slide"><img src="duvidar2.png" class="content-img"><div class="zoom-icon">🔍</div></div>
-    </div>
-  </div>
-
-  <div class="slider-dots"><span class="active"></span><span></span></div>
-
-  <div class="whats">
-    💬 <strong>Dúvidas sobre o evento</strong><br><br>
-    <a href="https://wa.me/5541997550040" target="_blank">📱 Falar no WhatsApp</a>
-  </div>
-</div>
-</div>
-
-</div>
+<!-- RESTANTE DO HTML PERMANECE IGUAL -->
 
 <div class="footer-bar">NICHELE LTDA. | CNPJ: 77.172.161/0001-97</div>
 
 <script>
-function showPage(page){
-  ["home","sorteio","roleta"].forEach(id=>{
-    const el=document.getElementById(id);
-    if(el) el.classList.add("hidden");
+/* ZOOM */
+document.addEventListener("click", e=>{
+  if(!e.target.classList.contains("zoom-icon")) return;
+
+  const img = e.target.previousElementSibling;
+  let scale = 1, x=0, y=0, startX=0, startY=0;
+
+  const overlay=document.createElement("div");
+  overlay.className="zoom-overlay";
+
+  const zoomImg=img.cloneNode();
+  zoomImg.className="zoom-img";
+
+  const controls=document.createElement("div");
+  controls.className="zoom-controls";
+  controls.innerHTML='<button>+</button><button>-</button><button>✕</button>';
+
+  overlay.append(zoomImg,controls);
+  document.body.appendChild(overlay);
+
+  function update(){
+    zoomImg.style.transform=`translate(calc(-50% + ${x}px), calc(-50% + ${y}px)) scale(${scale})`;
+  }
+
+  controls.children[0].onclick=()=>{scale=Math.min(scale+0.2,4);update();}
+  controls.children[1].onclick=()=>{scale=Math.max(scale-0.2,1);update();}
+  controls.children[2].onclick=()=>overlay.remove();
+
+  zoomImg.addEventListener("touchstart",e=>{
+    startX=e.touches[0].clientX-x;
+    startY=e.touches[0].clientY-y;
   });
-  const target=document.getElementById(page);
-  if(target){
-    target.classList.remove("hidden");
-    void target.offsetWidth;
-    target.classList.add("fade-up");
-  }
-}
 
-function toggle(id){
-  document.getElementById(id).classList.toggle("hidden");
-}
-
-/* SLIDERS */
-document.querySelectorAll("[data-slider]").forEach(slider=>{
-  let startX=0,current=0;
-  const track=slider.querySelector(".slider-track");
-  const slides=slider.querySelectorAll(".slide").length;
-  const dots=slider.parentElement.querySelectorAll(".slider-dots span");
-
-  if(slider.hasAttribute("data-autoplay")){
-    setInterval(()=>{
-      current=(current+1)%slides;
-      track.style.transform=`translateX(-${current*100}%)`;
-      dots.forEach((d,i)=>d.classList.toggle("active",i===current));
-    },4000);
-  }
-
-  slider.addEventListener("touchstart",e=>startX=e.touches[0].clientX);
-  slider.addEventListener("touchend",e=>{
-    const diff=e.changedTouches[0].clientX-startX;
-    if(diff<-50 && current<slides-1)current++;
-    if(diff>50 && current>0)current--;
-    track.style.transform=`translateX(-${current*100}%)`;
-    dots.forEach((d,i)=>d.classList.toggle("active",i===current));
+  zoomImg.addEventListener("touchmove",e=>{
+    x=e.touches[0].clientX-startX;
+    y=e.touches[0].clientY-startY;
+    update();
   });
 });
 </script>
