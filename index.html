@@ -23,6 +23,84 @@ body {
   text-align: center;
 }
 
+.quick-links-inner {
+  max-width: 1100px;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* LOGO MENOR */
+.quick-logo {
+  width: 58px; /* menor que antes */
+}
+
+/* BOTÕES DIREITA */
+.quick-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.link-btn {
+  color: #fff;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: bold;
+  padding: 7px 14px;
+  border-radius: 16px;
+  background: rgba(255,255,255,0.12);
+}
+
+.link-btn.destaque {
+  background: #b5121b;
+}
+
+/* DROPDOWN */
+.dropdown {
+  position: relative;
+}
+
+.dropdown-btn {
+  background: rgba(255,255,255,0.15);
+  border: none;
+  color: #fff;
+  font-size: 18px;
+  padding: 6px 12px;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+.dropdown-menu {
+  position: absolute;
+  right: 0;
+  top: 42px;
+  background: #0b2e52;
+  border-radius: 12px;
+  overflow: hidden;
+  display: none;
+  min-width: 150px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+}
+
+.dropdown-menu a {
+  display: block;
+  padding: 10px 14px;
+  color: #fff;
+  font-size: 13px;
+  text-decoration: none;
+}
+
+.dropdown-menu a:hover {
+  background: rgba(255,255,255,0.12);
+}
+
+/* ABRIR MENU */
+.dropdown:hover .dropdown-menu {
+  display: block;
+}
+
 .quick-links img {
   width: 90px;
   margin-bottom: 16px;
@@ -226,14 +304,39 @@ body {
 
 <!-- NOVA ÁREA DE REDIRECIONAMENTO -->
 <div class="quick-links">
-  <img src="logo.png" alt="Nichele">
-  <div class="links-row">
-    <a href="https://premiada.premify.com.br/Ganhadores/aniversariopremiadonichele" target="_blank">GANHADORES</a>
-    <a href="https://premiada.premify.com.br/Regulamento/aniversariopremiadonichele" target="_blank">REGULAMENTO</a>
-    <a href="https://premiada.premify.com.br/Cadastro/aniversariopremiadonichele" target="_blank">CADASTRE-SE</a>
-    <a href="https://premiada.premify.com.br/Login/aniversariopremiadonichele" target="_blank">LOGIN</a>
+  <div class="quick-links-inner">
+
+    <!-- LOGO ESQUERDA -->
+    <img src="logo.png" alt="Nichele" class="quick-logo">
+
+    <!-- AÇÕES DIREITA -->
+    <div class="quick-actions">
+
+      <a href="https://premiada.premify.com.br/Login/aniversariopremiadonichele" target="_blank" class="link-btn">
+        LOGIN
+      </a>
+
+      <a href="https://premiada.premify.com.br/Cadastro/aniversariopremiadonichele" target="_blank" class="link-btn destaque">
+        CADASTRE-SE
+      </a>
+
+      <!-- MENU SUSPENSO -->
+      <div class="dropdown">
+        <button class="dropdown-btn">☰</button>
+        <div class="dropdown-menu">
+          <a href="https://premiada.premify.com.br/Ganhadores/aniversariopremiadonichele" target="_blank">
+            GANHADORES
+          </a>
+          <a href="https://premiada.premify.com.br/Regulamento/aniversariopremiadonichele" target="_blank">
+            REGULAMENTO
+          </a>
+        </div>
+      </div>
+
+    </div>
   </div>
 </div>
+
 
 <div class="container">
 
