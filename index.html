@@ -468,6 +468,108 @@ document.querySelectorAll("[data-slider]").forEach(slider=>{
     dots.forEach((d,i)=>d.classList.toggle("active",i===current));
   });
 });
+
+let zoomScale = 1;
+let startDist = 0;
+let startScale = 1;
+let posX = 0, posY = 0;
+let startX = 0, startY = 0;
+let dragging = false;
+
+document.addEventListener("click", function(e){
+  if(e.target.classList.contains("zoom-icon")){
+    const img = e.target.previousElementSibling;
+
+    const overlay = document.createElement("div");
+    overlay.className = "zoom-overlay";
+
+    overlay.innerHTML = `
+      <img src="${img.src}" class="zoom-img">
+      <div class="zoom-controls">
+        <button id="zoomIn">+</button>
+        <button id="zoomOut">−</button>
+        <button id="zoomClose">✕</button>
+      </div>
+    `;
+
+    document.body.appendChild(overlay);
+
+    const zoomImg = overlay.querySelector(".zoom-img");
+
+    zoomScale = 1;
+    posX = 0;
+    posY = 0;
+    updateTransform();
+
+    function updateTransform(){
+      zoomImg.style.transform =
+        `translate(-50%, -50%) translate(${posX}px, ${posY}px) scale(${zoomScale})`;
+    }
+
+    overlay.querySelector("#zoomIn").onclick = ()=>{
+      zoomScale = Math.min(zoomScale + 0.2, 4);
+      updateTransform();
+    };
+
+    overlay.querySelector("#zoomOut").onclick = ()=>{
+      zoomScale = Math.max(zoomScale - 0.2, 1);
+      updateTransform();
+    };
+
+    overlay.querySelector("#zoomClose").onclick = ()=> overlay.remove();
+
+    overlay.addEventListener("click",e=>{
+      if(e.target === overlay) overlay.remove();
+    });
+
+    // Drag
+    zoomImg.addEventListener("mousedown",e=>{
+      dragging = true;
+      startX = e.clientX - posX;
+      startY = e.clientY - posY;
+    });
+
+    window.addEventListener("mousemove",e=>{
+      if(dragging){
+        posX = e.clientX - startX;
+        posY = e.clientY - startY;
+        updateTransform();
+      }
+    });
+
+    window.addEventListener("mouseup",()=> dragging=false);
+
+    // Scroll zoom (desktop)
+    overlay.addEventListener("wheel",e=>{
+      e.preventDefault();
+      zoomScale += e.deltaY * -0.001;
+      zoomScale = Math.min(Math.max(1, zoomScale), 4);
+      updateTransform();
+    }, { passive:false });
+
+    // Pinch zoom (mobile)
+    zoomImg.addEventListener("touchstart",e=>{
+      if(e.touches.length === 2){
+        startDist = Math.hypot(
+          e.touches[0].clientX - e.touches[1].clientX,
+          e.touches[0].clientY - e.touches[1].clientY
+        );
+        startScale = zoomScale;
+      }
+    });
+
+    zoomImg.addEventListener("touchmove",e=>{
+      if(e.touches.length === 2){
+        const dist = Math.hypot(
+          e.touches[0].clientX - e.touches[1].clientX,
+          e.touches[0].clientY - e.touches[1].clientY
+        );
+        zoomScale = Math.min(Math.max(startScale * (dist / startDist), 1), 4);
+        updateTransform();
+      }
+    });
+  }
+});
 </script>
 
 </body>
