@@ -510,7 +510,7 @@ zoomImg.style.transformOrigin = "0 0";
 
     function updateTransform(){
   zoomImg.style.transform =
-    `translate(${posX}px, ${posY}px) scale(${zoomScale})`;
+    `translate(-50%, -50%) translate(${posX}px, ${posY}px) scale(${zoomScale})`;
 }
 
     overlay.querySelector("#zoomIn").onclick = ()=>{
@@ -530,19 +530,20 @@ zoomImg.style.transformOrigin = "0 0";
     });
 
     // Drag
-    zoomImg.addEventListener("mousedown",e=>{
-      dragging = true;
-      startX = e.clientX - posX;
-      startY = e.clientY - posY;
-    });
+    zoomImg.addEventListener("mousedown", e => {
+  dragging = true;
+  startX = e.clientX;
+  startY = e.clientY;
+});
 
     window.addEventListener("mousemove",e=>{
       if(dragging){
-        posX = e.clientX - startX;
-        posY = e.clientY - startY;
-        updateTransform();
-      }
-    });
+  posX += e.clientX - startX;
+  posY += e.clientY - startY;
+  startX = e.clientX;
+  startY = e.clientY;
+  updateTransform();
+}
 
     window.addEventListener("mouseup",()=> dragging=false);
 
