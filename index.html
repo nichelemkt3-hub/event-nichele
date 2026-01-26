@@ -392,7 +392,7 @@ body {
 
   <div class="whats">
     💬 <strong>Dúvidas sobre o evento</strong><br><br>
-    <a href="https://wa.me/5541997550040" target="_blank">📱 Falar no WhatsApp</a>
+    <a href="https://wa.me/5541995120357" target="_blank">📱 Falar no WhatsApp</a>
   </div>
 </div>
 </div>
@@ -496,15 +496,22 @@ document.addEventListener("click", function(e){
 
     const zoomImg = overlay.querySelector(".zoom-img");
 
+    posX = window.innerWidth / 2;
+posY = window.innerHeight / 2;
+
+zoomImg.style.left = "0";
+zoomImg.style.top = "0";
+zoomImg.style.transformOrigin = "0 0";
+
     zoomScale = 1;
     posX = 0;
     posY = 0;
     updateTransform();
 
     function updateTransform(){
-      zoomImg.style.transform =
-        `translate(-50%, -50%) translate(${posX}px, ${posY}px) scale(${zoomScale})`;
-    }
+  zoomImg.style.transform =
+    `translate(${posX}px, ${posY}px) scale(${zoomScale})`;
+}
 
     overlay.querySelector("#zoomIn").onclick = ()=>{
       zoomScale = Math.min(zoomScale + 0.2, 4);
