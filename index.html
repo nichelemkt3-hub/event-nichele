@@ -11,186 +11,157 @@
   <title>Campanha Nichele</title>
 
   <style>
-    /* ===== ESTILOS GERAIS ===== */
     * { box-sizing: border-box; font-family: Arial, Helvetica, sans-serif; }
 
     body {
       margin: 0;
-      padding-bottom: 46px;
+      padding-bottom: 60px;
       background: linear-gradient(180deg, #0d2a4a, #123a63);
+      min-height: 100vh;
     }
 
-    /* ===== BANNER TOPO ===== */
-    .top-banner {
-      width: 100%;
-      background: #0d2a4a;
-    }
+    /* BANNER OCUPANDO 100% SEMPRE */
     .top-banner img { 
       width: 100%; 
+      height: auto;
       display: block; 
-      max-width: 100%;
     }
 
-    /* ===== BARRA DE LINKS (QUICK LINKS) ===== */
+    /* BARRA DE LINKS */
     .quick-links {
       background: linear-gradient(180deg, #071f36, #0b2e52);
-      padding: 20px 16px;
-      text-align: center;
+      padding: 15px 20px;
+      width: 100%;
     }
 
     .quick-links-inner {
-      max-width: 1000px;
+      width: 100%;
+      max-width: 1400px; /* Limite apenas para não espalhar demais em monitores UltraWide */
       margin: auto;
       display: flex;
       align-items: center;
       justify-content: space-between;
     }
 
-    .quick-logo { width: 24px; }
+    .quick-logo { width: 30px; }
 
     .quick-actions {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 15px;
     }
 
     .link-btn {
       color: #fff;
       text-decoration: none;
-      font-size: 13px;
+      font-size: 14px;
       font-weight: bold;
-      padding: 8px 14px;
-      border-radius: 16px;
+      padding: 10px 20px;
+      border-radius: 20px;
       background: rgba(255,255,255,0.12);
-      transition: 0.3s;
     }
 
     .link-btn.destaque { background: #b5121b; }
-    .link-btn:hover { background: rgba(255,255,255,0.25); }
 
-    /* DROPDOWN */
-    .dropdown { position: relative; }
-    .dropdown-btn {
-      background: rgba(255,255,255,0.15);
-      border: none;
-      color: #fff;
-      font-size: 18px;
-      padding: 6px 12px;
-      border-radius: 12px;
-      cursor: pointer;
-    }
-
-    .dropdown-menu {
-      position: absolute;
-      right: 0;
-      top: 42px;
-      background: #0b2e52;
-      border-radius: 12px;
-      overflow: hidden;
-      display: none;
-      min-width: 150px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-      z-index: 1000;
-    }
-
-    .dropdown-menu a {
-      display: block;
-      padding: 12px 14px;
-      color: #fff;
-      font-size: 13px;
-      text-decoration: none;
-    }
-
-    .dropdown-menu a:hover { background: rgba(255,255,255,0.12); }
-    .dropdown:hover .dropdown-menu { display: block; }
-
-    /* ===== CONTAINER E SEÇÕES ===== */
+    /* CONTAINER PRINCIPAL LARGO */
     .container { 
-      max-width: 1000px; 
+      width: 100%; 
+      max-width: 95%; /* Ocupa 95% da largura da tela */
       margin: auto; 
-      padding: 20px; 
+      padding: 20px 0; 
     }
 
     .section {
       background: #fff;
       border-radius: 16px;
-      padding: 22px;
+      padding: 30px;
       margin-bottom: 30px;
       box-shadow: 0 14px 32px rgba(0,0,0,0.2);
+      width: 100%;
     }
 
     .section-title {
       text-align: center;
-      font-size: 22px;
-      margin-bottom: 20px;
+      font-size: 28px;
+      margin-bottom: 25px;
       color: #0d2a4a;
       font-weight: bold;
     }
 
-    /* PRÊMIOS */
+    /* PRÊMIOS - AJUSTE PARA NÃO FICAR GIGANTE NO DESKTOP */
     .premios-row {
       display: flex;
-      gap: 16px;
+      gap: 20px;
+      justify-content: center;
     }
     .premios-row img {
-      width: calc(50% - 8px);
+      width: 45%; 
+      max-width: 500px; /* Evita que a imagem do prêmio fique imensa */
       border-radius: 14px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.18);
     }
 
-    /* SLIDER */
-    .slider { overflow: hidden; }
-    .slider-track { display: flex; transition: transform 0.5s ease; }
-    .slide { min-width: 100%; position: relative; }
-
-    .slider-dots {
-      display: flex;
-      justify-content: center;
-      gap: 8px;
-      margin-top: 15px;
-    }
-    .slider-dots span {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: #cfd8e3;
-    }
-    .slider-dots span.active { background: #0d2a4a; }
-
-    /* CAMPANHAS (VÍDEOS) */
+    /* VÍDEOS LADO A LADO NO DESKTOP */
     .menu-buttons { 
       display: flex; 
       flex-direction: column; 
-      gap: 18px; 
+      gap: 20px; 
     }
+
+    @media (min-width: 1024px) {
+      .menu-buttons {
+        flex-direction: row;
+        justify-content: center;
+      }
+      .menu-buttons video {
+        width: 48%;
+        max-width: 600px;
+      }
+    }
+
     .menu-buttons video {
-      width: 100%;
       border-radius: 16px;
       cursor: pointer;
       box-shadow: 0 10px 26px rgba(0,0,0,0.25);
     }
 
+    /* SLIDER */
+    .slider { overflow: hidden; width: 100%; }
+    .slider-track { display: flex; transition: transform 0.5s ease; }
+    .slide { min-width: 100%; text-align: center; }
+
+    .slider-dots {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 20px;
+    }
+    .slider-dots span { width: 10px; height: 10px; border-radius: 50%; background: #cfd8e3; }
+    .slider-dots span.active { background: #0d2a4a; }
+
     .content-img {
       width: 100%;
+      max-width: 800px;
+      display: block;
+      margin: 0 auto 20px;
       border-radius: 14px;
-      margin-bottom: 14px;
     }
 
     .btn {
       width: 100%;
+      max-width: 400px;
+      display: block;
+      margin: 0 auto 15px;
       background: #b5121b;
       color: #fff;
       border: none;
-      padding: 14px;
-      border-radius: 22px;
-      font-size: 15px;
+      padding: 15px;
+      border-radius: 30px;
+      font-size: 16px;
       font-weight: bold;
       cursor: pointer;
-      margin-bottom: 14px;
     }
     .btn.light { background: #ededed; color: #333; }
 
-    /* FOOTER */
     .footer-bar {
       position: fixed;
       bottom: 0;
@@ -198,108 +169,16 @@
       background: #b5121b;
       color: #fff;
       text-align: center;
-      padding: 12px;
-      font-size: 12px;
-      font-weight: bold;
+      padding: 15px;
+      font-size: 13px;
       z-index: 999;
     }
 
-    /* UTILITÁRIOS */
     .hidden { display: none; }
-    .fade-up { animation: fadeUp 0.8s ease forwards; }
+    .fade-up { animation: fadeUp 0.6s ease forwards; }
     @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(30px); }
+      from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* =============================================
-       AJUSTES PARA DESKTOP (TELAS GRANDES)
-    ============================================= */
-    @media (min-width: 1024px) {
-      .top-banner {
-        max-width: 1000px;
-        margin: 0 auto;
-      }
-      
-      .top-banner img {
-        border-radius: 0 0 20px 20px;
-      }
-
-      .quick-links {
-        max-width: 1000px;
-        margin: 15px auto;
-        border-radius: 16px;
-      }
-
-      .menu-buttons {
-        flex-direction: row; /* Vídeos lado a lado */
-        justify-content: space-between;
-      }
-
-      .menu-buttons video {
-        width: 49%; /* Metade da largura cada */
-      }
-
-      .section {
-        padding: 40px;
-      }
-    }
-
-    /* LUPA E ZOOM */
-    .zoom-icon {
-      position: absolute;
-      bottom: 15px;
-      right: 15px;
-      width: 36px;
-      height: 36px;
-      background: rgba(0,0,0,0.7);
-      color: #fff;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-    }
-
-    .zoom-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.95);
-      z-index: 3000;
-    }
-    .zoom-img {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%,-50%);
-      max-width: 90vw;
-      max-height: 85vh;
-    }
-    .zoom-controls {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      display: flex;
-      gap: 10px;
-    }
-    .zoom-controls button {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      border: none;
-      font-size: 20px;
-      cursor: pointer;
-    }
-
-    .whats { margin-top: 25px; text-align: center; }
-    .whats a {
-      display: inline-block;
-      background: #25D366;
-      color: #fff;
-      padding: 12px 24px;
-      border-radius: 30px;
-      text-decoration: none;
-      font-weight: bold;
     }
   </style>
 </head>
@@ -310,21 +189,15 @@
   height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
   <div class="top-banner">
-    <img src="topoat.png" alt="Banner Campanha">
+    <img src="topoat.png">
   </div>
 
   <div class="quick-links">
     <div class="quick-links-inner">
-      <img src="logo.png" alt="Nichele" class="quick-logo">
-
+      <img src="logo.png" class="quick-logo">
       <div class="quick-actions">
-        <a href="https://premiada.premify.com.br/Login/aniversariopremiadonichele" target="_blank" class="link-btn">
-          LOGIN
-        </a>
-        <a href="https://premiada.premify.com.br/Cadastro/aniversariopremiadonichele" target="_blank" class="link-btn destaque">
-          CADASTRE-SE
-        </a>
-
+        <a href="https://premiada.premify.com.br/Login/aniversariopremiadonichele" target="_blank" class="link-btn">LOGIN</a>
+        <a href="https://premiada.premify.com.br/Cadastro/aniversariopremiadonichele" target="_blank" class="link-btn destaque">CADASTRE-SE</a>
         <div class="dropdown">
           <button class="dropdown-btn">☰</button>
           <div class="dropdown-menu">
@@ -339,7 +212,6 @@
   <div class="container">
     <div id="home" class="section fade-up">
       <h2 class="section-title">🎁 Prêmios da Roleta</h2>
-      
       <div class="slider" data-slider data-autoplay>
         <div class="slider-track">
           <div class="slide"><div class="premios-row"><img src="4.png"><img src="7.png"></div></div>
@@ -351,12 +223,11 @@
           <div class="slide"><div class="premios-row"><img src="16.png"><img src="17.png"></div></div>
         </div>
       </div>
-
       <div class="slider-dots">
         <span class="active"></span><span></span><span></span><span></span><span></span><span></span><span></span>
       </div>
 
-      <div class="section-title" style="margin-top:40px;">🎉 Campanhas</div>
+      <div class="section-title" style="margin-top:50px;">🎉 Campanhas</div>
       <div class="menu-buttons">
         <video src="videosorteio.mp4" autoplay muted loop playsinline onclick="showPage('sorteio')"></video>
         <video src="videoroleta.mp4" autoplay muted loop playsinline onclick="showPage('roleta')"></video>
@@ -368,15 +239,13 @@
       <img src="sorteio1.png" class="content-img">
       <img src="sorteio2.png" class="content-img">
       <button class="btn" onclick="toggle('regrasSorteio')">Confira as regras</button>
-      
       <div id="regrasSorteio" class="hidden">
         <div class="slider" data-slider>
           <div class="slider-track">
-            <div class="slide"><img src="duvidas1.png" class="content-img"><div class="zoom-icon">🔍</div></div>
-            <div class="slide"><img src="duvidas2.png" class="content-img"><div class="zoom-icon">🔍</div></div>
+            <div class="slide"><img src="duvidas1.png" class="content-img"></div>
+            <div class="slide"><img src="duvidas2.png" class="content-img"></div>
           </div>
         </div>
-        <div class="slider-dots"><span class="active"></span><span></span></div>
       </div>
     </div>
 
@@ -384,16 +253,6 @@
       <button class="btn light" onclick="showPage('home')">⬅ Voltar</button>
       <img src="roleta.png" class="content-img">
       <button class="btn" onclick="toggle('regrasRoleta')">Confira as regras</button>
-
-      <div id="regrasRoleta" class="hidden">
-        <div class="slider" data-slider>
-          <div class="slider-track">
-            <div class="slide"><img src="duvidar1.png" class="content-img"><div class="zoom-icon">🔍</div></div>
-            <div class="slide"><img src="duvidar2.png" class="content-img"><div class="zoom-icon">🔍</div></div>
-          </div>
-        </div>
-        <div class="slider-dots"><span class="active"></span><span></span></div>
-      </div>
     </div>
   </div>
 
@@ -402,14 +261,10 @@
   <script>
     function showPage(page){
       ["home","sorteio","roleta"].forEach(id=>{
-        const el=document.getElementById(id);
-        if(el) el.classList.add("hidden");
+        document.getElementById(id).classList.add("hidden");
       });
-      const target=document.getElementById(page);
-      if(target){
-        target.classList.remove("hidden");
-        target.classList.add("fade-up");
-      }
+      const target = document.getElementById(page);
+      target.classList.remove("hidden");
       window.scrollTo({top: 0, behavior: 'smooth'});
     }
 
@@ -417,9 +272,8 @@
       document.getElementById(id).classList.toggle("hidden");
     }
 
-    // Lógica dos Sliders
     document.querySelectorAll("[data-slider]").forEach(slider=>{
-      let startX=0, current=0;
+      let current=0;
       const track=slider.querySelector(".slider-track");
       const slides=slider.querySelectorAll(".slide").length;
       const dots=slider.parentElement.querySelectorAll(".slider-dots span");
@@ -427,38 +281,9 @@
       if(slider.hasAttribute("data-autoplay")){
         setInterval(()=>{
           current=(current+1)%slides;
-          updateSlider();
+          track.style.transform=`translateX(-${current*100}%)`;
+          if(dots.length) dots.forEach((d,i)=>d.classList.toggle("active",i===current));
         },4000);
-      }
-
-      function updateSlider(){
-        track.style.transform=`translateX(-${current*100}%)`;
-        dots.forEach((d,i)=>d.classList.toggle("active",i===current));
-      }
-
-      slider.addEventListener("touchstart",e=>startX=e.touches[0].clientX);
-      slider.addEventListener("touchend",e=>{
-        const diff=e.changedTouches[0].clientX-startX;
-        if(diff<-50 && current<slides-1) current++;
-        if(diff>50 && current>0) current--;
-        updateSlider();
-      });
-    });
-
-    // Função de Zoom (Simplificada para funcionamento geral)
-    document.addEventListener("click", function(e){
-      if(e.target.classList.contains("zoom-icon")){
-        const img = e.target.previousElementSibling;
-        const overlay = document.createElement("div");
-        overlay.className = "zoom-overlay";
-        overlay.innerHTML = `
-          <img src="${img.src}" class="zoom-img">
-          <div class="zoom-controls">
-            <button onclick="this.parentElement.parentElement.remove()">✕</button>
-          </div>
-        `;
-        document.body.appendChild(overlay);
-        overlay.onclick = function(ev){ if(ev.target === overlay) overlay.remove(); };
       }
     });
   </script>
