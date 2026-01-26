@@ -523,11 +523,44 @@ document.addEventListener("click", function(e){
     });
 
     // Drag
-    zoomImg.addEventListener("mousedown",e=>{
-      dragging = true;
-      startX = e.clientX - posX;
-      startY = e.clientY - posY;
-    });
+    zoomImg.addEventListener("touchstart", e => {
+  if (e.touches.length === 1) {
+    dragging = true;
+    startX = e.touches[0].clientX - posX;
+    startY = e.touches[0].clientY - posY;
+  }
+
+  if (e.touches.length === 2) {
+    dragging = false;
+    startDist = Math.hypot(
+      e.touches[0].clientX - e.touches[1].clientX,
+      e.touches[0].clientY - e.touches[1].clientY
+    );
+    startScale = zoomScale;
+  }
+});
+
+zoomImg.addEventListener("touchmove", e => {
+  if (e.touches.length === 1 && dragging) {
+    posX = e.touches[0].clientX - startX;
+    posY = e.touches[0].clientY - startY;
+    updateTransform();
+  }
+
+  if (e.touches.length === 2) {
+    const dist = Math.hypot(
+      e.touches[0].clientX - e.touches[1].clientX,
+      e.touches[0].clientY - e.touches[1].clientY
+    );
+    zoomScale = Math.min(Math.max(startScale * (dist / startDist), 1), 4);
+    updateTransform();
+  }
+});
+
+zoomImg.addEventListener("touchend", () => {
+  dragging = false;
+});
+
 
     window.addEventListener("mousemove",e=>{
       if(dragging){
