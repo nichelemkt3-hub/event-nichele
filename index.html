@@ -473,7 +473,7 @@ let zoomScale = 1;
 let startDist = 0;
 let startScale = 1;
 let posX = 0, posY = 0;
-let startX = 0, startY = 0;
+let dragStartX = 0, dragStartY = 0;
 let dragging = false;
 
 document.addEventListener("click", function(e){
@@ -532,16 +532,16 @@ zoomImg.style.transformOrigin = "0 0";
     // Drag
     zoomImg.addEventListener("mousedown", e => {
   dragging = true;
-  startX = e.clientX;
-  startY = e.clientY;
+  dragStartX = e.clientX;
+dragStartY = e.clientY;
 });
 
     window.addEventListener("mousemove",e=>{
       if(dragging){
-  posX += e.clientX - startX;
-  posY += e.clientY - startY;
-  startX = e.clientX;
-  startY = e.clientY;
+  posX += e.clientX - dragStartX;
+posY += e.clientY - dragStartY;
+dragStartX = e.clientX;
+dragStartY = e.clientY;
   updateTransform();
 }
 
