@@ -187,10 +187,12 @@ body {
   gap: 16px;
   margin-bottom: 18px;
 }
-.premios-row img {
+.premios-row img,
+.premios-row video {
   width: calc(50% - 8px);
   border-radius: 14px;
   box-shadow: 0 8px 20px rgba(0,0,0,0.18);
+  object-fit: cover;
 }
 
 /* SLIDER */
@@ -362,14 +364,56 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <div class="slider" data-slider data-autoplay>
   <div class="slider-track">
-    <div class="slide"><div class="premios-row"><img src="4.png"><img src="7.png"></div></div>
-    <div class="slide"><div class="premios-row"><img src="6.png"><img src="5.png"></div></div>
-    <div class="slide"><div class="premios-row"><img src="8.png"><img src="9.png"></div></div>
-    <div class="slide"><div class="premios-row"><img src="10.png"><img src="11.png"></div></div>
-    <div class="slide"><div class="premios-row"><img src="12.png"><img src="13.png"></div></div>
-    <div class="slide"><div class="premios-row"><img src="14.png"><img src="15.png"></div></div>
-    <div class="slide"><div class="premios-row"><img src="16.png"><img src="17.png"></div></div>
+
+  <div class="slide">
+    <div class="premios-row">
+      <img src="4.png">
+      <img src="6.png">
+    </div>
   </div>
+
+  <div class="slide">
+    <div class="premios-row">
+      <img src="8.png">
+      <img src="5.png">
+    </div>
+  </div>
+
+  <div class="slide">
+    <div class="premios-row">
+      <img src="9.png">
+      <img src="10.png">
+    </div>
+  </div>
+
+  <div class="slide">
+    <div class="premios-row">
+      <img src="11.png">
+      <img src="12.png">
+    </div>
+  </div>
+
+  <div class="slide">
+    <div class="premios-row">
+      <img src="13.png">
+      <video src="videobola.mp4" autoplay muted loop playsinline></video>
+    </div>
+  </div>
+
+  <div class="slide">
+    <div class="premios-row">
+      <video src="videoguarda.mp4" autoplay muted loop playsinline></video>
+      <video src="videocadeira.mp4" autoplay muted loop playsinline></video>
+    </div>
+  </div>
+
+  <div class="slide">
+    <div class="premios-row">
+      <img src="16.png">
+      <img src="17.png">
+    </div>
+  </div>
+
 </div>
 
 <div class="slider-dots">
