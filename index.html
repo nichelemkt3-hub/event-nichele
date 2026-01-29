@@ -197,6 +197,28 @@ body {
 .slider { overflow: hidden; }
 .slider-track { display: flex; transition: transform 0.5s ease; }
 .slide { min-width: 100%; position: relative; }
+.arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0,0,0,0.55);
+  color: #fff;
+  border: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  font-size: 22px;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.arrow.prev { left: 10px; }
+.arrow.next { right: 10px; }
+
+.arrow:hover {
+  background: rgba(0,0,0,0.75);
+}
+
 
 /* DOTS */
 .slider-dots {
