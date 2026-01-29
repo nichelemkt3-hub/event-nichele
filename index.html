@@ -323,7 +323,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <div class="quick-links-inner">
 
     <!-- LOGO ESQUERDA -->
-    <img src="logoat1.png" alt="Nichele" class="quick-logo">
+   <img src="logoat1.png" alt="Nichele" class="quick-logo" style="cursor:pointer" onclick="showPage('home')">
 
     <!-- AÇÕES DIREITA -->
     <div class="quick-actions">
@@ -456,29 +456,84 @@ function toggle(id){
   document.getElementById(id).classList.toggle("hidden");
 }
 
+<script>
 /* SLIDERS */
 document.querySelectorAll("[data-slider]").forEach(slider=>{
-  let startX=0,current=0;
+  let startX=0,current=0,isDown=false,autoTimer;
   const track=slider.querySelector(".slider-track");
   const slides=slider.querySelectorAll(".slide").length;
   const dots=slider.parentElement.querySelectorAll(".slider-dots span");
 
-  if(slider.hasAttribute("data-autoplay")){
-    setInterval(()=>{
-      current=(current+1)%slides;
-      track.style.transform=`translateX(-${current*100}%)`;
-      dots.forEach((d,i)=>d.classList.toggle("active",i===current));
-    },4000);
+  function update(){
+    track.style.transform=`translateX(-${current*100}%)`;
+    dots.forEach((d,i)=>d.classList.toggle("active",i===current));
   }
 
+  function startAuto(){
+    if(slider.hasAttribute("data-autoplay")){
+      autoTimer=setInterval(()=>{
+        current=(current+1)%slides;
+        update();
+      },4000);
+    }
+  }
+
+  function stopAuto(){
+    clearInterval(autoTimer);
+  }
+
+  startAuto();
+
+  /* TOUCH (mobile – mantém igual) */
   slider.addEventListener("touchstart",e=>startX=e.touches[0].clientX);
   slider.addEventListener("touchend",e=>{
     const diff=e.changedTouches[0].clientX-startX;
     if(diff<-50 && current<slides-1)current++;
     if(diff>50 && current>0)current--;
-    track.style.transform=`translateX(-${current*100}%)`;
-    dots.forEach((d,i)=>d.classList.toggle("active",i===current));
+    update();
   });
+
+  /* MOUSE (desktop) */
+  slider.addEventListener("mousedown",e=>{
+    isDown=true;
+    startX=e.clientX;
+    stopAuto();
+  });
+
+  window.addEventListener("mouseup",()=>{
+    isDown=false;
+    startAuto();
+  });
+
+  window.addEventListener("mousemove",e=>{
+    if(!isDown) return;
+    const diff=e.clientX-startX;
+    if(diff<-60 && current<slides-1){
+      current++;
+      startX=e.clientX;
+      update();
+    }
+    if(diff>60 && current>0){
+      current--;
+      startX=e.clientX;
+      update();
+    }
+  });
+
+  /* DOTS clicáveis */
+  dots.forEach((dot,i)=>{
+    dot.style.cursor="pointer";
+    dot.addEventListener("click",()=>{
+      current=i;
+      update();
+      stopAuto();
+      startAuto();
+    });
+  });
+
+  /* pausa autoplay no hover */
+  slider.addEventListener("mouseenter",stopAuto);
+  slider.addEventListener("mouseleave",startAuto);
 });
 
 let zoomScale = 1;
