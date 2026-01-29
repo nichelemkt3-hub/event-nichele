@@ -197,43 +197,56 @@ body {
 .slider { overflow: hidden; }
 .slider-track { display: flex; transition: transform 0.5s ease; }
 .slide { min-width: 100%; position: relative; }
+
+  /* SETAS */
 .arrow {
-  position: relative;
+  position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  background: rgba(0,0,0,0.55);
+  background: rgba(0,0,0,0.6);
   color: #fff;
   border: none;
-  width: 36px;
-  height: 36px;
+  width: 42px;
+  height: 42px;
   border-radius: 50%;
-  font-size: 22px;
+  font-size: 26px;
   cursor: pointer;
-  z-index: 10;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.arrow.prev { left: 10px; }
-.arrow.next { right: 10px; }
+.arrow.prev {
+  left: 10px;
+}
+
+.arrow.next {
+  right: 10px;
+}
 
 .arrow:hover {
-  background: rgba(0,0,0,0.75);
+  background: rgba(0,0,0,0.85);
 }
-
 
 /* DOTS */
 .slider-dots {
   display: flex;
   justify-content: center;
   gap: 8px;
-  margin-top: 10px;
+  margin-top: 12px;
 }
+
 .slider-dots span {
-  width: 7px;
-  height: 7px;
+  width: 8px;
+  height: 8px;
   border-radius: 50%;
   background: #cfd8e3;
 }
-.slider-dots span.active { background: #0d2a4a; }
+
+.slider-dots span.active {
+  background: #0d2a4a;
+}
 
 /* MENU */
 .menu-buttons { display: flex; flex-direction: column; gap: 18px; }
@@ -384,6 +397,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <div class="slider" data-slider data-autoplay>
   <button class="arrow prev">‹</button>
+  
   <div class="slider-track">
     <div class="slide"><div class="premios-row"><img src="4.png"><img src="6.png"></div></div>
     <div class="slide"><div class="premios-row"><img src="8.png"><img src="5.png"></div></div>
@@ -393,6 +407,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="slide"><div class="premios-row"><img src="guarda.png"><img src="cadeira.png"></div></div>
     <div class="slide"><div class="premios-row"><img src="16.png"><img src="17.png"></div></div>
   </div>
+  
   <button class="arrow next">›</button>
 </div>
 
