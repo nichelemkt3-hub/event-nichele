@@ -499,7 +499,10 @@ function toggle(id){
 
 /* SLIDERS */
 document.querySelectorAll("[data-slider]").forEach(slider=>{
-  let startX=0,current=0,isDown=false,autoTimer;
+  let startX = 0;
+  let current = 0;
+  let isDown = false;
+  let autoTimer = null;
   const track=slider.querySelector(".slider-track");
   const slides=slider.querySelectorAll(".slide").length;
   const dots=slider.parentElement.querySelectorAll(".slider-dots span");
@@ -513,17 +516,21 @@ document.querySelectorAll("[data-slider]").forEach(slider=>{
   }
 
   function startAuto(){
-    if(slider.hasAttribute("data-autoplay")){
-      autoTimer=setInterval(()=>{
-        current=(current+1)%slides;
-        update();
-      },6000);
-    }
-  }
+  if (!slider.hasAttribute("data-autoplay")) return;
+  if (autoTimer) return; // 🔑 impede duplicar interval
 
-  function stopAuto(){
+  autoTimer = setInterval(() => {
+    current = (current + 1) % slides;
+    update();
+  }, 6000);
+}
+
+function stopAuto(){
+  if (autoTimer) {
     clearInterval(autoTimer);
+    autoTimer = null; // 🔑 zera de verdade
   }
+}
 
     if (prevBtn && nextBtn) {
     prevBtn.addEventListener("click", () => {
