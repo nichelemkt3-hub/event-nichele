@@ -361,6 +361,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <h2 class="section-title">🎁 Prêmios da Roleta</h2>
 
 <div class="slider" data-slider data-autoplay>
+  <button class="arrow prev">‹</button>
   <div class="slider-track">
     <div class="slide"><div class="premios-row"><img src="4.png"><img src="6.png"></div></div>
     <div class="slide"><div class="premios-row"><img src="8.png"><img src="5.png"></div></div>
@@ -370,6 +371,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="slide"><div class="premios-row"><img src="guarda.png"><img src="cadeira.png"></div></div>
     <div class="slide"><div class="premios-row"><img src="16.png"><img src="17.png"></div></div>
   </div>
+  <button class="arrow next">›</button>
 </div>
 
 <div class="slider-dots">
@@ -462,6 +464,9 @@ document.querySelectorAll("[data-slider]").forEach(slider=>{
   const track=slider.querySelector(".slider-track");
   const slides=slider.querySelectorAll(".slide").length;
   const dots=slider.parentElement.querySelectorAll(".slider-dots span");
+  const prevBtn = slider.querySelector(".prev");
+  const nextBtn = slider.querySelector(".next");
+
 
   function update(){
     track.style.transform=`translateX(-${current*100}%)`;
@@ -473,12 +478,28 @@ document.querySelectorAll("[data-slider]").forEach(slider=>{
       autoTimer=setInterval(()=>{
         current=(current+1)%slides;
         update();
-      },4000);
+      },6000);
     }
   }
 
   function stopAuto(){
     clearInterval(autoTimer);
+  }
+
+    if (prevBtn && nextBtn) {
+    prevBtn.addEventListener("click", () => {
+      current = current > 0 ? current - 1 : slides - 1;
+      update();
+      stopAuto();
+      startAuto();
+    });
+
+    nextBtn.addEventListener("click", () => {
+      current = (current + 1) % slides;
+      update();
+      stopAuto();
+      startAuto();
+    });
   }
 
   startAuto();
